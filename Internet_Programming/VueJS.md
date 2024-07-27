@@ -3,6 +3,7 @@
 
 
 # Official VueJS Documentation Notes
+## Getting Started
 + It is a JavaScript framework.
 + It builds on top of standard HTML, CSS, and JavaScript.
 + **Declarative Rendering:** Refers to a way of describing how the UI should look based on the state of the application. Instead of manually manipulating the DOM, you use Vue’s template syntax to declare what the UI should look like based on the underlying data.
@@ -36,3 +37,16 @@
 + **Import Maps:** Allows you to control how JavaScript modules are resolved and imported in the browser. Import maps enable you to map module specifiers (like module names) to specific URLs.
 + **ES Modules:** ES Modules (ECMAScript Modules) are a standardized module system in JavaScript that allows you to import and export code.
   - (Using VueJS in HTML Files) Due to security reasons, ES modules can only work over the `http://` protocol. In order for ES modules to work on our local machine, we need to serve the index.html over the `http://` protocol, with a local HTTP server. To do that we can use `npx serve` (node.js).
+
+## Essentials
++ Every Vue application starts by creating a new application instance with the `createApp` function.
++ Every app requires a "root component" that can contain other components as its children.
++ An application instance won't render anything until its `.mount()` method is called. It expects a "container" argument (DOM element or a selector string).
+
++ The `.mount()` method should always be called after all app configurations and asset registrations are done. Its return value, unlike the asset registration methods, is the root component instance instead of the application instance.
+  - **Asset Registration:** Techniques or mechanisms used to register and manage various assets within a Vue application. These assets ensures that they are available where needed.
+    1. **Global Registration:** Makes components, directives, and other assets available throughout your entire Vue application.
+    2. **Local Registration**
+
++ **In-DOM Template:** Refers to a way of defining and using templates directly within the HTML of your page.
++ The application instance exposes a `.config` object that allows us to configure a few app-level options.
