@@ -49,4 +49,5 @@
     2. **Local Registration**
 
 + **In-DOM Template:** Refers to a way of defining and using templates directly within the HTML of your page.
-+ The application instance exposes a `.config` object that allows us to configure a few app-level options.
++ The application instance exposes a `.config` object that allows us to configure a few app-level options and methods for registering app-scoped assets.
+  - **Application Instansce APIs**: Refers to the set of methods and properties available on the Vue instance created by `Vue.createApp()`.
