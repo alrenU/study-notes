@@ -24,11 +24,15 @@
   - **Options API:** It is a traditional way of defining Vue components and uses an object of options such as `data`, `methods`, and `mounted`. It looks like classes in OOP.
   - **Composition API:** It composes behavior using functions and typically used with `<script setup>` and more free-form compared to the Options API.
     + **`<script setup>`**:
-      + The script block is implicitly treated as the setup function's body.
-      + You can directly import and use Vue’s Composition API functions like `ref`, `reactive` etc.
-      + Variables and functions declared in it are automatically exposed to the template.
+      - The script block is implicitly treated as the setup function's body.
+      - You can directly import and use Vue’s Composition API functions like `ref`, `reactive` etc.
+      - Variables and functions declared in it are automatically exposed to the template.
 
 + Taken builds are saved under the "./dist" directory.
 + **Global Build:** A version of the software or application that is meant to be distributed. In the context of JavaScript libraries or frameworks a version of the library that is designed to be included in web pages via a global variable.
 
 ***NOTE:** If you want to use global build in an HTML file you cannot use the Composition API. So you should use Options API.*
+
++ **Import Maps:** Allows you to control how JavaScript modules are resolved and imported in the browser. Import maps enable you to map module specifiers (like module names) to specific URLs.
++ **ES Modules:** ES Modules (ECMAScript Modules) are a standardized module system in JavaScript that allows you to import and export code.
+  - (Using VueJS in HTML Files) Due to security reasons, ES modules can only work over the `http://` protocol. In order for ES modules to work on our local machine, we need to serve the index.html over the `http://` protocol, with a local HTTP server. To do that we can use `npx serve` (node.js).
