@@ -42,7 +42,7 @@
 + An application instance won't render anything until its `.mount()` method is called. It expects a "container" argument (DOM element or a selector string).
 
 + The `.mount()` method should always be called after all app configurations and asset registrations are done. Its return value, unlike the asset registration methods, is the root component instance instead of the application instance.
-  - **Asset Registration**: Techniques or mechanisms used to register and manage various assets within a Vue application. These assets ensures that they are available where needed.
+  - **Asset Registration**: Techniques or mechanisms used to register and manage various assets within a Vue application.
     1. **Global Registration**: Makes components and assets available throughout the app.
     2. **Local Registration**
 
