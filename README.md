@@ -3,5 +3,6 @@ This repository is dedicated to organizing and sharing my notes on computer scie
 
 ## Table of Contents
 + internet-programming
+  - [HTML.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/HTML.md)
   - [VueJS.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/VueJS.md)
   - [TypeScript.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/TypeScript.md)
