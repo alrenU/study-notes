@@ -42,7 +42,7 @@
 
 + **Import Maps**: Allows you to control how JavaScript modules are resolved and imported in the browser. Import maps enable you to map module specifiers (like module names) to specific URLs.
 + **ES Modules**: ES Modules (ECMAScript Modules) are a standardized module system in JavaScript that allows you to import and export code.
-  - **VueJS Usage In HTML**: Due to security reasons, ES modules can only work over the `http://` protocol. In order for ES modules to work on our local machine, we need to serve the index.html over the `http://` protocol, with a local HTTP server. To do that we can use `npx serve` (node.js).
+  - **VueJS Usage In HTML**: Due to security reasons, ES modules can only work over the `http://` protocol. In order for ES modules to work on your local machine, you need to serve the index.html over the `http://` protocol, with a local HTTP server. To do that you can use `npx serve` (node.js).
 
 ## Essentials
 + Every Vue application starts by creating a new application instance with the `createApp` function.
@@ -56,6 +56,6 @@
 
 + **In-DOM Template**: Defining templates directly in HTML.
 + The application instance exposes a `.config` object that allows us to configure a few app-level options and methods for registering app-scoped assets.
-  - **Application Instansce APIs**: Refers to the set of methods and properties available on the Vue instance created by `Vue.createApp()`.
+  - **Application Instance APIs**: Refers to the set of methods and properties available on the Vue instance created by `Vue.createApp()`.
 
 + The `createApp` API allows multiple Vue applications to co-exist on the same page, each with its own scope for configuration and global assets.
