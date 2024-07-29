@@ -59,3 +59,15 @@
   - **Application Instance APIs**: Refers to the set of methods and properties available on the Vue instance created by `Vue.createApp()`.
 
 + The `createApp` API allows multiple Vue applications to co-exist on the same page, each with its own scope for configuration and global assets.
+
+## Template Syntax
++ It has an HTML based template syntax and declaratively describes the structure of your UI.
++ Binds the rendered DOM to the underlying component instance's data.
++ Vue compiles the templates into JavaScript code with the reactivity system.
++ It is also possible to directly write render functions instead of templates.
+  - **Render Functions**: A lower-level alternative to the template syntax (JavaScript function that returns a virtual DOM node) for creating and rendering Vue components.
++ **Mustache Syntax**: It syntax is in the form of double curly braces and can be used in text interpolation. It simply returns a plain text. Cannot be used in HTML attributes.
++ **Data Binding**: Synchronizes the data between the model (data) and the view (UI).
++ **Directives**: They are special attributes provided by Vue. Prefixed with `v-`.
+  - **`v-html`**: Outputs as HTML. Data bindings are ignored. This directive can be dangerous because it can lead to XSS vulnerabilities. Also you cannot use template partials (Vue components) in it.
+  - **`v-bind`**: Connects a data value to an HTML attribute and synchronizes it.
