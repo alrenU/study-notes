@@ -40,7 +40,7 @@
 + Taken app builds are saved under the *./dist* directory.
 + **Global Build**: It has several meanings depending on the context but in the context of Vue.js and HTML, it refers to importing the global build of Vue.js into your HTML file using a link.
 
-***NOTE**: If you want to use global build in an HTML file, you cannot use the Composition API. So you should use Options API.*
+> ***NOTE**: If you want to use global build in an HTML file, you cannot use the Composition API. So you should use Options API.*
 
 + **Import Maps**: Controls how JS modules are resolved and imported in the browser. It enables you to map module specifiers (like module names) to specific URLs.
 + **ES Modules (ECMAScript Modules)**: A standardized module system in JS that allows you to import and export code.
@@ -97,7 +97,7 @@
     <a @click="doSomething"> ... </a>
     ```
 
-  ***NOTE**: When using in-DOM templates you should not use uppercase characters since browsers will coerce attribute names into lowercase.*
+  > ***NOTE**: When using in-DOM templates you should not use uppercase characters since browsers will coerce attribute names into lowercase.*
 
   - **Modifiers**: Special postfixes denoted by a dot, which alter the behavior of the directive.
   - **Full Directive Syntax**:
