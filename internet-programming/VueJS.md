@@ -66,8 +66,51 @@
 + Vue compiles the templates into JavaScript code with the reactivity system.
 + It is also possible to directly write render functions instead of templates.
   - **Render Functions**: A lower-level alternative to the template syntax (JavaScript function that returns a virtual DOM node) for creating and rendering Vue components.
+
 + **Mustache Syntax**: It syntax is in the form of double curly braces and can be used in text interpolation. It simply returns a plain text. Cannot be used in HTML attributes.
 + **Data Binding**: Synchronizes the data between the model (data) and the view (UI).
-+ **Directives**: They are special attributes provided by Vue. Prefixed with `v-`.
++ **Directives**: They are special attributes provided by Vue. It's job is to reactively apply updates to the DOM. Prefixed with `v-`.
+  - **Arguments**: Denoted by a colon after the directive name: `v-bind:href`.
+  - **Dynamic Arguments**: Dynamic arguments are wrapped in square brackets: `v-bind:[attributeName]` and `v-on:[eventName]`.
+    + **Value Constraints**: The value of the dynamic arguments are expected to be string or null. The value of null can be used in removing the binding.
+    + **Syntax Constraints**: Certain characters, such as spaces and quotes, are invalid. For complex dynamic arguments, use computed property.
   - **`v-html`**: Outputs as HTML. Data bindings are ignored. This directive can be dangerous because it can lead to XSS vulnerabilities. Also you cannot use template partials (Vue components) in it.
-  - **`v-bind`**: Connects a data value to an HTML attribute and synchronizes it.
+  - **`v-bind`**: Connects a data value to an HTML attribute and synchronizes it. If the bound value is `null` or `undefined`, then the attribute will be removed from the rendered element.
+    + **Shorthand Syntax**:
+    ```
+    <!-- Normal usage. -->
+    <div v-bind:id="dynamicId"></div>
+
+    <!-- Shorthand usage. -->
+    <div :id="dynamicId"></div>
+    ```
+    + **Same Name Shorthand**: If the attribute has the same name with the JavaScript value being bound, the syntax can be further shortened:
+    ```
+    <!-- Same as :id="id" -->
+    <div :id></div>
+    ```
+    + If you have an object you can bind them without an argument: `<div v-bind="objectOfAttrs"></div>`.
+  - **`v-on`**: Listens the DOM events.
+    + **Shorthand**:
+    ```
+    <a v-on:click="doSomething"> ... </a>
+
+    <!-- Shorthand. -->
+    <a @click="doSomething"> ... </a>
+    ```
+  - When using in-DOM templates you should not use uppercase characters since browsers will coerce attribute names into lowercase.
+  - **Modifiers**: Special postfixes denoted by a dot, which alter the behavior of the directive.
+  - **Full Directive Syntax**:
+  ```
+  v-on:submit.prevent="onSubmit"
+
+  v-on: Name
+  submit: Argument
+  .prevent: Modifiers
+  onSubmit: Value
+  ```
+
++ Each binding can only contain one single JS expression.
++ You can define globals for all Vue expressions by adding them to `app.config.globalProperties`.
+
+## Reactivity Fundementals
