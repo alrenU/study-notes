@@ -127,3 +127,10 @@
   console.log(reactive(raw) === proxy) // true
   ```
 + **Ref Unwrapping**: Automatically extracts the value from a ref object in templates.
+
+## Computed Properties
++ **In-Template Expressions**: Direct JavaScript expressions used in templates for dynamic content.
++ **Computed Properties**
+  - Complex in-template expressions can be hard to read. Use the `computed` function to simplify this.
+  - `computed()` takes a getter function and returns a computed *ref*, which is automatically updated and cached based on its reactive dependencies. Access computed values with `.value`.
++ **Writable Computed Properties**: By default, computed properties are read-only. To make them writable, provide both a getter and a setter in `computed()`.
