@@ -18,7 +18,7 @@
   - Single-Page Application (SPA)
   - Fullstack / Server-Side Rendering (SSR)
   - JAMstack / Static Site Generation (SSG)
-    + **JAMstack**: Stands for JavaScript, APIs, and Markup
+    + **JAMstack**: Stands for JavaScript, APIs, and Markup (static content of your site)
   - Desktop, Mobile, WebGL, and Terminal Applications
 
 + **Single-File Components (SFC)**: An SFC combines JavaScript (logic), HTML (template), and CSS (style) in one file.
@@ -134,3 +134,6 @@
   - Complex in-template expressions can be hard to read. Use the `computed` function to simplify this.
   - `computed()` takes a getter function and returns a computed *ref*, which is automatically updated and cached based on its reactive dependencies. Access computed values with `.value`.
 + **Writable Computed Properties**: By default, computed properties are read-only. To make them writable, provide both a getter and a setter in `computed()`.
+
+## Class and Style Bindings
++ `v-bind` can be used with `class` and `style`.
