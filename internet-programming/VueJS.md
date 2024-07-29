@@ -3,6 +3,8 @@
 # Bookmark
 
 # Official VueJS Documentation Notes
++ The notes are mainly shaped aroud *Compsition API*, *Single-File Component* and `<script setup>` for this document.
+
 ## Getting Started
 + It is a JavaScript UI framework.
 + It enhances HTML, CSS, and JavaScript with:
@@ -111,3 +113,34 @@
 + You can define globals for all Vue expressions by adding them to `app.config.globalProperties`.
 
 ## Reactivity Fundementals
++ Reactive state can be declared using the `ref` function. This declaration returns an object. You can access and manipulate the ref data inside `script` by using `.value` property. You can directly access it in `template`.
++ By using `<script setup>` you automatically expose your variables and functions. If you won't use it, you can use `setup` function to manually expose your variables and functions.
++ **Dependency Tracking**: Automatic tracking of reactive data properties a component depends on. To trigger a re-render Vue uses get and set operations of an object's properties. Vue performs the tracking in its getter, and performs triggering in its setter.
++ `ref` is deeply reactive (tracks every nested value). Using shallow refs can optimize the performance for some large objects. Similar to shallow refs, there is also the `shallowReactive`.
++ DOM updates are not applied synchonously. Vue buffers the changes and applies them in the *next tick*. To wait for the DOM update to complete after a state change, you can use the `nextTick()` global API. It ensures that any code that depends on the updated DOM or reactivity system runs after Vue has applied all changes and updated the DOM.
++ Another way of declaring reactive state is by `reactive` function. It makes an object, array and collection types (Map and Set) itself reactive. It is also called by ref internally when the ref value is an object. The value from reactive() is a Proxy of the original object, which is not equal to the original object. calling reactive() on the same object always returns the same proxy:
+```
+const raw = {}
+const proxy = reactive(raw)
+
+console.log(proxy === raw) // false
+console.log(reactive(raw) === proxy) // true
+```
++ Ref unwrapping in templates only applies if the ref is a top-level property in the template render context.
+  - **Ref Unwrapping**: process of automatically extracting the underlying value from a ref object in templates.
+  - Example:
+  ```
+  const count = ref(0)
+  const object = { id: ref(1) }
+
+  // This will work.
+  {{ count + 1 }}
+
+  // This will not work.
+  {{ object.id + 1 }}
+  ```
+  The rendered result will be `[object Object]1` because `object.id` is not unwrapped when evaluating the expression and remains a ref object. To fix this, we can destructure id into a top-level property:
+  ```
+  const { id } = object
+  {{ id + 1 }}
+  ```
