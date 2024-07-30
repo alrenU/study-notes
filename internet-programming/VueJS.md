@@ -1,5 +1,8 @@
 
 # VueJS Notes
+> ***NOTE**: I am taking notes about the VueJS while studying and I need you to make these notes organized, concise, easy to read and understand. Can you also fix if there are any wrong information?*
+> ***NOTE**: Can you summarize this VueJS document? I need you to make these notes organized, concise, easy to read and understand.*
+
 # Bookmark
 
 # Official VueJS Documentation Notes
@@ -136,4 +139,22 @@
 + **Writable Computed Properties**: By default, computed properties are read-only. To make them writable, provide both a getter and a setter in `computed()`.
 
 ## Class and Style Bindings
-+ `v-bind` can be used with `class` and `style`.
+### Class Bindings
++ Use `v-bind` with class to dynamically bind classes: `v-bind:class` or `:class`.
++ Classes can be conditionally applied using:
+  - **Object Syntax**: `{ className: condition }`
+  - **Array Syntax**: `[className, { className2: condition }]`
+  - **Computed Properties**: `:class="computedClass"`
+
++ Child elements inherit class names from parent attributes.
++ For components with multiple root elements, specify the target element using `$attrs:` `:class="$attrs.class"`.
+
+### Style Bindings
++ You can bind objects, arrays, or computed properties to the `:style` attribute.
++ Use camelCase for CSS property names, though kebab-case is also supported.
++ **Auto Prefixing**: Vue automatically adds vendor prefixes where necessary. Multiple prefixed values can be provided.
++ **Vendor Prefixes**: They allow developers to use features that might not be fully standardized or supported across all browsers.
+
+### Binding Concepts
++ **Binding**: Connects data and the DOM reactively.
++ **Two-Way Binding**: Syncs a data property with a form input, reflecting changes both ways (from data to input and vice versa).
