@@ -141,14 +141,10 @@
 
 ## Class and Style Bindings
 ### Class Bindings
-+ Use `v-bind` with class to dynamically bind classes: `v-bind:class` or `:class`.
-+ Classes can be conditionally applied using:
-  - **Object Syntax**: `{ className: condition }`
-  - **Array Syntax**: `[className, { className2: condition }]`
-  - **Computed Properties**: `:class="computedClass"`
-
++ Use `v-bind` with class to dynamically bind classes: `:class`.
++ Objects, arrays and computed properties can be  used in classes.
 + Child elements inherit class names from parent attributes.
-+ For components with multiple root elements, specify the target element using `$attrs:` `:class="$attrs.class"`.
++ For components with multiple root elements, specify the target element using `$attrs`: `:class="$attrs.class"`.
 
 ### Style Bindings
 + You can bind objects, arrays, or computed properties to the `:style` attribute.
@@ -159,3 +155,14 @@
 ### Binding Concepts
 + **Binding**: Connects data and the DOM reactively.
 + **Two-Way Binding**: Syncs a data property with a form input, reflecting changes both ways (from data to input and vice versa).
+
+## Conditional Rendering
++ **`v-if`, `v-else-if`, `v-else`**: Used in conditional block rendering. The `v-else-if ` or `v-else` directives must immediately follow the `v-if` block if there is any. These conditions can be also used on `<template>`.
+  - True conditional rendering; blocks are created and destroyed based on the condition.
+  - More costly for toggling but more efficient for rarely changing conditions.
+
++ **`v-show`**: Toggles the visibility of an element by changing its CSS display property. The element is always rendered and present in the DOM. Does not work with `<template>` or `v-else`.
+  - Always renders the element; visibility is controlled with CSS.
+  - Simpler but more costly for initial rendering; better for frequent toggling.
+
++ **`v-if` with `v-for`**: Avoid using `v-if` and `v-for` on the same element due to precedence issues. When used together, `v-if` is evaluated before `v-for`.
