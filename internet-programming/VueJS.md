@@ -165,4 +165,34 @@
   - Always renders the element; visibility is controlled with CSS.
   - Simpler but more costly for initial rendering; better for frequent toggling.
 
-+ **`v-if` with `v-for`**: Avoid using `v-if` and `v-for` on the same element due to precedence issues. When used together, `v-if` is evaluated before `v-for`.
+> ***NOTE (`v-if` with `v-for`)**: Avoid using `v-if` and `v-for` on the same element due to precedence issues. When used together, `v-if` is evaluated before `v-for`. That means the `v-if` condition will not have access to variables from the scope of the `v-for`. This can be fixed by moving `v-for` to a wrapping `<template>` tag: `<template v-for="todo in todos"> <li v-if="!todo.isComplete"></li> </template>`.*
+
+## List Rendering
++ **`v-for`**
+  - **Syntax**: `v-for="item in array"` or `v-for="(item, index) in array"`
+  - **Use Destructuring**: `v-for="({ message }, index) in array"`
+  - `v-for` can also iterate over objects with: `v-for="(value, key, index) in myObject"`.
+  - Loop over a range of numbers: `v-for="n in 10"` (*n* starts at *1*).
+  - Can be used with `<template>` tags.
+  - You can nest v-for to render lists within lists.
+  - `v-for` can use `of` instead of `in`: `v-for="item of array"`.
+  - When using `v-for` on components, you need to explicitly pass data using props:
+  ```
+  <MyComponent
+    v-for="(item, index) in items"
+    :item="item"
+    :index="index"
+    :key="item.id"
+  />
+  ```
+    > ***Note**: The data is not automatically passed to the component to maintain reusability and decouple the component from `v-for`.*
+
++ **In-Place Patch**: Updates specific parts of the DOM without re-rendering the entire component.
+  1. **Virtual DOM**: Vue creates a new Virtual DOM tree when the state changes and compares it with the previous tree.
+  2. **Diffing Algorithm**: Computes the minimal set of changes needed for the real DOM.
+  3. **In-Place Patch**: Applies updates only where changes occur, preserving other parts of the DOM.
+
++ **Efficiency in List Rendering**
+  - Vue uses an *in-place patch* strategy by default when rendering lists with `v-for`.
+  - For optimal performance and proper DOM updates, provide a unique *key* attribute for each item: `v-for="item in items" :key="item.id"`.
+    > ***Note**: Use the key attribute on the element with v-for to help Vue track item identity and maintain efficient updates.*
