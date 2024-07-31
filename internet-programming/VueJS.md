@@ -177,14 +177,14 @@
   - You can nest v-for to render lists within lists.
   - `v-for` can use `of` instead of `in`: `v-for="item of array"`.
   - When using `v-for` on components, you need to explicitly pass data using props:
-  ```
-  <MyComponent
-    v-for="(item, index) in items"
-    :item="item"
-    :index="index"
-    :key="item.id"
-  />
-  ```
+    ```
+    <MyComponent
+      v-for="(item, index) in items"
+      :item="item"
+      :index="index"
+      :key="item.id"
+    />
+    ```
     > ***Note**: The data is not automatically passed to the component to maintain reusability and decouple the component from `v-for`.*
 
 + **In-Place Patch**: Updates specific parts of the DOM without re-rendering the entire component.
