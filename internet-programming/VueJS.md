@@ -61,7 +61,7 @@
 
 + The `createApp` API allows multiple Vue applications to co-exist on the same page.
 
-## Template Syntax
+### Template Syntax
 + It has an HTML based syntax and declaratively describes the structure of your UI.
 + Vue compiles the templates into JavaScript code.
 + **Render Functions**: A lower-level alternative to the template syntax. They are written as JavaScript functions that returns a virtual DOM node.
@@ -113,7 +113,7 @@
 + Each binding can only contain one JS expression.
 + You can define globals for all Vue expressions by adding them to `app.config.globalProperties`.
 
-## Reactivity Fundementals
+### Reactivity Fundementals
 + **Reactive State**: Declare with `ref()`, which returns an object. Access or modify data with `.value` in `<script>`. Direct access in `<template>` is possible.
 + **Reactive Declaration**: Use `<script setup>` to automatically expose variables and functions. Without `<script setup>`, use the `setup()` function for manual exposure.
 + **Dependency Tracking**: Vue tracks dependencies of reactive properties to trigger re-renders. This is managed via getters and setters (tracking in its getter, triggering in its setter).
@@ -129,14 +129,14 @@
     ```
 + **Ref Unwrapping**: Automatically extracts the value from a ref object in templates.
 
-## Computed Properties
+### Computed Properties
 + **In-Template Expressions**: Direct JavaScript expressions used in templates for dynamic content.
 + **Computed Properties**
   - Complex in-template expressions can be hard to read. Use the `computed` function to simplify this.
   - `computed()` takes a getter function and returns a computed *ref*, which is automatically updated and cached based on its reactive dependencies. Access computed values with `.value`.
 + **Writable Computed Properties**: By default, computed properties are read-only. To make them writable, provide both a getter and a setter in `computed()`.
 
-## Class and Style Bindings
+### Class and Style Bindings
 + **Class Bindings**
   - Use `v-bind` with class to dynamically bind classes: `:class`.
   - Objects, arrays and computed properties can be  used in classes.
@@ -153,7 +153,7 @@
   - **Binding**: Connects data and the DOM reactively.
   - **Two-Way Binding**: Syncs a data property with a form input, reflecting changes both ways (from data to input and vice versa).
 
-## Conditional Rendering
+### Conditional Rendering
 + **`v-if`, `v-else-if`, `v-else`**: Used in conditional block rendering. The `v-else-if ` or `v-else` directives must immediately follow the `v-if` block if there is any. These conditions can be also used on `<template>`.
   - True conditional rendering; blocks are created and destroyed based on the condition.
   - More costly for toggling but more efficient for rarely changing conditions.
@@ -164,7 +164,7 @@
 
 > ***NOTE (`v-if` with `v-for`)**: Avoid using `v-if` and `v-for` on the same element due to precedence issues. When used together, `v-if` is evaluated before `v-for`. That means the `v-if` condition will not have access to variables from the scope of the `v-for`. This can be fixed by moving `v-for` to a wrapping `<template>` tag: `<template v-for="todo in todos"> <li v-if="!todo.isComplete"></li> </template>`.*
 
-## List Rendering
+### List Rendering
 + **`v-for`**
   - **Syntax**: `v-for="item in array"` or `v-for="(item, index) in array"`
   - **Use Destructuring**: `v-for="({ message }, index) in array"`
@@ -194,19 +194,44 @@
   - For optimal performance and proper DOM updates, provide a unique *key* attribute for each item: `v-for="item in items" :key="item.id"`.
     > ***Note**: Use the key attribute on the element with v-for to help Vue track item identity and maintain efficient updates.*
 
-## Event Handling
-+ To listen the DOM events you can use `v-on` (`v-on:click` shorten version is `@click`) directive. You can use an *inline handler* or *method handler* to handle the click.
-+ If you want to send the *event* to a method you can call the method without a parameter. A method handler automatically receives the native DOM Event object that triggers it.
-+ **Method vs. Inline Detection**: `foo`, `foo.bar` and `foo['bar']` are treated as method handlers, while `foo()` and `count++` are treated as inline handlers. Method handler are directly binded to an element. In order to access the DOM event in inline handlers you can pass the special `$event` variable: `@click="warn('text', $event)"`.
-+ **Event Modifiers**
-  - You can call `event.preventDefault()` or `event.stopPropagation()` inside event handlers. But instead of doing this, you can use *event modifiers* for `v-on`. These modifiers can be used as directive postfixes denoted by a dot: `@click.prevent`. Some of them are:
-    + **`.stop`**: The click event's propagation will be stopped.
-    + **`.prevent`**: Event will no longer reload the page.
-    + **`.self`**: When you want to handle events only if they occur on the element itself, not on any of its child elements.
-    + **`.capture`**: Attaches the event listener during the capture phase rather than the bubbling phase.
-    + **`.once`**: Ensures that the event handler is only executed once. After the first invocation, the event listener is removed.
-    + **`.passive`**: Improves performance, especially for scroll events, by letting the browser know that the event listener will not prevent the default action. Typically used with touch event listeners for improving performance on mobile devices.
-      > ***NOTE**:Do not use .passive and .prevent together, because .passive already indicates to the browser that you do not intend to prevent the event's default behavior, and you will likely see a warning from the browser if you do so.*
-  - You can also chain event modifiers: `@click.stop.prevent`. Order matters when using modifiers since the code is generated in the same order.
+### Event Handling
++ **Listening to Events**
+  - Use `v-on` (e.g. `v-on:click`) to listen to DOM events. Shortened version: `@event` (e.g. `@click`).
+  - **Handler Types**
+    + **Method Handler**: Directly bound to an element. Receives the native DOM Event object automatically: `@click="handleClick"`. `foo`, `foo.bar`, `foo['bar']` treated as method handlers.
+    + **Inline Handler**: Executes code inline. You can pass the `$event` variable if you need access to the DOM event: `@click="warn('text', $event)"`. `foo()`, `count++` treated as inline handlers.
 
-+ **Key Modifiers**
++ **Event Modifiers**
+  - Event modifiers are directive postfixes denoted by a dot: `@click.prevent`.
+  - **Common Modifiers**
+    + **`.stop`**: Stops event propagation.
+    + **`.prevent`**: Prevents the default action (e.g., form submission).
+    + **`.self`**: Handles events only if they occur directly on the element (not on child elements).
+    + **`.capture`**: Listens during the capture phase instead of the bubbling phase.
+    + **`.once`**: Ensures the handler is executed only once.
+    + **`.passive`**: Improves performance by indicating the event handler will not call `preventDefault()`.
+      > ***NOTE**: Do not use `.passive` with `.prevent` because `.passive` already indicates to the browser that you do not intend to prevent the event's default behavior, and you will likely see a warning from the browser if you do so.*
+
+  - You can chain multiple modifiers: `@click.stop.prevent`. Order matters.
+
++ **Key Modifiers** 
+  - You can listen keyboard events: `@keyup.enter`.
+  - You can directly use key names exposed via `KeyboardEvent.key` as modifiers by converting them to kebab-case: `@keyup.page-down`.
+  > ***NOTE**: `.delete`captures both *Delete* and *Backspace* keys.*
+
+  - **System Modifier Keys**
+    + Modifiers: `.ctrl`, `.alt`, `.shift`, `.meta`
+    + You can chain modifiers: `@keyup.ctrl.enter`.
+    + **`.exact` Modifier**: The `.exact` modifier allows control of the exact combination of system modifiers needed to trigger an event:
+      ```
+      <!-- fires with Ctrl pressed, other keys optional -->
+      @click.ctrl="onClick"
+
+      <!-- fires only when Ctrl is pressed and no other keys -->
+      @click.ctrl.exact="onCtrlClick"
+
+      <!-- fires when no system modifiers are pressed -->
+      @click.exact="onClick"
+      ```
+
++ **Mouse Button Modifiers**: `.left`, `.right`, `.middle`
