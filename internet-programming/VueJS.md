@@ -79,40 +79,40 @@
   - **`v-html`**: Outputs as HTML. Data bindings are ignored. Its usage can lead to XSS vulnerabilities. You cannot use template partials (Vue components) in it.
   - **`v-bind`**: Connects a data value to an HTML attribute and synchronizes it. If the bound value is `null` or `undefined`, then the attribute will be removed from the rendered element.
     + **Shorthand Syntax**:
-    ```
-    <div v-bind:id="dynamicId"></div>
+      ```
+      <div v-bind:id="dynamicId"></div>
 
-    <!-- Shorthand usage. -->
-    <div :id="dynamicId"></div>
-    ```
+      <!-- Shorthand usage. -->
+      <div :id="dynamicId"></div>
+      ```
     + **Same Name Shorthand**: If the attribute has the same name with the JavaScript value being bound, the syntax can be further shortened:
-    ```
-    <!-- Same as :id="id" -->
-    <div :id></div>
-    ```
+      ```
+      <!-- Same as :id="id" -->
+      <div :id></div>
+      ```
     + If you have an object, you can bind them without an argument: `v-bind="objectOfAttrs"`.
 
   - **`v-on`**: Listens the DOM events.
     + **Shorthand**:
-    ```
-    <a v-on:click="doSomething"> ... </a>
+      ```
+      <a v-on:click="doSomething"> ... </a>
 
-    <!-- Shorthand usage. -->
-    <a @click="doSomething"> ... </a>
-    ```
+      <!-- Shorthand usage. -->
+      <a @click="doSomething"> ... </a>
+      ```
 
   > ***NOTE**: When using in-DOM templates you should not use uppercase characters since browsers will coerce attribute names into lowercase.*
 
   - **Modifiers**: Special postfixes denoted by a dot, which alter the behavior of the directive.
   - **Full Directive Syntax**:
-  ```
-  v-on:submit.prevent="onSubmit"
+    ```
+    v-on:submit.prevent="onSubmit"
 
-  v-on: Name
-  submit: Argument
-  .prevent: Modifiers
-  onSubmit: Value
-  ```
+    v-on: Name
+    submit: Argument
+    .prevent: Modifiers
+    onSubmit: Value
+    ```
 + Each binding can only contain one JS expression.
 + You can define globals for all Vue expressions by adding them to `app.config.globalProperties`.
 
@@ -124,12 +124,12 @@
 + **DOM Updates**: DOM updates are not applied synchonously. Updates are batched and applied in the next tick. Use `nextTick()` to wait for DOM updates to complete.
 + **Reactive Objects**: Use `reactive()` for objects, arrays, Maps, and Sets. It returns a Proxy, not the original object.
   - **Example**:
-  ```
-  const raw = {}
-  const proxy = reactive(raw)
-  console.log(proxy === raw) // false
-  console.log(reactive(raw) === proxy) // true
-  ```
+    ```
+    const raw = {}
+    const proxy = reactive(raw)
+    console.log(proxy === raw) // false
+    console.log(reactive(raw) === proxy) // true
+    ```
 + **Ref Unwrapping**: Automatically extracts the value from a ref object in templates.
 
 ## Computed Properties
