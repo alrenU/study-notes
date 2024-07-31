@@ -1,8 +1,5 @@
 
 # VueJS Notes
-> ***NOTE**: I am taking notes about the VueJS while studying and I need you to make these notes organized, concise, easy to read and understand. Can you also fix if there are any wrong information?*
-
-> ***NOTE**: Can you summarize this VueJS document? I need you to make these notes organized, concise, easy to read and understand.*
 
 # Bookmark
 
@@ -140,21 +137,21 @@
 + **Writable Computed Properties**: By default, computed properties are read-only. To make them writable, provide both a getter and a setter in `computed()`.
 
 ## Class and Style Bindings
-### Class Bindings
-+ Use `v-bind` with class to dynamically bind classes: `:class`.
-+ Objects, arrays and computed properties can be  used in classes.
-+ Child elements inherit class names from parent attributes.
-+ For components with multiple root elements, specify the target element using `$attrs`: `:class="$attrs.class"`.
++ **Class Bindings**
+  - Use `v-bind` with class to dynamically bind classes: `:class`.
+  - Objects, arrays and computed properties can be  used in classes.
+  - Child elements inherit class names from parent attributes.
+  - For components with multiple root elements, specify the target element using `$attrs`: `:class="$attrs.class"`.
 
-### Style Bindings
-+ You can bind objects, arrays, or computed properties to the `:style` attribute.
-+ Use camelCase for CSS property names, though kebab-case is also supported.
-+ **Auto Prefixing**: Vue automatically adds vendor prefixes where necessary. Multiple prefixed values can be provided.
-+ **Vendor Prefixes**: They allow developers to use features that might not be fully standardized or supported across all browsers.
++ **Style Bindings**
+  - You can bind objects, arrays, or computed properties to the `:style` attribute.
+  - Use camelCase for CSS property names, though kebab-case is also supported.
+  - **Auto Prefixing**: Vue automatically adds vendor prefixes where necessary. Multiple prefixed values can be provided.
+  - **Vendor Prefixes**: They allow developers to use features that might not be fully standardized or supported across all browsers.
 
-### Binding Concepts
-+ **Binding**: Connects data and the DOM reactively.
-+ **Two-Way Binding**: Syncs a data property with a form input, reflecting changes both ways (from data to input and vice versa).
++ **Binding Concepts**
+  - **Binding**: Connects data and the DOM reactively.
+  - **Two-Way Binding**: Syncs a data property with a form input, reflecting changes both ways (from data to input and vice versa).
 
 ## Conditional Rendering
 + **`v-if`, `v-else-if`, `v-else`**: Used in conditional block rendering. The `v-else-if ` or `v-else` directives must immediately follow the `v-if` block if there is any. These conditions can be also used on `<template>`.
@@ -196,3 +193,20 @@
   - Vue uses an *in-place patch* strategy by default when rendering lists with `v-for`.
   - For optimal performance and proper DOM updates, provide a unique *key* attribute for each item: `v-for="item in items" :key="item.id"`.
     > ***Note**: Use the key attribute on the element with v-for to help Vue track item identity and maintain efficient updates.*
+
+## Event Handling
++ To listen the DOM events you can use `v-on` (`v-on:click` shorten version is `@click`) directive. You can use an *inline handler* or *method handler* to handle the click.
++ If you want to send the *event* to a method you can call the method without a parameter. A method handler automatically receives the native DOM Event object that triggers it.
++ **Method vs. Inline Detection**: `foo`, `foo.bar` and `foo['bar']` are treated as method handlers, while `foo()` and `count++` are treated as inline handlers. Method handler are directly binded to an element. In order to access the DOM event in inline handlers you can pass the special `$event` variable: `@click="warn('text', $event)"`.
++ **Event Modifiers**
+  - You can call `event.preventDefault()` or `event.stopPropagation()` inside event handlers. But instead of doing this, you can use *event modifiers* for `v-on`. These modifiers can be used as directive postfixes denoted by a dot: `@click.prevent`. Some of them are:
+    + **`.stop`**: The click event's propagation will be stopped.
+    + **`.prevent`**: Event will no longer reload the page.
+    + **`.self`**: When you want to handle events only if they occur on the element itself, not on any of its child elements.
+    + **`.capture`**: Attaches the event listener during the capture phase rather than the bubbling phase.
+    + **`.once`**: Ensures that the event handler is only executed once. After the first invocation, the event listener is removed.
+    + **`.passive`**: Improves performance, especially for scroll events, by letting the browser know that the event listener will not prevent the default action. Typically used with touch event listeners for improving performance on mobile devices.
+      > ***NOTE**:Do not use .passive and .prevent together, because .passive already indicates to the browser that you do not intend to prevent the event's default behavior, and you will likely see a warning from the browser if you do so.*
+  - You can also chain event modifiers: `@click.stop.prevent`. Order matters when using modifiers since the code is generated in the same order.
+
++ **Key Modifiers**
