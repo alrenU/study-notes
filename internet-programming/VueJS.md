@@ -1,8 +1,6 @@
 
 # VueJS Notes
 
-# Bookmark
-
 # Official VueJS Documentation Notes
 + The notes are mainly shaped aroud *Compsition API*, *Single-File Component* and `<script setup>` for this document.
 
@@ -235,3 +233,5 @@
       ```
 
 + **Mouse Button Modifiers**: `.left`, `.right`, `.middle`
+
+### Form Input Bindings
