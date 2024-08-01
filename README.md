@@ -1,5 +1,3 @@
-# study-notes
-This repository is dedicated to organizing and sharing my notes on computer science concepts. Here, you'll find a collection of insights and summaries that I've gathered during my studies, aimed at deepening understanding and facilitating learning for anyone interested in exploring these topics.
 
 # AI Question Templates
 > ***NOTE**: I am taking notes about the VueJS while studying and I need you to make these notes organized, concise, easy to read and understand. Can you also fix if there are any wrong information?*

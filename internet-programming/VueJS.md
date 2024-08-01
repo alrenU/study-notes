@@ -111,6 +111,9 @@
 
 ### Form Input Bindings
 > ***NOTE**: For languages with *IME* (e.g., Chinese, Japanese, Korean), `v-model` might not update during composition. Use an input event listener and value binding instead.*
+
 > ***NOTE**: Interpolation within `<textarea>` doesn't work. Use `v-model`.*
-> ***NOTE:** If the initial value of your v-model expression does not match any of the options, the `<select>` element will render in an "unselected" state. On iOS this will cause the user not being able to select the first item because iOS does not fire a change event in this case. It is therefore recommended to provide a `disabled` option with an empty value.*j
+
+> ***NOTE**: If the initial value of your v-model expression does not match any of the options, the `<select>` element will render in an "unselected" state. On iOS this will cause the user not being able to select the first item because iOS does not fire a change event in this case. It is therefore recommended to provide a `disabled` option with an empty value.*j
+
 + You can use *modifiers* for *form input bindings*.
