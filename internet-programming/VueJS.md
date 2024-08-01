@@ -235,3 +235,21 @@
 + **Mouse Button Modifiers**: `.left`, `.right`, `.middle`
 
 ### Form Input Bindings
++ **`v-model`**
+  - When we are dealing with forms we can use `v-modlel` directive:
+    ```
+    <input :value="text" @input="event => text = event.target.value">
+
+    <!-- the simplified version -->
+    <input v-model="text">
+    ```
+
+  - You can use `v-model` for different types of inputs. For example
+    + The `<input>` and `<textarea>` uses `value` property and `input` event;
+    + The `checkbox` and `radio` uses `checked` property and `change` event;
+    + `<select>` uses `value` as a prop and `change` as event.
+    > ***NOTE**:`v-model` will ignore the initial `value`, `checked` or `selected` attributes found on any form elements.*
+
+> ***NOTE**: For languages that require an IME (Chinese, Japanese, Korean etc.), `v-model` doesn't get updated during IME composition*. So use your own input event listener and `value` binding instead of using `v-model`.
+
++ **Multiline Text**
