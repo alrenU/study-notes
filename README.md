@@ -23,7 +23,7 @@ This repository is dedicated to organizing and sharing my notes on computer scie
 + Readings in Database Systems | Peter Bailis, Joseph M. Hellerstein
 + Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems | Martin Kleppmann
 
-+ (teachyourselfcs)[https://teachyourselfcs.com/]
++ [teachyourselfcs](https://teachyourselfcs.com/)
 
 + The Goal: A Process Of Ongoing Improvement | Eliyahu M. Goldratt, Jeff Cox
 + The Phoenix Project: A Novel about IT, DevOps, and Helping Your Business Win | Kim, Gene, Behr, Kevin, Spafford, George
