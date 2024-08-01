@@ -235,21 +235,51 @@
 + **Mouse Button Modifiers**: `.left`, `.right`, `.middle`
 
 ### Form Input Bindings
-+ **`v-model`**
-  - When we are dealing with forms we can use `v-modlel` directive:
++ **`v-model` Directive**
+  - **Basic Usage**: `<input v-model="text">"`
+  - **Equivalent Manual Binding**: `<input :value="text" @input="event => text = event.target.value">`
+    + **Text Inputs (`<input>`, `<textarea>`)**: Uses `value` property and `input` event.
+    + **Checkboxes and Radios**: Uses `checked` property and `change` event.
+    + **Select Dropdowns**: Uses `value` prop and `change` event.
+  > ***NOTE**: `v-model` overrides initial value, checked, or selected attributes.*
+  > ***NOTE**: For languages with *IME* (e.g., Chinese, Japanese, Korean), `v-model` might not update during composition. Use an input event listener and value binding instead.*
+  > ***NOTE**: Interpolation within `<textarea>` doesn't work. Use `v-model`.*
+
++ **Checkboxes and Radio Buttons:**
+  - Bind multiple checkboxes to an array or *Set*. Checked checkboxes will appear in the array. For radio buttons, only the selected value is bound.
+
++ **`<select>` Element**
+  - **Basic Usage**:
     ```
-    <input :value="text" @input="event => text = event.target.value">
-
-    <!-- the simplified version -->
-    <input v-model="text">
+    <select v-model="selected">
+      <option disabled value="">Please select one</option>
+      <option>A</option>
+    </select>
     ```
+  > ***NOTE:** If the initial value of your v-model expression does not match any of the options, the `<select>` element will render in an "unselected" state. On iOS this will cause the user not being able to select the first item because iOS does not fire a change event in this case. It is therefore recommended to provide a disabled option with an empty value.*
+  - **`multiple` Attribute**: Allows selection of multiple options.
 
-  - You can use `v-model` for different types of inputs. For example
-    + The `<input>` and `<textarea>` uses `value` property and `input` event;
-    + The `checkbox` and `radio` uses `checked` property and `change` event;
-    + `<select>` uses `value` as a prop and `change` as event.
-    > ***NOTE**:`v-model` will ignore the initial `value`, `checked` or `selected` attributes found on any form elements.*
++ **Checkboxes**
+  - **Basic Usage**:
+    ```
+    <input type="checkbox" v-model="toggle" true-value="yes" false-value="no" />
+    ```
+  - **Dynamic Values**:
+    ```
+    <input type="checkbox" v-model="toggle" :true-value="dynamicTrueValue" :false-value="dynamicFalseValue" />
+    ```
+   > ***NOTE**: The true-value and false-value attributes don't affect the input's value attribute, because browsers don't include unchecked boxes in form submissions. To guarantee that one of two values is submitted in a form (e.g. "yes" or "no"), use radio inputs instead.*
 
-> ***NOTE**: For languages that require an IME (Chinese, Japanese, Korean etc.), `v-model` doesn't get updated during IME composition*. So use your own input event listener and `value` binding instead of using `v-model`.
-
-+ **Multiline Text**
++ **Modifiers**
+  - **`.lazy`**: Syncs v-model after change events instead of input events.
+    ```
+    v-model.lazy
+    ```
+  - **`.number`**: Automatically converts input to a number using `parseFloat()`. If parsing fails, the original value is used. Automatically applied to `<input type="number">`.
+    ```
+    <input v-model.number="number">
+    ```
+  - **`.trim`**: Automatically trims whitespace from the input value.
+    ```
+    <input v-model.trim="text">
+    ```
