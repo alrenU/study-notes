@@ -6,13 +6,13 @@ This repository is dedicated to organizing and sharing my notes on computer scie
 
 > ***NOTE**: Can you summarize this VueJS document? I need you to make these notes organized, concise, easy to read and understand.*
 
-## Table of Contents
+# Table of Contents
 + internet-programming
   - [HTML.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/HTML.md)
   - [VueJS.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/VueJS.md)
   - [TypeScript.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/TypeScript.md)
 
-## Books to Read
+# Books to Read
 + Crafting Interpreters | Robert Nystrom
 + Structure and Interpretation of Computer Programs (MIT Electrical Engineering and Computer Science) | Harold Abelson, Gerald Jay Sussman
 + Computer Systems: A Programmer's Perspective | Bryant
