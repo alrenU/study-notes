@@ -1,8 +1,8 @@
 
 # AI Question Templates
-> ***NOTE**: I am taking notes about the VueJS while studying and I need you to make these notes organized, concise, easy to read and understand. Can you also fix if there are any wrong information?*
+> ***NOTE**: I am taking notes about the TypeScript while studying and I need you to make these notes organized, concise, easy to read and understand. Can you also fix if there are any wrong information?*
 
-> ***NOTE**: Can you summarize this VueJS document? I need you to make these notes organized, concise, easy to read and understand.*
+> ***NOTE**: Can you summarize this TypeScript document? I need you to make these notes organized, concise, easy to read and understand.*
 
 # Table of Contents
 + internet-programming
