@@ -1,3 +1,9 @@
+# What Should Be Taken As A Note
++ Core concepts and terminology.
++ Common pitfalls and debugging tips.
++ Best practices.
++ Useful libraries and tools.
++ Personal insights.
 
 # AI Question Templates
 > ***NOTE**: I am taking notes about the TypeScript while studying and I need you to make these notes organized, concise, easy to read and understand. Can you also fix if there are any wrong information?*
