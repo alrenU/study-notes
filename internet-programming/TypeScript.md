@@ -65,7 +65,7 @@
         let fst: (a: any, b: any) => any = (a, b) => a;
         let fst1: <T, U>(a: T, b: U) => T = (a, b) => a;
         ```
-    
+
   - `undefined` is its own type, while `null` is an object type due to a historical reason but is treated as its own type in TS.
   - `null` and `undefined` are both falsy but behave differently:
     + `null == undefined` is true (loose equality)
@@ -156,8 +156,62 @@
     new Box<number>()
     ```
 
-+ **Higher-kinded Types**: Abstract types that can take other types as parameters.
++ **Higher-Kinded Types**: Abstract types that can take other types as parameters.
   - **Funktor**: A functor is a type that can be mapped over.
   - **Relationship Between HKTs and Functors**: Functors are an example of higher-kinded types. They are a specific use case of HKTs where the type constructor. HKTs are a broader concept that encompasses various type patterns and abstractions, including functors.
 
-+ **Point-Free Programming**
++ **Point-Free Programming (Tacit Programming)**: Refers to a style of coding where functions are defined and composed without explicitly mentioning the arguments they operate on. Instead of specifying the arguments directly, you create functions by composing other functions.
+  - **Example**: Lets say you have a function that doubles the number first and then squares it. In a *point-free* style, you might create a new function that first doubles a number and then squares the result, without explicitly mentioning the argument:
+    ```
+    const double = (x: number) => x * 2;
+    const square = (x: number) => x * x;
+
+    const doubleThenSquare = (x: number) => square(double(x));
+    ```
+    In point-free style, you can use function composition to achieve the same:
+    ```
+    // Function composition
+    const compose = <A, B, C>(f: (b: B) => C, g: (a: A) => B) => (a: A) => f(g(a));
+
+    // Using compose to create a point-free version
+    const doubleThenSquare = compose(square, double);
+    ```
+  - In TS, the result is so verbose that it’s usually better to avoid point-free programming.
+
++ **Importing and Exporting**
+  - You can import like this: `import * as prefix from "../lib/third-package";`
+  - **CommonJS Module Import and Export**: When working with CommonJS modules in TS or JS, you can use `require` and `module.exports` for importing and exporting.
+
++ **`const`**
+  - In `const` variables *reference* is immutable but the *referent* is still mutable.
+  - You can also use a *const-assertion*, which operates on arrays and object literals: `let a = [1, 2, 3] as const;`.
+
++ **`readonly` Modifier**
+  - **Example**: `readonly x: number;`
+  - Mapped type `Readonly<T>` that makes all properties readonly:
+    ```
+    interface X {
+      x: number;
+    }
+
+    let rx: Readonly<X> = { x: 1 };
+    ```
+  - **`ReadonlyArray<T>`**:
+    ```
+    let a: ReadonlyArray<number> = [1, 2, 3];
+    let b: readonly number[] = [1, 2, 3];
+    ```
+
++ **Type Assertions**: Assertions are used to explicitly tell the TS compiler about the type of a value when it cannot automatically infer it. There are two primary types of type assertions in TypeScript:
+  1. **Angle-Bracket Syntax**: `let strLength: number = (<string>someValue).length;`
+  2. **`as` Syntax**: `let strLength: number = (someValue as string).length;`
+  - **When to Use Typee Assertions**:
+    + Sometimes TypeScript's type inference system may not have enough information to determine the correct type. Type assertions let you override this inference.
+    + When working with DOM elements, you might need to assert a more specific type: `let inputElement = document.querySelector('input') as HTMLInputElement;`.
+  
+  > ***NOTE**: If possible, use *type guards* or conditional checks to narrow down types instead of using assertions, as they provide better type safety.*
+
++ **Type Guard**: It is a mechanism used to ensure that a value conforms to a specific type at runtime. Type guards help the TS compiler refine types within conditional blocks, improving type safety and preventing errors.
+  - **Type Narrowing**: Type guards help narrow down the type of a value from a broader type (like `any`, `unknown`, or a *union type*) to a more specific type within a certain scope, such as inside an `if` block. Types of typeguards: `typeof`, `instanceof`, `in` operator, user-defined type checks.
+
++ **Mapped Type**:
