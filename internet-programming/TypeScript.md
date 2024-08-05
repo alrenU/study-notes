@@ -134,4 +134,30 @@
 
   > ***NOTE**: Inference will work in any order, but intellisense will only work left-to-right.*
 
-+ **Type Aliases**:
++ **Type Aliases**: Allow you to create a new name for an existing type.
+  - Type aliases can represent complex types like unions, intersections, and tuples.
+  - **Type Aliases vs. Interfaces**: Type aliases are more flexible and can also represent *union* and *intersection* types. Interfaces are generally preferred for object shapes, especially when you need to extend or implement them.
+
++ **Tagged Intersection**: Tagged intersections are a way to combine different types of data in TypeScript, where each type has a special tag (a label) to help identify what kind of data it is.
+  - **How Does It Work?**
+    1. **Tagged Types**: First, you create types that have a common property to distinguish between different kinds of data. For example, you might have a type for different shapes, each with a tag to indicate whether it’s a circle, rectangle, or triangle.
+    2. **Adding Extra Properties**: Adding Extra Properties: Then, you can create new types by combining these tagged types with extra properties. For example, you might want a type for shapes that also have a color or a label.
+
++ **Type Parameters**: Type parameters are like placeholders for types. When you define a function, class, or interface with type parameters, you can use those placeholders to represent any type.
+  - Type parameters are conventionally single uppercase letters.
+  - Type parameters should only be used to propagate type information, such as constraining parameters to be the same type.
+  - **Example**:
+    ```
+    function identity<T>(value: T): T { return value; }
+    ```
+    T is a type parameter. It’s a placeholder for a type that you will specify later. You can use type parameters in classes too:
+    ```
+    class Box<T>{}
+    new Box<number>()
+    ```
+
++ **Higher-kinded Types**: Abstract types that can take other types as parameters.
+  - **Funktor**: A functor is a type that can be mapped over.
+  - **Relationship Between HKTs and Functors**: Functors are an example of higher-kinded types. They are a specific use case of HKTs where the type constructor. HKTs are a broader concept that encompasses various type patterns and abstractions, including functors.
+
++ **Point-Free Programming**
