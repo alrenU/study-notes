@@ -2,6 +2,10 @@
 + (Suggested Book In Official Docs) JavaScript: The Good Parts
 
 # Notes From Offical Documents
+<!-- TS For New Programmer -->
+<!-- TS For JS Programmer -->
+<!-- TS For Functional Programmers -->
+<!-- TS Tooling In 5 Minutes -->
 + **TypeScript (TS)**: A statically-typed *superset* of JavaScript (JS) that adds type annotations to the language.
   - **Superset (In Programming)**: A language that extends another language by adding new features while maintaining full compatibility with the original language.
 + Since TS is a superset of JS, any valid JS code is also valid TS code.
@@ -210,3 +214,9 @@
     + **`Partial<T>`**: Makes all properties *optional*.
     + **`Required<T>`**: Makes all properties *required*.
     + **`Readonly<T>`**: Makes all properties *read-only*.
+
+<!-- The Basics -->
++ JS only provides dynamic typing.
++ **Non-Exception Failures**: In TS, it means problems that happen when TS tries to check your code but doesn't crash or stop working. They usually include type errors, syntax errors, semantic errors.
++ **`tsc`**: TS compiler. After the code is being compiled the TS code is turn into JS code.
++ **`--noEmitOnError`**: As a normal behavior, TS will *emit* the compiled code but you can change its behavior with `tsc --noEmitOnError hello.ts` command. Thus your compiled JS file will not be updated.  
