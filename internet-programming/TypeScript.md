@@ -11,23 +11,38 @@
 + **Type Erasure**: Type annotations and other TS-specific types are removed during compilation. The resulting JS code does not include TS types.
 + **Libraries and Frameworks**: TS does not include additional runtime libraries. It uses the same standard library and external libraries as JS. There are no TS-specific frameworks to learn.
 
-<!-- TS for JS Programmers -->
-+ **Types by Inference**: TypeScript can automatically figure out the type of a variable based on the value you assign to it.
-+ *Visual Studio Code* uses TypeScript behind the scenes to make working with JavaScript easier.
-+ **Well-Known Symbols**: These are special symbols built into the language for internal and meta-programming purposes.
-+ **Composing Types**: In TS you can combine simple types to create complex types. You can do this by using *unions* or *generics*.
-  - **Unions (`|`)**: Allows a value to be one of several types. For example, `number | string` means the value can be either a `number` or a `string`.
-  - **Generics**: Let you create functions and classes that work with any type while keeping track of that type.
-    + A generic function example:
++ **Tooling and Usage**
+  - **Installing TypeScript**: Via *npm* or *Visual Studio* plugins.
+  - **Type Annotations**: Explicitly specify types for variables, parameters, and return values.
+  - **Class Constructors**: Using `public` in `constructor` parameters creates properties automatically.
+    + **Example**:
+      ```
+      class Student {
+        fullName: string;
+        constructor(
+          public firstName: string,
+          public lastName: string
+        ) {
+          this.fullName = firstName + " " + lastName;
+        }
+      }
+      ```
+
++ **Type Inference**: TS automatically determines the type of a variable based on the assigned value.
++ *Visual Studio Code* uses TS to enhance JS development.
++ **Well-Known Symbols**: Special symbols built into the language for internal and meta-programming purposes.
++ **Composing Types**:
+  - **Unions (`|`)**: A value can be one of several types: `let value: number | string;`.
+  - **Generics**: Create functions and classes that work with any type while maintaining type information.
+    + **Example**:
       ```
       function getItem<Type>(item: Type): Type {
         return item;
       }
       ```
 
-+ **Structural Type System**: TypeScript checks if objects have the right shape. This is sometimes called *duck typing* or *structural typing*. In a structural type system, if two objects have the same shape, they are considered to be of the same type.
-  - + **Duck Typing**: If an object has the right properties and methods, it’s considered correct for a particular use, no matter its actual type or class. The term comes from the saying: "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.".
-  - **Example**: The `point` variable is never declared to be a `Point` type. However, TypeScript compares the shape of point to the shape of Point in the type-check. They have the same shape. The shape-matching only requires a subset of the object’s fields to match.
++ **Duck Typing (Structural Typing)**: TS uses structural typing. If two objects have the same shape, they are considered the same type. The term comes from the saying: "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.".
+  - **Example**:
     ```
     interface Point {
       x: number;
@@ -39,179 +54,159 @@
     }
 
     const point = { x: 12, y: 26 };
-    logPoint(point); // Works fine
+    logPoint(point); // Works
 
     const point1 = { x: 12, y: 26, z: 89 };
-    logPoint(point1); // Also works, even with extra property
+    logPoint(point1); // Works, extra property is allowed
     ```
 
-<!-- TS For Functional Programmers -->
-+ **Call By Value**: A copy of the actual argument’s value is passed to the function. The function works with this copy, not the original value.
-  - **Primitive Values**: The function gets a copy of the value, so changes inside the function do not affect the original.
-  - **References (Objects or Arrays)**: The function gets a copy of the reference, so changes to the object's properties affect the original object.
++ **Call By Value**: Functions receive a copy of the value.
+  - **Primitives**: Changes do not affect the original value.
+  - **References (Objects and Arrays)**: Changes to object properties affect the original object.
 
-+ **Primitive Types**: TypeScript adds a few extra primitive types to JavaScript's built-in types.
++ **Primitive Types**
   - **JavaScript Types**: `boolean`, `bigint`, `number`, `string`, `symbol`, `undefined`, `null`
-  - **TypeScript Adds**:
-    + **`unknown`**: Represents any value but needs type checking before use.
-    + **`never`**: Represents values that don’t exist, like functions that throw errors or never return.
-    + **`void`**: Used for functions that don’t return a value.
+    + **`undefined` vs. `null`**:
+      - `undefined` is a type on its own.
+      - `null` is historically an object type but treated as its own type in TS.
+      - `null == undefined` is `true` (*loose equality*).
+      - `null === undefined` is `false` (*strict equality*).
+  - **TypeScript Additions**:
+    + **`unknown`**: Represents any value but requires type checking before use.
+    + **`never`**: Represents values that do not exist (e.g., functions that throw errors).
+    + **`void`**: Indicates functions that do not return a value.
     + **Object Literal**: `{ property: Type }`
-    + **Mutable Arrays**: `T[]` also written as `Array<T>`
-    + **Tuples**: `[T, T]` fixed length but mutable
+    + **Arrays**: `T[]` or `Array<T>`
+    + **Tuples**: `[T, T]` (fixed length but mutable)
     + **Functions**: `(t: T) => U`
-      - Function syntax includes parameter names:
+      - **Example**:
         ```
         let fst: (a: any, b: any) => any = (a, b) => a;
         let fst1: <T, U>(a: T, b: U) => T = (a, b) => a;
         ```
 
-  - `undefined` is its own type, while `null` is an object type due to a historical reason but is treated as its own type in TS.
-  - `null` and `undefined` are both falsy but behave differently:
-    + `null == undefined` is true (loose equality)
-    + `null === undefined` is false (strict equality)
-
-+ **Boxed Types**: JS has boxed equivalents of primitive types that contain the methods that programmers associate with those types. For example `(1).toExponential();` is equivalent to `Number.prototype.toExponential.call(1);`.
-
-+ **`any`**: TypeScript uses the type `any` whenever it can’t tell what the type of an expression should be. Compared to Dynamic, calling `any` a type is an overstatement. It just turns off the type checker wherever it appears. `any` is contagious, too — if you initialize a variable with an expression of type any, the variable has type any too.
-
-+ **Untagged Unions**: Being *untagged* means TS does not insert any runtime information to distinguish between these types.
-  - **Example**:
-    ```
-    function process(value: string | number) {
-      if (typeof value === "string") {
++ **`any`**: Disables type checking. Use sparingly as it negates TypeScript’s type safety.
++ **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
++ **Union Types**
+  - **Untagged Unions**: No runtime information for distinguishing types.
+    + **Example**:
+      ```
+      function process(value: string | number) {
+        if (typeof value === "string") {
           console.log("String value:", value);
-      } else {
+        } else {
           console.log("Number value:", value);
-      }
-    }
-    ```
-+ **Discriminated Unions (Tagged Unions)**: Each type in the union has a common property (tag) that helps differentiate between them at runtime.
-  - **Example**:
-    ```
-    type Animal = { type: 'cat'; meow: boolean } | { type: 'dog'; bark: boolean };
-
-    function handleAnimal(animal: Animal) {
-        switch (animal.type) {
-            case 'cat':
-                console.log("It's a cat, meow:", animal.meow);
-                break;
-            case 'dog':
-                console.log("It's a dog, bark:", animal.bark);
-                break;
         }
-    }
-    ```
+      }
+      ```
+  - **Discriminated Unions (Tagged Unions)**: Each type in the union has a common property.
+    + **Example**:
+      ```
+      type Animal = { type: 'cat'; meow: boolean } | { type: 'dog'; bark: boolean };
 
-+ **Intersections**: Way to combine multiple types into one. The resulting type will have all the properties and methods of the intersected types. You can combine *types*, *intersections*, *classes* and *functions*.
+      function handleAnimal(animal: Animal) {
+        switch (animal.type) {
+          case 'cat':
+            console.log("It's a cat, meow:", animal.meow);
+            break;
+          case 'dog':
+            console.log("It's a dog, bark:", animal.bark);
+            break;
+        }
+      }
+      ```
+
++ **Intersections**: Combine multiple types into one, including properties and methods from all types.
   - **Example**:
     ```
     interface InterfaceA { a: string; }
     interface InterfaceB { b: number; }
     type Combined = InterfaceA & InterfaceB;
     ```
-
-+ **Unit Types**: Unit types are a special kind of type that contains exactly one specific value. TS often uses unions of these unit types (like `"left" | "right"`) to simulate *enums* in JS.
-  - Example:
+  
++ **Unit Types**: Represent exactly one value. Useful for simulating enums.
+  - **Example**:
     ```
     declare function pad(s: string, n: number, direction: "left" | "right"): string;
     pad("hi", 10, "left");
     ```
-    In this function, direction is a union type of "left" and "right", meaning it can only be one of these two string literals. The issue arises when you try to use a variable instead of a literal:
+
+    In this function, `direction` is a union type of `left` and `right`, meaning it can only be one of these two string literals. The issue arises when you try to use a variable instead of a literal:
+    
     ```
     let s = "right";
     pad("hi", 10, s); // error
     ```
-    Here, `s` is of type string (because `"right"` gets widened to string when assigned to `s`). Since string is not the same as the union type `"left" | "right"`, TS gives an error. To fix this, you can explicitly declare s with the union type:
+
+    Here, `s` is of type string (because `"right"` gets widened to string when assigned to `s`). Since string is not the same as the union type `"left" | "right"`, TS gives an error. To fix this, you can explicitly declare `s` with the union type:
+
     ```
     let s: "left" | "right" = "right";
     pad("hi", 10, s); // works
     ```
 
-+ TypeScript can automatically figure out the types of variables and functions in several ways. For example:
-  - When you use a function like map, TypeScript can infer the types of its inputs and outputs even if you don’t specify them. For instance, if map is used with an array of numbers and a function that converts numbers to strings, TypeScript figures out that the result is an array of strings.
-  - TypeScript can also figure out types from the context of functions and objects. For example, if you have a function that modifies an object, TypeScript will determine the type of that object based on the function’s usage.
-
-  > ***NOTE**: Inference will work in any order, but intellisense will only work left-to-right.*
-
-+ **Type Aliases**: Allow you to create a new name for an existing type.
-  - Type aliases can represent complex types like unions, intersections, and tuples.
-  - **Type Aliases vs. Interfaces**: Type aliases are more flexible and can also represent *union* and *intersection* types. Interfaces are generally preferred for object shapes, especially when you need to extend or implement them.
-
-+ **Tagged Intersection**: Tagged intersections are a way to combine different types of data in TypeScript, where each type has a special tag (a label) to help identify what kind of data it is.
-  - **How Does It Work?**
-    1. **Tagged Types**: First, you create types that have a common property to distinguish between different kinds of data. For example, you might have a type for different shapes, each with a tag to indicate whether it’s a circle, rectangle, or triangle.
-    2. **Adding Extra Properties**: Adding Extra Properties: Then, you can create new types by combining these tagged types with extra properties. For example, you might want a type for shapes that also have a color or a label.
-
-+ **Type Parameters**: Type parameters are like placeholders for types. When you define a function, class, or interface with type parameters, you can use those placeholders to represent any type.
-  - Type parameters are conventionally single uppercase letters.
-  - Type parameters should only be used to propagate type information, such as constraining parameters to be the same type.
++ **Type Parameters**: Placeholders for types in functions, classes, or interfaces.
   - **Example**:
     ```
     function identity<T>(value: T): T { return value; }
-    ```
-    T is a type parameter. It’s a placeholder for a type that you will specify later. You can use type parameters in classes too:
-    ```
     class Box<T>{}
-    new Box<number>()
+    new Box<number>();
     ```
+  - Type parameters are conventionally single uppercase letters.
+  - Type parameters should only be used to propagate type information, such as constraining parameters to be the same type.
 
-+ **Higher-Kinded Types**: Abstract types that can take other types as parameters.
++ **Higher-Kinded Types**: Abstract types that take other types as parameters. Functors are an example of higher-kinded types.
   - **Funktor**: A functor is a type that can be mapped over.
   - **Relationship Between HKTs and Functors**: Functors are an example of higher-kinded types. They are a specific use case of HKTs where the type constructor. HKTs are a broader concept that encompasses various type patterns and abstractions, including functors.
 
-+ **Point-Free Programming (Tacit Programming)**: Refers to a style of coding where functions are defined and composed without explicitly mentioning the arguments they operate on. Instead of specifying the arguments directly, you create functions by composing other functions.
-  - **Example**: Lets say you have a function that doubles the number first and then squares it. In a *point-free* style, you might create a new function that first doubles a number and then squares the result, without explicitly mentioning the argument:
++ **Point-Free Programming**: Define and compose functions without specifying the arguments.
+  - **Example**:
     ```
     const double = (x: number) => x * 2;
     const square = (x: number) => x * x;
 
     const doubleThenSquare = (x: number) => square(double(x));
-    ```
-    In point-free style, you can use function composition to achieve the same:
-    ```
-    // Function composition
-    const compose = <A, B, C>(f: (b: B) => C, g: (a: A) => B) => (a: A) => f(g(a));
 
-    // Using compose to create a point-free version
+    const compose = <A, B, C>(f: (b: B) => C, g: (a: A) => B) => (a: A) => f(g(a));
     const doubleThenSquare = compose(square, double);
     ```
-  - In TS, the result is so verbose that it’s usually better to avoid point-free programming.
 
-+ **Importing and Exporting**
-  - You can import like this: `import * as prefix from "../lib/third-package";`
-  - **CommonJS Module Import and Export**: When working with CommonJS modules in TS or JS, you can use `require` and `module.exports` for importing and exporting.
-
-+ **`const`**
-  - In `const` variables *reference* is immutable but the *referent* is still mutable.
-  - You can also use a *const-assertion*, which operates on arrays and object literals: `let a = [1, 2, 3] as const;`.
-
-+ **`readonly` Modifier**
++ **Modifiers**
+  - **`readonly` Modifier**: Makes properties immutable.
   - **Example**: `readonly x: number;`
-  - Mapped type `Readonly<T>` that makes all properties readonly:
+  - **Example**: `Readonly<T>` that makes all properties readonly.
     ```
     interface X {
       x: number;
     }
-
     let rx: Readonly<X> = { x: 1 };
     ```
-  - **`ReadonlyArray<T>`**:
+  - **Example**:
     ```
     let a: ReadonlyArray<number> = [1, 2, 3];
     let b: readonly number[] = [1, 2, 3];
     ```
 
-+ **Type Assertions**: Assertions are used to explicitly tell the TS compiler about the type of a value when it cannot automatically infer it. There are two primary types of type assertions in TypeScript:
-  1. **Angle-Bracket Syntax**: `let strLength: number = (<string>someValue).length;`
-  2. **`as` Syntax**: `let strLength: number = (someValue as string).length;`
-  - **When to Use Typee Assertions**:
-    + Sometimes TypeScript's type inference system may not have enough information to determine the correct type. Type assertions let you override this inference.
-    + When working with DOM elements, you might need to assert a more specific type: `let inputElement = document.querySelector('input') as HTMLInputElement;`.
-  
-  > ***NOTE**: If possible, use *type guards* or conditional checks to narrow down types instead of using assertions, as they provide better type safety.*
++ **`const`**
+  - In `const` variables *reference* is immutable but the *referent* is still mutable.
+  - You can also use a *const-assertion*, which operates on arrays and object literals: `let a = [1, 2, 3] as const;`.
 
-+ **Type Guard**: It is a mechanism used to ensure that a value conforms to a specific type at runtime. Type guards help the TS compiler refine types within conditional blocks, improving type safety and preventing errors.
-  - **Type Narrowing**: Type guards help narrow down the type of a value from a broader type (like `any`, `unknown`, or a *union type*) to a more specific type within a certain scope, such as inside an `if` block. Types of typeguards: `typeof`, `instanceof`, `in` operator, user-defined type checks.
++ **Type Assertions**: Explicitly tell the TS compiler the type of a value. You can use it when type inference is insufficient or when working with specific DOM elements.
+  - **Angle-Bracket Syntax**: `let strLength: number = (<string>someValue).length;`
+  - **`as` Syntax**: `let strLength number = (someValue as string).length;`
+  - **Example**: Using it on DOM elements.
+    ```
+    let inputElement = document.querySelector('input') as HTMLInputElement;
+    ```
 
-+ **Mapped Type**:
++ **Type Guards**: Ensure values conform to specific types at runtime.
+  - **Types of Type Guards**: `typeof`, `instanceof`, `in` operator, user-defined checks.
+  - **Type Narrowing**: Type guards help narrow down the type of a value from a broader type (like `any`, `unknown`, or a *union type*) to a more specific type within a certain scope.
+
+> ***NOTE**: If possible, use *type guards* or conditional checks to narrow down types instead of using assertions, as they provide better type safety.*
+
++ **Mapped Types**
+  - Built-in mapped types:
+    + **`Partial<T>`**: Makes all properties *optional*.
+    + **`Required<T>`**: Makes all properties *required*.
+    + **`Readonly<T>`**: Makes all properties *read-only*.
