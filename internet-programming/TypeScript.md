@@ -6,18 +6,16 @@
 <!-- TS For JS Programmer -->
 <!-- TS For Functional Programmers -->
 <!-- TS Tooling In 5 Minutes -->
-+ **TypeScript (TS)**: A statically-typed *superset* of JavaScript (JS) that adds type annotations to the language.
++ **TypeScript (TS)**: A statically-typed *superset* of JavaScript (JS) that adds type annotations to the language. Since it is a superset of JS, any valid JS code is also valid TS code.
   - **Superset (In Programming)**: A language that extends another language by adding new features while maintaining full compatibility with the original language.
-+ Since TS is a superset of JS, any valid JS code is also valid TS code.
 
 + **Runtime Behavior**: TS preserves the runtime behavior of JS. For instance, dividing by zero in JS results in `Infinity` rather than throwing an exception. TS does not alter this behavior, so existing JS code will run the same way when converted to TS.
-+ **Compilation**: The TS compiler converts TS code into JS code for execution.
++ The TS compiler converts TS code into JS code for execution.
 + **Type Erasure**: Type annotations and other TS-specific types are removed during compilation. The resulting JS code does not include TS types.
 + **Libraries and Frameworks**: TS does not include additional runtime libraries. It uses the same standard library and external libraries as JS. There are no TS-specific frameworks to learn.
 
 + **Tooling and Usage**
   - **Installing TypeScript**: Via *npm* or *Visual Studio* plugins.
-  - **Type Annotations**: Explicitly specify types for variables, parameters, and return values.
   - **Class Constructors**: Using `public` in `constructor` parameters creates properties automatically.
     + **Example**:
       ```
@@ -33,7 +31,7 @@
       ```
 
 + **Type Inference**: TS automatically determines the type of a variable based on the assigned value.
-+ *Visual Studio Code* uses TS to enhance JS development.
++ *Visual Studio Code* uses TS under the hood to enhance JS development.
 + **Well-Known Symbols**: Special symbols built into the language for internal and meta-programming purposes.
 + **Composing Types**:
   - **Unions (`|`)**: A value can be one of several types: `let value: number | string;`.
@@ -89,7 +87,6 @@
         let fst1: <T, U>(a: T, b: U) => T = (a, b) => a;
         ```
 
-+ **`any`**: Disables type checking. Use sparingly as it negates TypeScript’s type safety.
 + **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
 + **Union Types**
   - **Untagged Unions**: No runtime information for distinguishing types.
@@ -216,7 +213,20 @@
     + **`Readonly<T>`**: Makes all properties *read-only*.
 
 <!-- The Basics -->
-+ JS only provides dynamic typing.
-+ **Non-Exception Failures**: In TS, it means problems that happen when TS tries to check your code but doesn't crash or stop working. They usually include type errors, syntax errors, semantic errors.
-+ **`tsc`**: TS compiler. After the code is being compiled the TS code is turn into JS code.
-+ **`--noEmitOnError`**: As a normal behavior, TS will *emit* the compiled code but you can change its behavior with `tsc --noEmitOnError hello.ts` command. Thus your compiled JS file will not be updated.  
++ JavaScript uses dynamic typing, where types are determined at runtime.
++ **Non-Exception Failures**: In TS, this refers to issues detected during type checking that don't cause the compiler to crash. Common types include: *type errors*, *syntax errors*, *semantic errors*.
++ **`tsc`**: The TS compiler. It compiles TS code into JS.
++ **`--noEmitOnError`**: By default, TS will emit (generate) JS code even if there are errors. Using this flag prevents the emission of JS files if there are any compilation errors.
++ **Downleveling**: TS can convert code written in newer ECMAScript versions to older versions. This process is known as downleveling.
++ You can add strictness level to your TS program by adding extra configurations in `tsconfig.json` file. The two most important ones are `noImplicitAny` and `strictNullChecks`.
+  - **`noImplicitAny`**: Ensures that all variables must have explicit types. Without this flag, TS will default to `any` type when it cannot infer the type. Enabling it helps catch unintentional uses of `any`.
+  - **`strictNullChecks`**: Enforces explicit handling of `null` and `undefined`. By default, these values can be assigned to any type. This flag makes it necessary to explicitly handle or check for `null` and `undefined` values, improving code safety.
+
+  <!-- Everyday Types -->
++ **`any`**: you can use whenever you don’t want a particular value to cause typechecking errors. When you don’t specify a type, and TypeScript can’t infer it from context, the compiler will typically default to any. You usually want to avoid this, though, because any isn’t type-checked. Use sparingly as it negates TypeScript’s type safety.
++ **Type Annotations**: Explicitly specify types for variables, parameters, and return values.
++ **Functions**
+  - You can determine the return type of a parameter by using *return type annotation*.
+  - If you want to annotate the return type of a function which returns a promise, you should use the `Promise` type.
+  - **Anonymous Functions**: Functions that does not have a name. For example the functions delared as a parameter in another function's arguments.
+  - **Contextual Typing**: Refers to determinining the type of a variable or function parameter by analyzing how and where it is used, even if the type is not explicitly specified.
