@@ -19,15 +19,10 @@
   - **Class Constructors**: Using `public` in `constructor` parameters creates properties automatically.
     + **Example**:
       ```
-      class Student {
-        fullName: string;
         constructor(
           public firstName: string,
           public lastName: string
-        ) {
-          this.fullName = firstName + " " + lastName;
-        }
-      }
+        ) {}
       ```
 
 + **Type Inference**: TS automatically determines the type of a variable based on the assigned value.
@@ -36,12 +31,7 @@
 + **Composing Types**:
   - **Unions (`|`)**: A value can be one of several types: `let value: number | string;`.
   - **Generics**: Create functions and classes that work with any type while maintaining type information.
-    + **Example**:
-      ```
-      function getItem<Type>(item: Type): Type {
-        return item;
-      }
-      ```
+    + **Example**: `function getItem<Type>(item: Type): Type {}`
 
 + **Call By Value**: Functions receive a copy of the value.
   - **Primitives**: Changes do not affect the original value.
@@ -112,33 +102,9 @@
   - **Funktor**: A functor is a type that can be mapped over.
   - **Relationship Between HKTs and Functors**: Functors are an example of higher-kinded types. They are a specific use case of HKTs where the type constructor. HKTs are a broader concept that encompasses various type patterns and abstractions, including functors.
 
-+ **Point-Free Programming**: Define and compose functions without specifying the arguments.
-  - **Example**:
-    ```
-    const double = (x: number) => x * 2;
-    const square = (x: number) => x * x;
-
-    const doubleThenSquare = (x: number) => square(double(x));
-
-    const compose = <A, B, C>(f: (b: B) => C, g: (a: A) => B) => (a: A) => f(g(a));
-    const doubleThenSquare = compose(square, double);
-    ```
-
-+ **Modifiers**
-  - **`readonly` Modifier**: Makes properties immutable.
-  - **Example**: `readonly x: number;`
-  - **Example**: `Readonly<T>` that makes all properties readonly.
-    ```
-    interface X {
-      x: number;
-    }
-    let rx: Readonly<X> = { x: 1 };
-    ```
-  - **Example**:
-    ```
-    let a: ReadonlyArray<number> = [1, 2, 3];
-    let b: readonly number[] = [1, 2, 3];
-    ```
++ **Point-Free Programming (Tacit Programming)**: It is a style of programming where you write functions without explicitly mentioning the arguments they operate on. Instead, you define functions by composing other functions.
++ **`readonly` Modifier**: Makes properties immutable.
+  - `readonly`, `Readonly<T>` (makes all properties readonly), `ReadonlyArray<T>`
 
 + **`const`**
   - In `const` variables *reference* is immutable but the *referent* is still mutable.
@@ -165,90 +131,62 @@
   - **`noImplicitAny`**: Ensures that all variables must have explicit types. Without this flag, TS will default to `any` type when it cannot infer the type. Enabling it helps catch unintentional uses of `any`.
   - **`strictNullChecks`**: Enforces explicit handling of `null` and `undefined`. By default, these values can be assigned to any type. This flag makes it necessary to explicitly handle or check for `null` and `undefined` values, improving code safety.
 
-  <!-- Everyday Types -->
-+ **`any`**: you can use whenever you don’t want a particular value to cause typechecking errors. When you don’t specify a type, and TypeScript can’t infer it from context, the compiler will typically default to any. You usually want to avoid this, though, because any isn’t type-checked. Use sparingly as it negates TypeScript’s type safety.
-+ **Type Annotations**: Explicitly specify types for variables, parameters, and return values.
+<!-- Everyday Types -->
++ **`any` Type**: Represents any value and bypasses TypeScript’s type checking.
+  - Use sparingly as it negates type safety.
+  - When TypeScript cannot infer a type, it defaults to `any`.
+
++ **Type Annotations**: Explicitly specify types for variables, function parameters, and return values.
+  - **Example**: `let num: number = 42;`
+
 + **Functions**
-  - You can determine the return type of a parameter by using *return type annotation*.
-  - If you want to annotate the return type of a function which returns a promise, you should use the `Promise` type.
-  - **Anonymous Functions**: Functions that does not have a name. For example the functions delared as a parameter in another function's arguments.
-  - **Contextual Typing**: Refers to determinining the type of a variable or function parameter by analyzing how and where it is used, even if the type is not explicitly specified.
+  - *Return type annotation* specifies the return type of a function.
+  - Annotate functions returning promises with the `Promise` type.
+  - **Anonymous Functions**: Functions without names, often used as arguments in other functions.
+  - **Contextual Typing**: Infers the type of a value based on how and where it’s used.
 
-+ **Optional Properties**: In objets if you want to define a property as optional, add `?` after the property name. In JS, if you access a property that doesn’t exist, you’ll get the value `undefined` rather than a runtime error. Because of this, when you read from an optional property, you’ll have to check for undefined before using it.
-  - **Example**: `let obj: { first: string; last?: string }`
-
-+ **Non-null Assertion Operator (`!`)**: Removes `null` and `undefined` from a type without doing any explicit checking.
-  - **Example**: `x!.toFixed()`
-
-+ **Union Types (`|`)**
-  - A union type is a type formed from two or more other types, representing values that may be any one of those types. We refer to each of these types as the union’s *members*.
-  - When using union types you should check each value using conditional statements. Because if you have a number or string property, some methods of number will not be suitable for strings and you will likely to get an error. This is called *narrowing*.
++ **Optional Properties (`?`)**: Properties that may or may not be present in an object (checks for `undefined`).
++ **Non-null Assertion Operator (`!`)**: Asserts that a value is not `null` or `undefined`.
++ **Union Types (`|`)**: Represents a value that can be one of several types.
+  - **Narrowing**: Use *type guards* to narrow down the type in conditional statements.
   - **Untagged Unions**: No runtime information for distinguishing types.
-    + **Example**: `function process(value: string | number) {}`
   - **Discriminated Unions (Tagged Unions)**: Each type in the union has a common property.
-    + **Example**: `type Animal = { type: 'cat'; meow: boolean } | { type: 'dog'; bark: boolean };`
 
-+ **Type Narrowing**: Type guards help narrow down the type of a value from a broader type (like `any`, `unknown`, or a *union type*) to a more specific type within a certain scope.
-+ **Type Aliases**: If you use a type more than once you can define a type alias to reuse it.
-  -  **Example**: `type Point = { x: number; y: number; };`
-
-+ **Interfaces**: It is a way to define an object type.
-  - **Example**: `interface Point { x: number; y: number; }`
-  - **Structural Typing (Duck Typing)**: TS uses structural typing. If two objects have the same shape, they are considered the same type. The term comes from the saying: "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.".
-    + TS is a *structurally typed* type system.
-    + **Example**:
-      ```
-      interface Point {
-        x: number;
-        y: number;
-      }
-
-      function logPoint(p: Point) {
-        console.log(`${p.x}, ${p.y}`);
-      }
-
-      const point = { x: 12, y: 26 };
-      logPoint(point); // Works
-
-      const point1 = { x: 12, y: 26, z: 89 };
-      logPoint(point1); // Works, extra property is allowed
-      ```
++ **Type Aliases**: Create a new name for a type.
++ **Interfaces**: Define the shape of an object.
+  - **Structural Typing (Duck Typing)**: Objects with the same shape are considered the same type.
 
 + **Type Aliases vs Interfaces**
-  - A *type* cannot be re-opened to add new properties vs an *interface* which is always extendable.
-  - Using *interfaces* with extends can often be more performant for the compiler than *type aliases* with intersections.
+  - Interfaces can be extended with new properties; type aliases cannot.
+  - Interfaces may be more performant for the compiler when extending types.
 
-+ **Type Assertions**: Explicitly tell the TS compiler the type of a value. You can use it when type inference is insufficient or when working with specific DOM elements.
-  - **Example**: `let inputElement = document.querySelector('input') as HTMLInputElement;`
-  - **Angle-Bracket Syntax**: `let strLength: number = (<string>someValue).length;`
-  - **`as` Syntax**: `let strLength number = (someValue as string).length;`
-  - Sometimes *type assertions* can be too conservative and will disallow more complex coercions that might be valid. If this happens, you can use two assertions, first to `any` `unknown`, then to the desired type.
++ **Type Assertions**: Explicitly specify a value’s type when TS cannot infer it.
+  - **Syntaxes**:
+    + **Angle-Bracket Syntax**: `<string>someValue`
+    + **`as` Syntax**: `document.querySelector('input') as HTMLInputElement;`
+  - **Complex Coercion**: Sometimes *type assertions* can be too conservative and will disallow more complex coercions that might be valid. If this happens, you can use two assertions, first to `any` or `unknown`, then to the desired type.
     + **Example**: `const a = expr as any as T;`
-  - **Literal Types**: If you define a variable with `const`, since it cannot be changed by reassigning value to it, its type will be literal.
-    + **Example**: `const constantString = "Hello World";`
-      - Because `constantString` can only represent 1 possible string, it has a literal type `"Hello World"` instead of `string`.
-    + **Example**:
-      ```
-      declare function handleRequest(url: string, method: "GET" | "POST"): void;
-      ```
-      The following code will promp error when you call `handleRequest` method:
-      ```
-      const req = { url: "https://example.com", method: "GET" };
-      handleRequest(req.url, req.method);
-      ```
-      In the above example req.method is inferred to be string, not "GET". Because code can be evaluated between the creation of req and the call of handleRequest which could assign a new string like "GUESS" to req.method, TS considers this code to have an error. There are two ways to work around this:
 
-      1. You can change the inference by adding a type assertion in either location:
-        ```
-        // Change 1:
-        const req = { url: "https://example.com", method: "GET" as "GET" };
-        // Change 2
-        handleRequest(req.url, req.method as "GET");
-        ```
-      2. You can use as const to convert the entire object to be type literals:
-        ```
-        const req = { url: "https://example.com", method: "GET" } as const;
-        handleRequest(req.url, req.method);
-        ```
++ **Literal Types**: Exact values of a type, typically from `const` variables.
+  - `const constantString = "Hello World";` has the literal type *"Hello World"*.
+  - **Example**: Usage with Functions
+    ```
+    declare function handleRequest(url: string, method: "GET" | "POST"): void;
+    
+    const req = { url: "https://example.com", method: "GET" };
+    handleRequest(req.url, req.method); // Will not work
 
-+ **Enums**: Enums are a feature added to JS by TS which allows for describing a value which could be one of a set of possible named constants. It’s a feature which you should know exists, but maybe hold off on using unless you are sure.
+    const req1 = { url: "https://example.com", method: "GET" as "GET" };
+    handleRequest(req1.url, req1.method); // Works
+
+    const req2 = { url: "https://example.com", method: "GET" };
+    handleRequest(req2.url, req2.method as "GET"); // Alternative
+
+    const req3 = { url: "https://example.com", method: "GET" } as const;
+    handleRequest(req3.url, req3.method); // Works
+    ```
+
+    In the above code the first example fails because TS thinks of the `method` property is a `string` type.
+
++ **Enums**: Define a set of named constants.
+  - Use to describe values that can be one of a set of named constants, but consider carefully if they add value over other solutions.
