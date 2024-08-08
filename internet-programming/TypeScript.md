@@ -43,25 +43,6 @@
       }
       ```
 
-+ **Duck Typing (Structural Typing)**: TS uses structural typing. If two objects have the same shape, they are considered the same type. The term comes from the saying: "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.".
-  - **Example**:
-    ```
-    interface Point {
-      x: number;
-      y: number;
-    }
-
-    function logPoint(p: Point) {
-      console.log(`${p.x}, ${p.y}`);
-    }
-
-    const point = { x: 12, y: 26 };
-    logPoint(point); // Works
-
-    const point1 = { x: 12, y: 26, z: 89 };
-    logPoint(point1); // Works, extra property is allowed
-    ```
-
 + **Call By Value**: Functions receive a copy of the value.
   - **Primitives**: Changes do not affect the original value.
   - **References (Objects and Arrays)**: Changes to object properties affect the original object.
@@ -88,35 +69,6 @@
         ```
 
 + **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
-+ **Union Types**
-  - **Untagged Unions**: No runtime information for distinguishing types.
-    + **Example**:
-      ```
-      function process(value: string | number) {
-        if (typeof value === "string") {
-          console.log("String value:", value);
-        } else {
-          console.log("Number value:", value);
-        }
-      }
-      ```
-  - **Discriminated Unions (Tagged Unions)**: Each type in the union has a common property.
-    + **Example**:
-      ```
-      type Animal = { type: 'cat'; meow: boolean } | { type: 'dog'; bark: boolean };
-
-      function handleAnimal(animal: Animal) {
-        switch (animal.type) {
-          case 'cat':
-            console.log("It's a cat, meow:", animal.meow);
-            break;
-          case 'dog':
-            console.log("It's a dog, bark:", animal.bark);
-            break;
-        }
-      }
-      ```
-
 + **Intersections**: Combine multiple types into one, including properties and methods from all types.
   - **Example**:
     ```
@@ -192,17 +144,8 @@
   - In `const` variables *reference* is immutable but the *referent* is still mutable.
   - You can also use a *const-assertion*, which operates on arrays and object literals: `let a = [1, 2, 3] as const;`.
 
-+ **Type Assertions**: Explicitly tell the TS compiler the type of a value. You can use it when type inference is insufficient or when working with specific DOM elements.
-  - **Angle-Bracket Syntax**: `let strLength: number = (<string>someValue).length;`
-  - **`as` Syntax**: `let strLength number = (someValue as string).length;`
-  - **Example**: Using it on DOM elements.
-    ```
-    let inputElement = document.querySelector('input') as HTMLInputElement;
-    ```
-
 + **Type Guards**: Ensure values conform to specific types at runtime.
   - **Types of Type Guards**: `typeof`, `instanceof`, `in` operator, user-defined checks.
-  - **Type Narrowing**: Type guards help narrow down the type of a value from a broader type (like `any`, `unknown`, or a *union type*) to a more specific type within a certain scope.
 
 > ***NOTE**: If possible, use *type guards* or conditional checks to narrow down types instead of using assertions, as they provide better type safety.*
 
@@ -230,3 +173,82 @@
   - If you want to annotate the return type of a function which returns a promise, you should use the `Promise` type.
   - **Anonymous Functions**: Functions that does not have a name. For example the functions delared as a parameter in another function's arguments.
   - **Contextual Typing**: Refers to determinining the type of a variable or function parameter by analyzing how and where it is used, even if the type is not explicitly specified.
+
++ **Optional Properties**: In objets if you want to define a property as optional, add `?` after the property name. In JS, if you access a property that doesn’t exist, you’ll get the value `undefined` rather than a runtime error. Because of this, when you read from an optional property, you’ll have to check for undefined before using it.
+  - **Example**: `let obj: { first: string; last?: string }`
+
++ **Non-null Assertion Operator (`!`)**: Removes `null` and `undefined` from a type without doing any explicit checking.
+  - **Example**: `x!.toFixed()`
+
++ **Union Types (`|`)**
+  - A union type is a type formed from two or more other types, representing values that may be any one of those types. We refer to each of these types as the union’s *members*.
+  - When using union types you should check each value using conditional statements. Because if you have a number or string property, some methods of number will not be suitable for strings and you will likely to get an error. This is called *narrowing*.
+  - **Untagged Unions**: No runtime information for distinguishing types.
+    + **Example**: `function process(value: string | number) {}`
+  - **Discriminated Unions (Tagged Unions)**: Each type in the union has a common property.
+    + **Example**: `type Animal = { type: 'cat'; meow: boolean } | { type: 'dog'; bark: boolean };`
+
++ **Type Narrowing**: Type guards help narrow down the type of a value from a broader type (like `any`, `unknown`, or a *union type*) to a more specific type within a certain scope.
++ **Type Aliases**: If you use a type more than once you can define a type alias to reuse it.
+  -  **Example**: `type Point = { x: number; y: number; };`
+
++ **Interfaces**: It is a way to define an object type.
+  - **Example**: `interface Point { x: number; y: number; }`
+  - **Structural Typing (Duck Typing)**: TS uses structural typing. If two objects have the same shape, they are considered the same type. The term comes from the saying: "If it looks like a duck, swims like a duck, and quacks like a duck, then it probably is a duck.".
+    + TS is a *structurally typed* type system.
+    + **Example**:
+      ```
+      interface Point {
+        x: number;
+        y: number;
+      }
+
+      function logPoint(p: Point) {
+        console.log(`${p.x}, ${p.y}`);
+      }
+
+      const point = { x: 12, y: 26 };
+      logPoint(point); // Works
+
+      const point1 = { x: 12, y: 26, z: 89 };
+      logPoint(point1); // Works, extra property is allowed
+      ```
+
++ **Type Aliases vs Interfaces**
+  - A *type* cannot be re-opened to add new properties vs an *interface* which is always extendable.
+  - Using *interfaces* with extends can often be more performant for the compiler than *type aliases* with intersections.
+
++ **Type Assertions**: Explicitly tell the TS compiler the type of a value. You can use it when type inference is insufficient or when working with specific DOM elements.
+  - **Example**: `let inputElement = document.querySelector('input') as HTMLInputElement;`
+  - **Angle-Bracket Syntax**: `let strLength: number = (<string>someValue).length;`
+  - **`as` Syntax**: `let strLength number = (someValue as string).length;`
+  - Sometimes *type assertions* can be too conservative and will disallow more complex coercions that might be valid. If this happens, you can use two assertions, first to `any` `unknown`, then to the desired type.
+    + **Example**: `const a = expr as any as T;`
+  - **Literal Types**: If you define a variable with `const`, since it cannot be changed by reassigning value to it, its type will be literal.
+    + **Example**: `const constantString = "Hello World";`
+      - Because `constantString` can only represent 1 possible string, it has a literal type `"Hello World"` instead of `string`.
+    + **Example**:
+      ```
+      declare function handleRequest(url: string, method: "GET" | "POST"): void;
+      ```
+      The following code will promp error when you call `handleRequest` method:
+      ```
+      const req = { url: "https://example.com", method: "GET" };
+      handleRequest(req.url, req.method);
+      ```
+      In the above example req.method is inferred to be string, not "GET". Because code can be evaluated between the creation of req and the call of handleRequest which could assign a new string like "GUESS" to req.method, TS considers this code to have an error. There are two ways to work around this:
+
+      1. You can change the inference by adding a type assertion in either location:
+        ```
+        // Change 1:
+        const req = { url: "https://example.com", method: "GET" as "GET" };
+        // Change 2
+        handleRequest(req.url, req.method as "GET");
+        ```
+      2. You can use as const to convert the entire object to be type literals:
+        ```
+        const req = { url: "https://example.com", method: "GET" } as const;
+        handleRequest(req.url, req.method);
+        ```
+
++ **Enums**: Enums are a feature added to JS by TS which allows for describing a value which could be one of a set of possible named constants. It’s a feature which you should know exists, but maybe hold off on using unless you are sure.
