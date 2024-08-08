@@ -13,7 +13,6 @@
 + The TS compiler converts TS code into JS code for execution.
 + **Type Erasure**: Type annotations and other TS-specific types are removed during compilation. The resulting JS code does not include TS types.
 + **Libraries and Frameworks**: TS does not include additional runtime libraries. It uses the same standard library and external libraries as JS. There are no TS-specific frameworks to learn.
-
 + **Tooling and Usage**
   - **Installing TypeScript**: Via *npm* or *Visual Studio* plugins.
   - **Class Constructors**: Using `public` in `constructor` parameters creates properties automatically.
