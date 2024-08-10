@@ -17,7 +17,7 @@
   - **Installing TypeScript**: Via *npm* or *Visual Studio* plugins.
   - **Class Constructors**: Using `public` in `constructor` parameters creates properties automatically.
     + **Example**:
-      ```
+      ```typescript
         constructor(
           public firstName: string,
           public lastName: string
@@ -52,7 +52,7 @@
     + **Tuples**: `[T, T]` (fixed length but mutable)
     + **Functions**: `(t: T) => U`
       - **Example**:
-        ```
+        ```typescript
         let fst: (a: any, b: any) => any = (a, b) => a;
         let fst1: <T, U>(a: T, b: U) => T = (a, b) => a;
         ```
@@ -60,7 +60,7 @@
 + **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
 + **Intersections**: Combine multiple types into one, including properties and methods from all types.
   - **Example**:
-    ```
+    ```typescript
     interface InterfaceA { a: string; }
     interface InterfaceB { b: number; }
     type Combined = InterfaceA & InterfaceB;
@@ -68,28 +68,24 @@
   
 + **Unit Types**: Represent exactly one value. Useful for simulating enums.
   - **Example**:
-    ```
+    ```typescript
     declare function pad(s: string, n: number, direction: "left" | "right"): string;
     pad("hi", 10, "left");
     ```
-
     In this function, `direction` is a union type of `left` and `right`, meaning it can only be one of these two string literals. The issue arises when you try to use a variable instead of a literal:
-    
-    ```
+    ```typescript
     let s = "right";
     pad("hi", 10, s); // error
     ```
-
     Here, `s` is of type string (because `"right"` gets widened to string when assigned to `s`). Since string is not the same as the union type `"left" | "right"`, TS gives an error. To fix this, you can explicitly declare `s` with the union type:
-
-    ```
+    ```typescript
     let s: "left" | "right" = "right";
     pad("hi", 10, s); // works
     ```
 
 + **Type Parameters**: Placeholders for types in functions, classes, or interfaces.
   - **Example**:
-    ```
+    ```typescript
     function identity<T>(value: T): T { return value; }
     class Box<T>{}
     new Box<number>();
@@ -175,7 +171,7 @@
 + **Literal Types**: Exact values of a type, typically from `const` variables.
   - `const constantString = "Hello World";` has the literal type *"Hello World"*.
   - **Example**: Usage with Functions
-    ```
+    ```typescript
     declare function handleRequest(url: string, method: "GET" | "POST"): void;
     
     const req = { url: "https://example.com", method: "GET" };
@@ -205,10 +201,7 @@
   - **Control flow analysis**
   - **Assignments**:  TypeScript narrows the left side based on the right side of the assignment.
   - **Assertion Functions**: Used to assert a variable's type at runtime.
-   + **Example**:
-     ```
-     function assertIsString(value: any): asserts value is string {}
-     ```
+   + **Example**: `function assertIsString(value: any): asserts value is string {}`
   - **Type Predicates**: Define user-defined type guards.
    + **Syntax**: `parameterName is Type`
    + **Example**:
