@@ -14,7 +14,7 @@
 + internet-programming
   - [HTML.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/HTML.md)
   - [VueJS.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/VueJS.md)
-  - [TypeScript.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/TypeScript.md)
+  - [TypeScript.md](https://github.com/alrenU/study-notes/blob/main/InternetProgramming/TypeScript/TypeScript.md)
 
 # Books to Read
 + Crafting Interpreters | Robert Nystrom
