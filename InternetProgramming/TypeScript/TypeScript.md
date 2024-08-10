@@ -45,7 +45,7 @@
       - `null === undefined` is `false` (*strict equality*).
   - **TypeScript Additions**:
     + **`unknown`**: Represents any value but requires type checking before use.
-    + **`never`**: Represents values that do not exist (e.g., functions that throw errors).
+    + **`never`**: Represents values which are never observed. In a return type, this means that the function throws an exception or terminates execution of the program.
     + **`void`**: Indicates functions that do not return a value.
     + **Object Literal**: `{ property: Type }`
     + **Arrays**: `T[]` or `Array<T>`
@@ -116,7 +116,7 @@
     + **`Required<T>`**: Makes all properties *required*.
     + **`Readonly<T>`**: Makes all properties *read-only*.
 
-<!-- The Basics -->
+## The Basics
 + JavaScript uses dynamic typing, where types are determined at runtime.
 + **Non-Exception Failures**: In TS, this refers to issues detected during type checking that don't cause the compiler to crash. Common types include: *type errors*, *syntax errors*, *semantic errors*.
 + **`tsc`**: The TS compiler. It compiles TS code into JS.
@@ -126,7 +126,7 @@
   - **`noImplicitAny`**: Ensures that all variables must have explicit types. Without this flag, TS will default to `any` type when it cannot infer the type. Enabling it helps catch unintentional uses of `any`.
   - **`strictNullChecks`**: Enforces explicit handling of `null` and `undefined`. By default, these values can be assigned to any type. This flag makes it necessary to explicitly handle or check for `null` and `undefined` values, improving code safety.
 
-<!-- Everyday Types -->
+## Everyday Types
 + **`any` Type**: Represents any value and bypasses TypeScript’s type checking.
   - Use sparingly as it negates type safety.
   - When TypeScript cannot infer a type, it defaults to `any`.
@@ -192,7 +192,7 @@
 + **Enums**: Define a set of named constants.
   - Use to describe values that can be one of a set of named constants, but consider carefully if they add value over other solutions.
 
-<!-- Narrowing -->
+## Narrowing
 + **Narrowing**: Narrowing is the process of refining a variable's type to a more specific type based on the program's control flow. Methods to achieve narrowing include:
   - **Truthiness Narrowing**
   - **Equality Narrowing**
@@ -235,3 +235,46 @@
 + In JS, constructs like `if` first *coerce* their conditions to booleans to make sense of them. Truthy and falsy values:
   - **Falsy**: `0`, `NaN`, `""` (empty string), `0n` (bigint zero), `null`, `undefined`
   - **Truthy**: All other values.
+
+## More On Functions
++ **Function Type Expressions**: Specifies the types of a function’s parameters and return value without implementing the function.
+  - **Example**: `type GreetFunction = (name: string) => string;`
+
++ If a parameter type isn’t specified, it defaults to `any`.
++ **Call Signature**: Defines the type of a function within an object type or interface.
+  - **Example**: `interface MathOperation { (a: number, b: number): number; }`
+
++ You can add properties to functions.
++ You can use constructor and can call functions with the `new` operator.
++ **Generic Functions**: A generic function is a function that can operate on different types without being explicitly tied to one.
+  - **Example**: `function identity<Type>(arg: Type): Type {}`
+    + In this example the `Type` is called **type parameter**.
+  - **Constraints**: It refers to restrictions placed on generic type parameters to ensure that they adhere to a specific structure or interface.
+    + **Example**: `function logLength<T extends { length: number }>(arg: T): T {}`
+  
+  > ***NOTE**: When possible, use the *type parameter* itself rather than *constraining* it.*
+
++ In JS, if you call a function with more arguments than there are parameters, the extra arguments are simply ignored. TS behaves the same way.
+
++ **Function Overloads**: Allows you to define multiple versions of a function with the same name but different parameter types or numbers.
+  - **Overload Signature**: You define multiple signatures for a function, each specifying a different set of parameters and return types.
+  - **Implementation Signature**: The actual implementation of the function (the function body) must match one of the overload signatures.
+
+  > ***NOTE**: Prefer union types for parameters over overloads when possible.*
+
++ **Type Safety**: Ensures values are used consistently with their types.
++ In JS, a function’s return type is `undefined`. In TS, it’s `void`.
++ **Untyped Function Call**: Refers to function calls where TS lacks enough information to infer the types of the function’s parameters or return value.
+
++ **Parameter Destructuring**
+  - Type annotation for destructured objects should be placed after the destructuring syntax.
+    + **Example**:
+      ```typescript
+      function sum({ a, b, c }: { a: number; b: number; c: number }) {}
+
+      // Same as prior example
+      type ABC = { a: number; b: number; c: number };
+      function sum({ a, b, c }: ABC) {}
+      ```
+
+## Object Types
