@@ -194,11 +194,11 @@
 
 <!-- Narrowing -->
 + **Narrowing**: Narrowing is the process of refining a variable's type to a more specific type based on the program's control flow. Methods to achieve narrowing include:
-  - **Truthiness narrowing**
-  - **Equality narrowing**
-  - **`in` operator narrowing**
-  - **`instanceof` narrowing**
-  - **Control flow analysis**
+  - **Truthiness Narrowing**
+  - **Equality Narrowing**
+  - **`in` Operator Narrowing**
+  - **`instanceof` Narrowing**
+  - **Control Flow Analysis**
   - **Assignments**:  TypeScript narrows the left side based on the right side of the assignment.
   - **Assertion Functions**: Used to assert a variable's type at runtime.
    + **Example**: `function assertIsString(value: any): asserts value is string {}`
