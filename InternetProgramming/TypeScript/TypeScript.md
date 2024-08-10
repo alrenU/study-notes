@@ -100,6 +100,7 @@
 + **Point-Free Programming (Tacit Programming)**: It is a style of programming where you write functions without explicitly mentioning the arguments they operate on. Instead, you define functions by composing other functions.
 + **`readonly` Modifier**: Makes properties immutable.
   - `readonly`, `Readonly<T>` (makes all properties readonly), `ReadonlyArray<T>`
+  - It does not mean its internal contents can’t be changed. It means the property itself can’t be re-written to.
 
 + **`const`**
   - In `const` variables *reference* is immutable but the *referent* is still mutable.
@@ -278,3 +279,30 @@
       ```
 
 ## Object Types
++ **Index Signatures**: They let you specify the types of values that can be accessed using these dynamic keys. This is useful when you want to create objects where the keys are not known ahead of time but you still want to enforce some type constraints on the values.
+  - **Example**:
+    ```typescript
+    interface StringNumberMap {
+      [key: string]: number;
+    }
+
+    const example: StringNumberMap = {
+      age: 25,
+      year: 2024,
+    };
+    ```
+
++ **Excess Property Checking**: When you create an object literal and assign it to a variable with a specific type, TypeScript will check that the object only contains properties that are defined in that type. If the object contains any extra properties that are not part of the type, TypeScript will produce an error.
+  - **Example**:
+    ```typescript
+    interface Person {
+      name: string;
+      age: number;
+    }
+
+    const person: Person = {
+      name: "Alice",
+      age: 30,
+      // address: "123 Main St" // Error
+    };
+    ```
