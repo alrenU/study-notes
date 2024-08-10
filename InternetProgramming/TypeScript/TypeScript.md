@@ -145,9 +145,15 @@
   - **Contextual Typing**: Infers the type of a value based on how and where it’s used.
 
 + **Optional Properties (`?`)**: Properties that may or may not be present in an object (checks for `undefined`).
+  - **Example**: `interface User { email?: string; }`
+
 + **Non-null Assertion Operator (`!`)**: Asserts that a value is not `null` or `undefined`.
+  - **Example**: `value!.length`
+
++ **Double-Boolean Negation (`!!`)**: Converts a value to a boolean.
+  - **Example**: `const isTruthy = !!value;`
+
 + **Union Types (`|`)**: Represents a value that can be one of several types.
-  - **Narrowing**: Use *type guards* to narrow down the type in conditional statements.
   - **Untagged Unions**: No runtime information for distinguishing types.
   - **Discriminated Unions (Tagged Unions)**: Each type in the union has a common property.
 
@@ -189,3 +195,50 @@
 
 + **Enums**: Define a set of named constants.
   - Use to describe values that can be one of a set of named constants, but consider carefully if they add value over other solutions.
+
+<!-- Narrowing -->
++ **Narrowing**: Narrowing is the process of refining a variable's type to a more specific type based on the program's control flow. Methods to achieve narrowing include:
+  - **Truthiness narrowing**
+  - **Equality narrowing**
+  - **`in` operator narrowing**
+  - **`instanceof` narrowing**
+  - **Control flow analysis**
+  - **Assignments**:  TypeScript narrows the left side based on the right side of the assignment.
+  - **Assertion Functions**: Used to assert a variable's type at runtime.
+   + **Example**:
+     ```
+     function assertIsString(value: any): asserts value is string {}
+     ```
+  - **Type Predicates**: Define user-defined type guards.
+   + **Syntax**: `parameterName is Type`
+   + **Example**:
+     ```typescript
+     function isFish(pet: Fish | Bird): pet is Fish {
+       return (pet as Fish).swim !== undefined;
+     }
+     ```
+  - **Discriminated Unions**
+  - **Exhaustiveness Checking**
+    + Ensures all cases of a union type are handled.
+    + Uses the `never` type for checking.
+    + **Example**:
+      ```typescript
+      type Shape = Circle | Square;
+
+      function getArea(shape: Shape) {
+        switch (shape.kind) {
+          case "circle":
+            return Math.PI * shape.radius ** 2;
+          case "square":
+            return shape.sideLength ** 2;
+          default:
+            const _exhaustiveCheck: never = shape;
+            return _exhaustiveCheck;
+        }
+      }
+      ```
+
++ In JavaScript, `typeof null` returns `"object"` (historical quirk).
++ In JS, constructs like `if` first *coerce* their conditions to booleans to make sense of them. Truthy and falsy values:
+  - **Falsy**: `0`, `NaN`, `""` (empty string), `0n` (bigint zero), `null`, `undefined`
+  - **Truthy**: All other values.

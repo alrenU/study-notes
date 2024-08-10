@@ -7,7 +7,7 @@
 // type assertions
 // type guards
 // type narrowing
-// SECTION - START
+// # - S
 var UserAccount = /** @class */ (function () {
     function UserAccount(id, name) {
         this.id = id;
@@ -20,9 +20,8 @@ var user = {
     name: "Hayes",
 };
 var userAccount = new UserAccount(0, "John");
-// The `any` Statement
-var num_1 = "5";
-// Structural Type System
+// # - E
+// # - S: Structural Type System
 console.log("\n# Structural Type System");
 function logCoordinates(coordinates) {
     console.log("x: ", coordinates.x, "y: ", coordinates.y);
@@ -38,12 +37,15 @@ var coordinates_1 = {
 };
 logCoordinates(coordinates);
 logCoordinates(coordinates_1);
-// Function Type
+// # - E
+// # - S: Function Type
 var add = function (num_1, num_2) { return num_1 + num_2; };
 var strConcat = function (str_1, str_2) { return str_1; };
-// Union Types
+// # - E
+// # - S: Union Types
 var weight;
-// Discriminated Union
+// # - E
+// # - S: Discriminated Union
 console.log("\n# Discriminated Union");
 function printAnimal(animal) {
     if (animal.type === "lion") {
@@ -57,7 +59,8 @@ printAnimal({ type: "lion", sound: "roar" });
 printAnimal({ type: "bird", mouthType: "beak" });
 ;
 ;
-// Unit Type
+// # - E
+// # - S: Unit Type
 console.log("\n# Unit Type");
 function employee(name, age, gender) {
     console.log("Name: ", name, "Age: ", age, "Gender: ", gender);
@@ -65,10 +68,27 @@ function employee(name, age, gender) {
 // If you would use just `gender = "man"` it would throw error.
 var gender = "man";
 employee("Josh", 30, gender);
-// Passing Object as a Parameter
+// # - E
+// # - S: Passing Object As A Parameter
 console.log("\n# Passing Object as a Parameter");
 function printCoord(pt) {
-    console.log("X: ", pt.x, "Y.", pt.y);
+    console.log("X: ", pt.x, "Y:", pt.y);
 }
 printCoord({ x: 10, y: 15 });
-// SECTION - END
+// # - E
+// # - S: Exhaustiveness Checking
+console.log("\n# Exhaustiveness Checking");
+function exhaustiveness(shape) {
+    switch (shape.kind) {
+        case "circle":
+            return shape.circleMethod;
+        case "square":
+            return shape.squareMethod;
+        default:
+            var _exhaustivenessCheck = shape;
+            return _exhaustivenessCheck;
+    }
+}
+var triangle = { kind: "triangle", triangleMethod: "Triangle method." };
+console.log(exhaustiveness(triangle));
+// # - E
