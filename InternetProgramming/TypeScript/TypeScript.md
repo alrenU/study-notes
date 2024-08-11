@@ -344,5 +344,11 @@
 
   + **Convention-Based APIs**: Convention-based APIs use standard rules and patterns, ensuring that data and functions are structured consistently and predictably for developers.
 
-  ## Type Manipulation
-  ### Generics
+<!-- TODO - Summary -->
+## Type Manipulation
+### Generics
++ Generics in TypeScript let you create functions, classes, and other components that work with any type of data, but still keep type safety.
++ **Generic Types**: It is a way to define a type that can be used with different types of data. Instead of specifying a specific type, you use a placeholder, like `Type`, that can be replaced with any type when the code runs. You can give any name in place of `Type`.
+  - **Example**: `function identity<Type>(arg: Type): Type {}`
+
++ You can create generic interface and class but it is not possible to create generic enums and namespaces..

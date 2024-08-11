@@ -21,6 +21,14 @@ var user = {
 };
 var userAccount = new UserAccount(0, "John");
 // #-E
+// #-S: Generics
+console.log("\n# Generics");
+function genericFunc(arg) {
+    return arg;
+}
+var compGenericFunc = genericFunc;
+console.log(compGenericFunc("hello"));
+// #-E
 // #-S: Structural Type System
 console.log("\n# Structural Type System");
 function logCoordinates(coordinates) {
@@ -131,8 +139,4 @@ function getLength(arg) {
     return arg.length;
 }
 console.log(getLength("hello"));
-var f1 = function () {
-    //   return true;
-    console.log();
-};
-console.log(typeof f1());
+// #-E

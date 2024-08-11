@@ -33,9 +33,16 @@ const userAccount: User = new UserAccount(0, "John");
 // #-E
 
 // #-S: Generics
+console.log("\n# Generics");
 type StringArr = Array<string>;
 type NumberArr = Array<number>;
 type ObjectWithNameArr = Array<{ name: string }>;
+
+function genericFunc<Type>(arg: Type): Type {
+    return arg;
+}
+const compGenericFunc: <Type>(arg: Type) => Type = genericFunc;
+console.log(compGenericFunc("hello"));
 // #-E
 
 // #-S: Structural Type System
