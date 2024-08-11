@@ -158,7 +158,7 @@
 + **Interfaces**: Define the shape of an object.
   - **Structural Typing (Duck Typing)**: Objects with the same shape are considered the same type.
 
-+ **Type Aliases vs Interfaces**
++ **Type Aliases vs. Interfaces**
   - Interfaces can be extended with new properties; type aliases cannot.
   - Interfaces may be more performant for the compiler when extending types.
 
@@ -279,7 +279,7 @@
       ```
 
 ## Object Types
-+ **Index Signatures**: They let you specify the types of values that can be accessed using these dynamic keys. This is useful when you want to create objects where the keys are not known ahead of time but you still want to enforce some type constraints on the values.
++ **Index Signatures**: Allow specifying the types of values that can be accessed using dynamic keys. Useful when the keys are not known ahead of time but you want to enforce type constraints on values.
   - **Example**:
     ```typescript
     interface StringNumberMap {
@@ -292,7 +292,7 @@
     };
     ```
 
-+ **Excess Property Checking**: When you create an object literal and assign it to a variable with a specific type, TypeScript will check that the object only contains properties that are defined in that type. If the object contains any extra properties that are not part of the type, TypeScript will produce an error.
++ **Excess Property Checking**: TS checks that object literals only contain properties defined in their type. Extra properties not part of the type will produce an error.
   - **Example**:
     ```typescript
     interface Person {
@@ -306,3 +306,43 @@
       // address: "123 Main St" // Error
     };
     ```
+  
+  > ***NOTE**: Excess property errors are usually bugs. Review your code before working around them.*
+
++ **Option Bags (Options Objects)**: A pattern where a single object with optional properties is passed as a function argument. This approach is also known as.
+  - **Example**: `function createUser({ name, age }: { name: string; age?: number; }) {}`
+
++ **Extending Types**: Create a superset of an interface by using the `extends` keyword.
++ **Declaration Merging**: TS merges properties from multiple interfaces with the same name into a single interface. Only interfaces and namespaces (or modules) support merging in TypeScript.
+  - **Example**:
+    ```typescript
+    interface Person { name: string; }
+    interface Person { age: number; }
+
+    // Merged result
+    const person: Person = {
+      name: "Alice",
+      age: 30,
+    };
+    ```
+
++ **Generic Object Types**: Use generics when the type of an object may vary. This allows for flexible and reusable types.
+  - **Example**: `interface Box<Type> { contents: Type; }`
+
+> ***NOTE**: Use generic functions to avoid overloads.*
+
++ **Tuple Types**: A tuple is an array with a fixed number of elements where each element can have a different type.
+  - **Example**:
+  ```typescript
+  let tuple: [string, number, boolean];
+  tuple = ["hello", 42, true];
+  ```
+  - Fixed number of elements. Adding or removing elements will produce an error.
+  - Optional elements can only be at the end and affect the tuple's length type.
+
+  > ***NOTE**: Tuples are useful in convention-based APIs where each element's meaning is clear. Annotate tuples as readonly when possible to ensure immutability.*
+
+  + **Convention-Based APIs**: Convention-based APIs use standard rules and patterns, ensuring that data and functions are structured consistently and predictably for developers.
+
+  ## Type Manipulation
+  ### Generics
