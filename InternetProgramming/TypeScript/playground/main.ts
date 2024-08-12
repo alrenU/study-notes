@@ -7,6 +7,8 @@
 // type assertions
 // type guards
 // type narrowing
+// type manipulation
+// template literal types
 
 // #-S
 class UserAccount {

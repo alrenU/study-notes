@@ -94,6 +94,7 @@
   - Type parameters should only be used to propagate type information, such as constraining parameters to be the same type.
 
 + **Higher-Kinded Types**: Abstract types that take other types as parameters. Functors are an example of higher-kinded types.
+  <!-- Give an example about funktor. -->
   - **Funktor**: A functor is a type that can be mapped over.
   - **Relationship Between HKTs and Functors**: Functors are an example of higher-kinded types. They are a specific use case of HKTs where the type constructor. HKTs are a broader concept that encompasses various type patterns and abstractions, including functors.
 
@@ -282,24 +283,14 @@
 + **Index Signatures**: Allow specifying the types of values that can be accessed using dynamic keys. Useful when the keys are not known ahead of time but you want to enforce type constraints on values.
   - **Example**:
     ```typescript
-    interface StringNumberMap {
-      [key: string]: number;
-    }
-
-    const example: StringNumberMap = {
-      age: 25,
-      year: 2024,
-    };
+    interface StringNumberMap { [key: string]: number; }
+    const example: StringNumberMap = { age: 25, year: 2024 };
     ```
 
 + **Excess Property Checking**: TS checks that object literals only contain properties defined in their type. Extra properties not part of the type will produce an error.
   - **Example**:
     ```typescript
-    interface Person {
-      name: string;
-      age: number;
-    }
-
+    interface Person { name: string; age: number; }
     const person: Person = {
       name: "Alice",
       age: 30,
@@ -320,10 +311,7 @@
     interface Person { age: number; }
 
     // Merged result
-    const person: Person = {
-      name: "Alice",
-      age: 30,
-    };
+    const person: Person = { name: "Alice", age: 30 };
     ```
 
 + **Generic Object Types**: Use generics when the type of an object may vary. This allows for flexible and reusable types.
@@ -344,11 +332,187 @@
 
   + **Convention-Based APIs**: Convention-based APIs use standard rules and patterns, ensuring that data and functions are structured consistently and predictably for developers.
 
-<!-- TODO - Summary -->
 ## Type Manipulation
 ### Generics
-+ Generics in TypeScript let you create functions, classes, and other components that work with any type of data, but still keep type safety.
-+ **Generic Types**: It is a way to define a type that can be used with different types of data. Instead of specifying a specific type, you use a placeholder, like `Type`, that can be replaced with any type when the code runs. You can give any name in place of `Type`.
++ Generics allow you to write flexible, reusable functions, classes, and interfaces while maintaining type safety.
++ **Generic Types**: Generic types use placeholders to represent types. They enable functions and classes to handle various data types without sacrificing type safety.
   - **Example**: `function identity<Type>(arg: Type): Type {}`
+    + Use a placeholder (e.g., `T`, `Type`) that is replaced with an actual type during use.
 
-+ You can create generic interface and class but it is not possible to create generic enums and namespaces..
+> ***NOTE**: You can create generic interface and class but it is not possible to create generic enums and namespaces.*
++ You can use constructors to create instances of generic types.
+  - **Example**: `function create<Type>(c: { new (): Type }): Type { return new c(); }`
+
++ You can provide default values for generic types, which makes them optional.
+  - **Example**:
+    ```typescript
+    declare function create<T extends HTMLElement = HTMLDivElement, U extends HTMLElement[] = T[]>(
+      element?: T,
+      children?: U
+    ): Container<T, U>;
+
+    const div = create();
+    const p = create(new HTMLParagraphElement());
+    ```
+
+### The `keyof` Type Operator
++ It is used to obtain a union type of the keys of a given object type. It generates a type representing all property names of an object type.
+  - **Example**:
+    ```typescript
+    type Person = { name: string; age: number; };
+    type PersonKeys = keyof Person; // 'name' | 'age'
+    ```
+
+### The `typeof` Type Operator
++ **`ReturnType<FunctionName>`**: Extracts the return type of a function type. It is used with types only.
++ **`typeof`**: is used to get the type of a variable or a property. It can be used with both types and values.
+
+### Indexed Access Types
++ Indexed Access Types in TypeScript allow you to access the type of a property in an object type using an index. This feature is particularly useful for dynamically retrieving the type of a property from a given type.
+  - **Example**:
+    ```typescript
+    interface Person { name: string; }
+    type NameType = Person['name']; // NameType is inferred as string
+    ```
+
++ Indexed Access Types can also be used with *index signatures*.
+  - **Example**:
+    ```typescript
+    interface Dictionary { [key: string]: number; }
+    type ValueType = Dictionary[string]; // ValueType is inferred as number
+    ```
+
++ **Example**:
+  Consider the following array:
+  ```typescript
+  const MyArray = [ { name: "Alice", age: 15 } ];
+  type Person = typeof MyArray[number];
+  ```
+  Here, `Person` is inferred as:
+  ```typescript
+  type Person = {
+      name: string;
+      age: number;
+  }
+  ```
+  Thus, you can access property types:
+  ```typescript
+  type Age = typeof MyArray[number]["age"]; // Age is inferred as number
+  ```
+
+> ***NOTE**: Indexed Access Types work with types, not values. You cannot use a constant value in place of a type when indexing.*
+
+### Conditional Types
++ *Conditional types* enable you to define types based on conditions, similar to how conditional statements work in programming.
+  - **Syntax**: `SomeType extends OtherType ? TrueType : FalseType`
+
++ **Using Conditional Types with Generics**
+  - **Example**:  
+    Instead of defining multiple overloads, use conditional types to simplify.
+    ```typescript
+    interface IdLabel { id: number; }
+    interface NameLabel { name: string; }
+
+    type Label<T> = T extends number ? IdLabel : NameLabel;
+    function createLabel<T extends number | string>(input: T): Label<T> {}
+    ```
+
++ **Inferring Within Conditional Types**
+  - **Inferring Types**
+    + You can use `infer` to deduce types within conditional types.
+    + **Example**:
+      ```typescript
+      type Flatten<Type> = Type extends Array<infer Item> ? Item : Type;
+
+      type Str = Flatten<string[]>; // string
+      type Num = Flatten<number>; // number
+      ```
+
++ **Distributive Conditional Types**
+  - **Distributivity**:
+    + Conditional types can be applied to each member of a union type separately.
+    + **Example**:
+      ```typescript
+      type ToArray<Type> = Type extends any ? Type[] : never;
+      type StrArrOrNumArr = ToArray<string | number>; // string[] | number[]
+      ```
+  - **Non-Distributive Conditional Types**
+    + To avoid distributing across union types, wrap the type in square brackets.
+    + **Example**:
+      ```typescript
+      type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never;
+      type ArrOfStrOrNum = ToArrayNonDist<string | number>; // (string | number)[]
+      ```
+
+### Mapped Types
++ **Mapping Modifiers**
+  - There are two additional modifiers which can be applied during mapping: `readonly` and `?`. You can remove or add these modifiers by prefixing with `-` or `+`. If you don’t add a prefix, then `+` is assumed.
+  - **Example**:
+    ```typescript
+    // Removes 'readonly' attributes from a type's properties
+    type CreateMutable<Type> = {
+      -readonly [Property in keyof Type]: Type[Property];
+    };
+    
+    type LockedAccount = {
+      readonly id: string;
+      readonly name: string;
+    };
+    
+    type UnlockedAccount = CreateMutable<LockedAccount>;
+    ```
+  - **Example**:
+    ```typescript
+    // Removes 'optional' attributes from a type's properties
+    type Concrete<Type> = {
+      [Property in keyof Type]-?: Type[Property];
+    };
+    
+    type MaybeUser = {
+      id: string;
+      name?: string;
+      age?: number;
+    };
+    
+    type User = Concrete<MaybeUser>;
+    ```
+
++ **Key Remapping via `as`**: Use as to remap keys in mapped types.
+  - **Example**:
+    ```typescript
+    type MappedTypeWithNewProperties<Type> = {
+        [Properties in keyof Type as NewKeyType]: Type[Properties]
+    }
+    ```
+
+### Template Literal Types
++ Template literal types extend string literal types.
++ **Union Expansion**: If a union type is used in a template literal, it creates a union of all possible strings.
+  - **Example**:
+    ```typescript
+    type EmailLocaleIDs = "welcome_email" | "email_heading";
+    type FooterLocaleIDs = "footer_title" | "footer_sendoff";
+    type AllLocaleIDs = `${EmailLocaleIDs | FooterLocaleIDs}_id`;
+    // "welcome_email_id" | "email_heading_id" | "footer_title_id" | "footer_sendoff_id"
+    ```
+  - **Cross Product of Unions**: Combining multiple unions results in a Cartesian product of the possible values.
+    + **Example**:
+      ```typescript
+      type Lang = "en" | "ja" | "pt";
+      type LocaleMessageIDs = `${Lang}_${AllLocaleIDs}`;
+      // "en_welcome_email_id" | "en_email_heading_id" | ... | "pt_footer_title_id" | "pt_footer_sendoff_id"
+      ```
+  - **Application Example**:
+  Define a function that listens for changes on object properties, ensuring type safety with template literal types.
+  ```typescript
+  type PropEventSource<Type> = {
+    on<Key extends keyof Type>(eventName: `${Key}Changed`, callback: (newValue: Type[Key]) => void): void;
+  };
+  ```
+
+> ***NOTE**: We generally recommend that people use ahead-of-time generation for large string unions, but this is useful in smaller cases.*
+
++ **Intrinsic String Manipulation Types**: TypeScript provides built-in types for manipulating strings at the type level. For example: `Uppercase<StringType>`, `Lowercase<StringType>` etc.
+
+<!-- TODO - Summary -->
+## Classes
