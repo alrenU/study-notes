@@ -1,4 +1,4 @@
-// NOTE: Make an example about the below things:
+// TODO: Make an example about the below things:
 // symbol type
 // funktors
 // point-free programming

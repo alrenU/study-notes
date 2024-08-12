@@ -6,27 +6,31 @@
 <!-- TS For JS Programmer -->
 <!-- TS For Functional Programmers -->
 <!-- TS Tooling In 5 Minutes -->
-+ **TypeScript (TS)**: A statically-typed *superset* of JavaScript (JS) that adds type annotations to the language. Since it is a superset of JS, any valid JS code is also valid TS code.
-  - **Superset (In Programming)**: A language that extends another language by adding new features while maintaining full compatibility with the original language.
-
++ **TypeScript (TS)**: A statically-typed *superset* of JavaScript (JS) that adds type annotations to the language. Because of that any valid JS code is also a valid TS code.
 + **Runtime Behavior**: TS preserves the runtime behavior of JS. For instance, dividing by zero in JS results in `Infinity` rather than throwing an exception. TS does not alter this behavior, so existing JS code will run the same way when converted to TS.
 + The TS compiler converts TS code into JS code for execution.
 + **Type Erasure**: Type annotations and other TS-specific types are removed during compilation. The resulting JS code does not include TS types.
-+ **Libraries and Frameworks**: TS does not include additional runtime libraries. It uses the same standard library and external libraries as JS. There are no TS-specific frameworks to learn.
++ **Libraries and Frameworks**: TS uses the same standard library and external libraries as JS. There are no TS-specific frameworks to learn.
 + **Tooling and Usage**
   - **Installing TypeScript**: Via *npm* or *Visual Studio* plugins.
   - **Class Constructors**: Using `public` in `constructor` parameters creates properties automatically.
-    + **Example**:
-      ```typescript
-        constructor(
-          public firstName: string,
-          public lastName: string
-        ) {}
-      ```
+    + **Example**: `constructor(public firstName: string) {}`
 
 + **Type Inference**: TS automatically determines the type of a variable based on the assigned value.
 + *Visual Studio Code* uses TS under the hood to enhance JS development.
-+ **Well-Known Symbols**: Special symbols built into the language for internal and meta-programming purposes.
++ **Well-Known Symbols**: Special symbols built into the language for internal and meta-programming purposes. For example `Symbol.iterator`, `Symbol.hasInstance` etc.
++ **Generator Functions**
+  - **Generator Function Syntax (`*`)**: The `*` is used in the function definition to indicate that it is a generator function. A generator function can pause its execution and later resume, allowing it to produce a series of values over time. You can use asynchronous functions with it.
+    + **Example**:
+      ```typescript
+      function* myGenerator() {
+        yield 1;
+        yield 2;
+        yield 3;
+      }
+      ```
+      Each `yield` statement produces a value and pauses the function until the next value is requested.
+
 + **Composing Types**:
   - **Unions (`|`)**: A value can be one of several types: `let value: number | string;`.
   - **Generics**: Create functions and classes that work with any type while maintaining type information.
