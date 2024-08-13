@@ -448,6 +448,7 @@
       type ArrOfStrOrNum = ToArrayNonDist<string | number>; // (string | number)[]
       ```
 
+<!-- TODO: Re-reaad mapped types section. -->
 ### Mapped Types
 + **Mapping Modifiers**
   - There are two additional modifiers which can be applied during mapping: `readonly` and `?`. You can remove or add these modifiers by prefixing with `-` or `+`. If you don’t add a prefix, then `+` is assumed.

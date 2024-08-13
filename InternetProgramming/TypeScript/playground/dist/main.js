@@ -1,4 +1,5 @@
-// NOTE: Make an example about the below things:
+"use strict";
+// TODO: Make an example about the below things:
 // symbol type
 // funktors
 // point-free programming
@@ -7,26 +8,27 @@
 // type assertions
 // type guards
 // type narrowing
+// type manipulation
+// template literal types
 // #-S
-var UserAccount = /** @class */ (function () {
-    function UserAccount(id, name) {
+class UserAccount {
+    constructor(id, name) {
         this.id = id;
         this.name = name;
     }
-    return UserAccount;
-}());
-var user = {
+}
+const user = {
     id: 0,
     name: "Hayes",
 };
-var userAccount = new UserAccount(0, "John");
+const userAccount = new UserAccount(0, "John");
 // #-E
 // #-S: Generics
 console.log("\n# Generics");
 function genericFunc(arg) {
     return arg;
 }
-var compGenericFunc = genericFunc;
+const compGenericFunc = genericFunc;
 console.log(compGenericFunc("hello"));
 // #-E
 // #-S: Structural Type System
@@ -34,11 +36,11 @@ console.log("\n# Structural Type System");
 function logCoordinates(coordinates) {
     console.log("x: ", coordinates.x, "y: ", coordinates.y);
 }
-var coordinates = {
+let coordinates = {
     x: 0,
     y: 0,
 };
-var coordinates_1 = {
+let coordinates_1 = {
     x: 0,
     y: 0,
     z: 0,
@@ -47,11 +49,11 @@ logCoordinates(coordinates);
 logCoordinates(coordinates_1);
 // #-E
 // #-S: Function Type
-var add = function (num_1, num_2) { return num_1 + num_2; };
-var strConcat = function (str_1, str_2) { return str_1; };
+let add = (num_1, num_2) => num_1 + num_2;
+let strConcat = (str_1, str_2) => str_1;
 // #-E
 // #-S: Union Types
-var weight;
+let weight;
 // #-E
 // #-S: Discriminated Union
 console.log("\n# Discriminated Union");
@@ -74,7 +76,7 @@ function employee(name, age, gender) {
     console.log("Name: ", name, "Age: ", age, "Gender: ", gender);
 }
 // If you would use just `gender = "man"` it would throw error.
-var gender = "man";
+let gender = "man";
 employee("Josh", 30, gender);
 // #-E
 // #-S: Passing Object As A Parameter
@@ -93,16 +95,16 @@ function exhaustiveness(shape) {
         case "square":
             return shape.squareMethod;
         default:
-            var _exhaustivenessCheck = shape;
+            const _exhaustivenessCheck = shape;
             return _exhaustivenessCheck;
     }
 }
-var triangle = { kind: "triangle", triangleMethod: "Triangle method." };
+const triangle = { kind: "triangle", triangleMethod: "Triangle method." };
 console.log(exhaustiveness(triangle));
 // #-E
 // #-S: Function Property
 console.log("\n# Function Property");
-var myFunction = function () {
+const myFunction = function () {
     console.log("Function called");
 };
 myFunction.description = "This is a function with a description property.";
@@ -111,18 +113,17 @@ myFunction();
 // #-E
 // #-S: Function With Constructor
 console.log("\n# Function With Constructor");
-var CarFactory = /** @class */ (function () {
-    function class_1(brand) {
+const CarFactory = class {
+    constructor(brand) {
         this.brand = brand;
         this.doorNumber = 4;
     }
-    return class_1;
-}());
+};
 function printCar(car) {
-    var newCar = new car("Audi");
+    const newCar = new car("Audi");
     return newCar;
 }
-var myCar = printCar(CarFactory);
+const myCar = printCar(CarFactory);
 console.log(myCar);
 // #-E
 // #-S: Generic Functions
