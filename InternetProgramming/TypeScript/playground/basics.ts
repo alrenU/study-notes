@@ -1,4 +1,4 @@
-export default function basics() {
+export default function Basics() {
     // # Public Parameters In Class Constructor
     console.log("\n# Public Parameters In Class Constructor");
 

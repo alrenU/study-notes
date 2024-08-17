@@ -19,8 +19,7 @@
 + **Type Inference**: TS automatically determines the type of a variable based on the assigned value.
 + *Visual Studio Code* uses TS under the hood to enhance JS development.
 + **Well-Known Symbols**: Special symbols built into the language for internal and meta-programming purposes. For example `Symbol.iterator`, `Symbol.hasInstance` etc.
-+ **Generator Functions**
-  - **Generator Function Syntax (`*`)**: The `*` is used in the function definition to indicate that it is a generator function. A generator function can pause its execution and later resume, allowing it to produce a series of values over time. You can use asynchronous functions with it.
++ **Generator Functions (`*`)**: They are a special type of function that allow you to iterate through a sequence of values lazily, meaning they produce values one at a time and only as needed. They are particularly useful for handling sequences or streams of data that may be too large to fit into memory all at once.
     + **Example**:
       ```typescript
       function* myGenerator() {

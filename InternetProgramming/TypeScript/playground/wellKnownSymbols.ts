@@ -1,4 +1,4 @@
-export default function wellKnownSymbols() {
+export default function WellKnownSymbols() {
     // # Well-Known Symbols
     console.log("\n# Well-Known Symbols");
 
