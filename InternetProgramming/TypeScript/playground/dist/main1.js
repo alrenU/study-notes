@@ -4,8 +4,12 @@ TODO:
 + Delete the `main.ts` file.
 + Rename the `main-1.ts` file as `main.ts`.
 */
-import Basics from "./basics.js";
+import Miscellaneous from "./miscellaneous.js";
 import GeneratorFunctions from "./generatorFunctions.js";
-Basics();
+import Unions from "./unions.js";
+import Generics from "./generics.js";
+Miscellaneous();
 // WellKnownSymbols();
 GeneratorFunctions();
+Unions();
+Generics();

@@ -5,10 +5,14 @@ TODO:
 + Rename the `main-1.ts` file as `main.ts`.
 */
 
-import Basics from "./basics.js";
+import Miscellaneous from "./miscellaneous.js";
 import WellKnownSymbols from "./wellKnownSymbols.js";
 import GeneratorFunctions from "./generatorFunctions.js";
+import Unions from "./unions.js";
+import Generics from "./generics.js";
 
-Basics();
+Miscellaneous();
 // WellKnownSymbols();
 GeneratorFunctions();
+Unions();
+Generics();

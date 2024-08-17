@@ -16,7 +16,7 @@ export default function GeneratorFunctions() {
     function* infiniteNumbers() {
         let i = 0;
         while (true) {
-            yield 5;
+            yield i++;
         }
     }
     const infNums = infiniteNumbers();

@@ -18,14 +18,15 @@
 
 + **Type Inference**: TS automatically determines the type of a variable based on the assigned value.
 + *Visual Studio Code* uses TS under the hood to enhance JS development.
-+ **Well-Known Symbols**: Special symbols built into the language for internal and meta-programming purposes. For example `Symbol.iterator`, `Symbol.hasInstance` etc.
-+ **Generator Functions (`*`)**: They are a special type of function that allow you to iterate through a sequence of values lazily, meaning they produce values one at a time and only as needed. They are particularly useful for handling sequences or streams of data that may be too large to fit into memory all at once.
+<!-- TODO: Put "Well-Known Symbols" into JS notes. -->
++ **Well-Known Symbols**: Special symbols built into the language for internal and meta-programming purposes.
+<!-- TODO: Put "Generator Functions" into JS notes. -->
++ **Generator Functions (`*`)**: Special type of functions that allow you to iterate through a sequence of values lazily, meaning they produce values one at a time and only. They are particularly useful for handling sequences or streams of data that may be too large to fit into memory all at once.
     + **Example**:
       ```typescript
       function* myGenerator() {
         yield 1;
         yield 2;
-        yield 3;
       }
       ```
       Each `yield` statement produces a value and pauses the function until the next value is requested.
@@ -35,17 +36,18 @@
   - **Generics**: Create functions and classes that work with any type while maintaining type information.
     + **Example**: `function getItem<Type>(item: Type): Type {}`
 
-+ **Call By Value**: Functions receive a copy of the value.
-  - **Primitives**: Changes do not affect the original value.
-  - **References (Objects and Arrays)**: Changes to object properties affect the original object.
+<!-- TODO: Put "Call By Value And Call By Reference" into JS notes. -->
++ **Call By Value And Call By Reference**: Functions receive a copy of the value.
+  - **Primitives**: Acts as *call by value*.
+  - **References (Objects and Arrays)**: Acts as *call by reference*.
 
 + **Primitive Types**
   - **JavaScript Types**: `boolean`, `bigint`, `number`, `string`, `symbol`, `undefined`, `null`
     + **`undefined` vs. `null`**:
       - `undefined` is a type on its own.
       - `null` is historically an object type but treated as its own type in TS.
-      - `null == undefined` is `true` (*loose equality*).
-      - `null === undefined` is `false` (*strict equality*).
+      - `null == undefined` is `true` in *loose equality*.
+      - `null === undefined` is `false` in *strict equality*.
   - **TypeScript Additions**:
     + **`unknown`**: Represents any value but requires type checking before use.
     + **`never`**: Represents values which are never observed. In a return type, this means that the function throws an exception or terminates execution of the program.
@@ -60,6 +62,7 @@
         let fst1: <T, U>(a: T, b: U) => T = (a, b) => a;
         ```
 
+<!-- TODO: Put "Boxed Types" into JS notes. -->
 + **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
 + **Intersections**: Combine multiple types into one, including properties and methods from all types.
   - **Example**:
@@ -80,11 +83,12 @@
     let s = "right";
     pad("hi", 10, s); // error
     ```
-    Here, `s` is of type string (because `"right"` gets widened to string when assigned to `s`). Since string is not the same as the union type `"left" | "right"`, TS gives an error. To fix this, you can explicitly declare `s` with the union type:
+    Here, `s` is of type string (because `right` gets widened to string when assigned to `s`). Since string is not the same as the union type `"left" | "right"`, TS gives an error. To fix this, you can explicitly declare `s` with the union type:
     ```typescript
     let s: "left" | "right" = "right";
     pad("hi", 10, s); // works
     ```
+    + `declare` keyword is used to tell the TS compiler about the existence of an entity (such as a function, variable, class, or module) without providing an implementation.
 
 + **Type Parameters**: Placeholders for types in functions, classes, or interfaces.
   - **Example**:
@@ -96,16 +100,18 @@
   - Type parameters are conventionally single uppercase letters.
   - Type parameters should only be used to propagate type information, such as constraining parameters to be the same type.
 
-+ **Higher-Kinded Types**: Abstract types that take other types as parameters. Functors are an example of higher-kinded types.
-  <!-- Give an example about funktor. -->
-  - **Funktor**: A functor is a type that can be mapped over.
-  - **Relationship Between HKTs and Functors**: Functors are an example of higher-kinded types. They are a specific use case of HKTs where the type constructor. HKTs are a broader concept that encompasses various type patterns and abstractions, including functors.
+<!-- TODO: The higher-kinded types and funktors are functional programming concept. Put them into their related section later. -->
++ **Higher-Kinded Types**: Abstract types that take other types as parameters. Functors are an example of higher-kinded types. Both HKT and funktors comes from functional programming and does not represented in TS.
+  - **Funktor**: In functional programming, a functor is a container type that supports a map operation.
+  - Functors are an example of higher-kinded types. They are a specific use case of HKTs where the type constructor. HKTs are a broader concept that encompasses various type patterns and abstractions, including functors.
 
+<!-- TODO: The point-free programming is a functional programming concept. Put it into its related section later. -->
 + **Point-Free Programming (Tacit Programming)**: It is a style of programming where you write functions without explicitly mentioning the arguments they operate on. Instead, you define functions by composing other functions.
 + **`readonly` Modifier**: Makes properties immutable.
   - `readonly`, `Readonly<T>` (makes all properties readonly), `ReadonlyArray<T>`
   - It does not mean its internal contents can’t be changed. It means the property itself can’t be re-written to.
 
+<!-- Bookmark -->
 + **`const`**
   - In `const` variables *reference* is immutable but the *referent* is still mutable.
   - You can also use a *const-assertion*, which operates on arrays and object literals: `let a = [1, 2, 3] as const;`.
