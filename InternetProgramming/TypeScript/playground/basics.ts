@@ -1,5 +1,5 @@
 export default function basics() {
-    // #-S: Public Parameters In Class Constructor
+    // # Public Parameters In Class Constructor
     console.log("\n# Public Parameters In Class Constructor");
 
     class Person {
@@ -11,5 +11,4 @@ export default function basics() {
     const person = new Person("John", "Doe");
     console.log("Name: ", person.getName());
     console.log("Surname: ", person.getSurname());
-    // #-E
 }

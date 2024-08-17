@@ -42,6 +42,108 @@ export default function wellKnownSymbols() {
     }
     const obj = new CustomObject();
     console.log(Object.prototype.toString.call(obj));
+    // ## `Symbol.hasInstance`: Customizes the behavior of the `instanceof` operator.
+    // By defining this symbol, you can control whether an object should be considered an instance of a class.
+    console.log("## Symbol.hasInstance");
+    class MyClass {
+        static [Symbol.hasInstance](instance) {
+            return instance.customCheck === true;
+        }
+    }
+    const myClass = { customCheck: true };
+    console.log(myClass instanceof MyClass);
+    // ## `Symbol.toPrimitive`: Allows you to define how an object should be converted to a primitive value.
+    console.log("## Symbol.toPrimitive");
+    class MyClass1 {
+        [Symbol.toPrimitive](hint) {
+            if (hint === "string") {
+                return "MyClass1 is a string.";
+            }
+            else if (hint === "number") {
+                return 42;
+            }
+        }
+    }
+    const myClass1 = new MyClass1();
+    console.log(String(myClass1));
+    console.log(Number(myClass1));
+    // ## `Symbol.for` and `Symbol.keyFor`: These methods are used to create or access global symbols and to get the key for a given symbol.
+    console.log("## Symbol.for and Symbol.keyFor");
+    const symbol1 = Symbol.for("mySymbol");
+    const symbol2 = Symbol.for("mySymbol");
+    console.log(symbol1 === symbol2);
+    const symbol1Key = Symbol.keyFor(symbol1);
+    console.log(symbol1Key);
+    // ## `Symbol.match`: Checks whether a string matches a regular expression.
+    console.log("## Symbol.match");
+    class MyRegExp extends RegExp {
+        constructor(pattern) {
+            super(pattern);
+        }
+        [Symbol.match](string) {
+            const match = super[Symbol.match](string);
+            if (match) {
+                return match;
+            }
+            return null;
+        }
+    }
+    const myRegExp = new MyRegExp("test");
+    console.log("hello, this is test".match(myRegExp));
+    // ## `Symbol.replace`: Replaces a substring with a new value.
+    console.log("## Symbol.replace");
+    class MyReplaceRegExp {
+        [Symbol.replace](string, replacement) {
+            return `Replaced ${string} with ${replacement}`;
+        }
+    }
+    const myReplaceRegExp = new MyReplaceRegExp();
+    // `replace` method encounters an object with a `[Symbol.replace]` method and it invokes that method instead of performing a regular expression-based replacement.
+    console.log("test".replace(myReplaceRegExp, "example"));
+    // ## `Symbol.search`: Checks for if a string has a substring.
+    console.log("## Symbol.search");
+    class MySearchRegexp {
+        [Symbol.search](string) {
+            return string.indexOf("custom");
+        }
+    }
+    const mySearchRegExp = new MySearchRegexp();
+    console.log("This is a custom search".search(mySearchRegExp));
+    // ## `Symbol.split`: Determines how to split a string into an array of substrings.
+    console.log("## Symbol.split");
+    class MySplitRegExp {
+        [Symbol.split](string) {
+            return string.split("custom").map(s => `Segment: ${s}`);
+        }
+    }
+    const mySplitRegExp = new MySplitRegExp();
+    console.log("This is a custom split example".split(mySplitRegExp));
+    // ## `Symbol.unscopables`: Defines properties that should not be included in with statements.
+    console.log("## Symbol.unscopables");
+    const unscopableObj = {
+        [Symbol.unscopables]: {
+            customProperty: true
+        },
+        customProperty: "value"
+    };
+    // The following code works in JS.
+    // with (unscopableObj) {
+    //     console.log(customProperty);
+    // }
+    // ## `Symbol.species`: Allows subclasses to override the constructor used for instances created in methods like `Array.prototype.slice`.
+    console.log("## Symbol.species");
+    class MyArray extends Array {
+        constructor(...args) {
+            super(...args);
+        }
+        static get [Symbol.species]() {
+            return Array;
+        }
+    }
+    const myArr = new MyArray(1, 2, 3);
+    const newArray = myArr.slice(0);
+    console.log(newArray instanceof MyArray);
+    console.log(newArray instanceof Array);
     // ## `Symbol.asyncIterator`: Used to define an asynchronous iterator for an object.
     // It is used in conjunction with `for await...of` loops to iterate over asynchronous data sources.
     console.log("## Symbol.asyncIterator");
