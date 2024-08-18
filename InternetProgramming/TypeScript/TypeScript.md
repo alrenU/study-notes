@@ -71,7 +71,7 @@
     interface InterfaceB { b: number; }
     type Combined = InterfaceA & InterfaceB;
     ```
-  
+
 + **Unit Types**: Represent exactly one value. Useful for simulating enums.
   - **Example**:
     ```typescript
@@ -111,7 +111,6 @@
   - `readonly`, `Readonly<T>` (makes all properties readonly), `ReadonlyArray<T>`
   - It does not mean its internal contents can’t be changed. It means the property itself can’t be re-written to.
 
-<!-- Bookmark -->
 + **`const`**
   - In `const` variables *reference* is immutable but the *referent* is still mutable.
   - You can also use a *const-assertion*, which operates on arrays and object literals: `let a = [1, 2, 3] as const;`.
@@ -128,7 +127,8 @@
     + **`Readonly<T>`**: Makes all properties *read-only*.
 
 ## The Basics
-+ JavaScript uses dynamic typing, where types are determined at runtime.
+<!-- TODO: Put below matter to the JS section. -->
++ JS uses ***dynamic typing***, where types are determined at runtime.
 + **Non-Exception Failures**: In TS, this refers to issues detected during type checking that don't cause the compiler to crash. Common types include: *type errors*, *syntax errors*, *semantic errors*.
 + **`tsc`**: The TS compiler. It compiles TS code into JS.
 + **`--noEmitOnError`**: By default, TS will emit (generate) JS code even if there are errors. Using this flag prevents the emission of JS files if there are any compilation errors.
@@ -138,20 +138,20 @@
   - **`strictNullChecks`**: Enforces explicit handling of `null` and `undefined`. By default, these values can be assigned to any type. This flag makes it necessary to explicitly handle or check for `null` and `undefined` values, improving code safety.
 
 ## Everyday Types
-+ **`any` Type**: Represents any value and bypasses TypeScript’s type checking.
++ **`any` Type**: Represents any value and bypasses TS’s type checking.
   - Use sparingly as it negates type safety.
-  - When TypeScript cannot infer a type, it defaults to `any`.
+  - When TS cannot infer a type, it defaults to `any`.
 
 + **Type Annotations**: Explicitly specify types for variables, function parameters, and return values.
   - **Example**: `let num: number = 42;`
 
 + **Functions**
-  - *Return type annotation* specifies the return type of a function.
+  - ***Return type annotation*** specifies the return type of a function.
   - Annotate functions returning promises with the `Promise` type.
   - **Anonymous Functions**: Functions without names, often used as arguments in other functions.
   - **Contextual Typing**: Infers the type of a value based on how and where it’s used.
 
-+ **Optional Properties (`?`)**: Properties that may or may not be present in an object (checks for `undefined`).
++ **Optional Properties (`?`)**: Checks for `undefined` of an object's property.
   - **Example**: `interface User { email?: string; }`
 
 + **Non-null Assertion Operator (`!`)**: Asserts that a value is not `null` or `undefined`.
@@ -164,8 +164,8 @@
   - **Untagged Unions**: No runtime information for distinguishing types.
   - **Discriminated Unions (Tagged Unions)**: Each type in the union has a common property.
 
-+ **Type Aliases**: Create a new name for a type.
-+ **Interfaces**: Define the shape of an object.
++ **Type Aliases**: Creates a new name for a type.
++ **Interfaces**: Defines the shape of an object.
   - **Structural Typing (Duck Typing)**: Objects with the same shape are considered the same type.
 
 + **Type Aliases vs. Interfaces**
@@ -173,20 +173,19 @@
   - Interfaces may be more performant for the compiler when extending types.
 
 + **Type Assertions**: Explicitly specify a value’s type when TS cannot infer it.
-  - **Syntaxes**:
+  - **Syntax**:
     + **Angle-Bracket Syntax**: `<string>someValue`
     + **`as` Syntax**: `document.querySelector('input') as HTMLInputElement;`
-  - **Complex Coercion**: Sometimes *type assertions* can be too conservative and will disallow more complex coercions that might be valid. If this happens, you can use two assertions, first to `any` or `unknown`, then to the desired type.
-    + **Example**: `const a = expr as any as T;`
+  - **Complex Coercion**: Sometimes *type assertions* can be too conservative and will disallow more complex coercions that might be valid. If this happens, you can use two assertions, first to `any` or `unknown`, then to the desired type. You are casting to `any` or `unknown` first because of it allows you to bypass TS’s strict type checking temporarily.
 
-+ **Literal Types**: Exact values of a type, typically from `const` variables.
-  - `const constantString = "Hello World";` has the literal type *"Hello World"*.
-  - **Example**: Usage with Functions
++ **Literal Types**: Exact values of a type, typically from `const` variables. For example `const constantString = "Hello World";` has the literal type *"Hello World"*.
+  - **Example**:
+    Usage with Functions
     ```typescript
     declare function handleRequest(url: string, method: "GET" | "POST"): void;
-    
+
     const req = { url: "https://example.com", method: "GET" };
-    handleRequest(req.url, req.method); // Will not work
+    handleRequest(req.url, req.method); // Will not work because TS thinks of the `method` property is a `string` type.
 
     const req1 = { url: "https://example.com", method: "GET" as "GET" };
     handleRequest(req1.url, req1.method); // Works
@@ -198,8 +197,7 @@
     handleRequest(req3.url, req3.method); // Works
     ```
 
-    In the above code the first example fails because TS thinks of the `method` property is a `string` type.
-
+<!-- Bookmark -->
 + **Enums**: Define a set of named constants.
   - Use to describe values that can be one of a set of named constants, but consider carefully if they add value over other solutions.
 
@@ -262,7 +260,7 @@
     + In this example the `Type` is called **type parameter**.
   - **Constraints**: It refers to restrictions placed on generic type parameters to ensure that they adhere to a specific structure or interface.
     + **Example**: `function logLength<T extends { length: number }>(arg: T): T {}`
-  
+
   > ***NOTE**: When possible, use the *type parameter* itself rather than *constraining* it.*
 
 + In JS, if you call a function with more arguments than there are parameters, the extra arguments are simply ignored. TS behaves the same way.
@@ -306,7 +304,7 @@
       // address: "123 Main St" // Error
     };
     ```
-  
+
   > ***NOTE**: Excess property errors are usually bugs. Review your code before working around them.*
 
 + **Option Bags (Options Objects)**: A pattern where a single object with optional properties is passed as a function argument. This approach is also known as.
@@ -416,7 +414,7 @@
   - **Syntax**: `SomeType extends OtherType ? TrueType : FalseType`
 
 + **Using Conditional Types with Generics**
-  - **Example**:  
+  - **Example**:
     Instead of defining multiple overloads, use conditional types to simplify.
     ```typescript
     interface IdLabel { id: number; }
@@ -463,12 +461,12 @@
     type CreateMutable<Type> = {
       -readonly [Property in keyof Type]: Type[Property];
     };
-    
+
     type LockedAccount = {
       readonly id: string;
       readonly name: string;
     };
-    
+
     type UnlockedAccount = CreateMutable<LockedAccount>;
     ```
   - **Example**:
@@ -477,13 +475,13 @@
     type Concrete<Type> = {
       [Property in keyof Type]-?: Type[Property];
     };
-    
+
     type MaybeUser = {
       id: string;
       name?: string;
       age?: number;
     };
-    
+
     type User = Concrete<MaybeUser>;
     ```
 

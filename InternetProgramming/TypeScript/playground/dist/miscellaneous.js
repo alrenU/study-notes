@@ -14,7 +14,7 @@ export default function Miscellaneous() {
     const person = new Person("John", "Doe");
     console.log("Name: ", person.getName());
     console.log("Surname: ", person.getSurname());
-    // *****
+    // ***
     // ## Call By Value
     console.log("## Call By Value");
     function callByValue(x) {
@@ -29,7 +29,7 @@ export default function Miscellaneous() {
     const obj = { x: 10 };
     callByReference(obj);
     console.log("(call by reference) Previous was 10 and now: ", obj.x);
-    // *****
+    // ***
     // ## `unknown` Usage
     console.log("## `unknown` Usage");
     function receiveValue(value) {
@@ -42,7 +42,7 @@ export default function Miscellaneous() {
     }
     receiveValue(10);
     receiveValue("Hello World");
-    // *****
+    // ***
     // ## Intersections
     console.log("## Intersections");
     class Coordinates {
@@ -63,7 +63,7 @@ export default function Miscellaneous() {
         width: 30,
         height: 40,
     };
-    // *****
+    // ***
     // ## Point-Free Programming
     console.log("## Point-Free Programming");
     // ### Non-Point-Free Approach
@@ -80,14 +80,42 @@ export default function Miscellaneous() {
     const numbers = [1, 2, 3];
     console.log(transform(numbers));
     // ### Point-Free Approach
+    // TODO: Make more examples on your own by using point-free programming.
     console.log("### Point-Free Approach");
     // Function to compose two functions.
     const compose = (f, g) => (x) => f(g(x));
     // `T` is the type of the input to the second function (g).
     // `U` is the type of the output from `g` and input to `f`.
     // `V` is the type of the output from `f`.
-    // One way of simplifying the above function: const compose = (f: (arg: any) => any, g: (arg: any) => any) => (x: any) => f(g(x));
+    // Simplifying the above function:
+    // const compose = <T, U, V>(f: (arg: U) => V, g: (arg: T) => U) => (x: T) => f(g(x));
+    // const compose = (f: (arg: number) => number, g: (arg: number) => number) => (x: number) => f(g(x));
     // Create a point-free transformation function.
     const transform1 = compose((arr) => arr.map(addOne), (arr) => arr.map(double));
     console.log(transform1(numbers));
+    // ***
+    // ## Mapped Types
+    // ### `Partial<T>`
+    console.log("### `Partial<T>`");
+    // If we do not want to use the salary property, we can use `Partial<T>`.
+    const user = {
+        name: "John",
+        surname: "Doe",
+    };
+    // ***
+    // ## `Promise` Return Type
+    console.log("## `Promise` Return Type");
+    function fetchData(url) {
+        return new Promise((resolve, reject) => {
+            if (typeof url === "string") {
+                resolve("The API endpoint received.");
+            }
+            else if (typeof url === null) {
+                reject("The API endpoint did not receive.");
+            }
+        });
+    }
+    fetchData("https://example.com")
+        .then((data) => { console.log(data); })
+        .catch((error) => { console.log(error); });
 }

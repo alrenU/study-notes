@@ -15,8 +15,7 @@ export default function Miscellaneous() {
     console.log("Name: ", person.getName());
     console.log("Surname: ", person.getSurname());
 
-    // *****
-
+    // ***
     // ## Call By Value
     console.log("## Call By Value");
 
@@ -36,8 +35,7 @@ export default function Miscellaneous() {
     callByReference(obj);
     console.log("(call by reference) Previous was 10 and now: ", obj.x);
 
-    // *****
-
+    // ***
     // ## `unknown` Usage
     console.log("## `unknown` Usage");
 
@@ -52,8 +50,7 @@ export default function Miscellaneous() {
     receiveValue(10);
     receiveValue("Hello World");
 
-    // *****
-
+    // ***
     // ## Intersections
     console.log("## Intersections");
 
@@ -73,8 +70,7 @@ export default function Miscellaneous() {
         height: 40,
     };
 
-    // *****
-
+    // ***
     // ## Point-Free Programming
     console.log("## Point-Free Programming");
 
@@ -118,4 +114,41 @@ export default function Miscellaneous() {
     );
 
     console.log(transform1(numbers));
+
+    // ***
+    // ## Mapped Types
+    // ### `Partial<T>`
+    console.log("### `Partial<T>`");
+
+    interface User {
+        name: string;
+        surname: string;
+        salary: number;
+    }
+
+    // If we do not want to use the salary property, we can use `Partial<T>`.
+    const user: Partial<User> = {
+        name: "John",
+        surname: "Doe",
+    };
+
+    // ***
+    // ## `Promise` Return Type
+    console.log("## `Promise` Return Type");
+
+    function fetchData(url: string | null): Promise<string> {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (typeof url === "string") {
+                    resolve("The API endpoint received.");
+                } else if (typeof url === null) {
+                    reject("The API endpoint did not receive.");
+                }
+            }, 1000);
+        });
+    }
+
+    fetchData("https://example.com")
+        .then((data) => { console.log(data) })
+        .catch((error) => { console.log(error) });
 }
