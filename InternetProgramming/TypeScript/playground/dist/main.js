@@ -1,143 +1,50 @@
-"use strict";
-// TODO: Make an example about the below things:
-// symbol type
-// funktors
-// point-free programming
-// importing and exporting
-// readonly modifier
-// type assertions
-// type guards
-// type narrowing
-// type manipulation
-// template literal types
-// #-S
-class UserAccount {
-    constructor(id, name) {
-        this.id = id;
-        this.name = name;
+// # `unknown` Usage
+console.log("\n# `unknown` Usage");
+function receiveValue(value) {
+    if (typeof value === "number") {
+        console.log("It is number: ", value);
+    }
+    else if (typeof value === "string") {
+        console.log("It is string: ", value);
     }
 }
-const user = {
-    id: 0,
-    name: "Hayes",
-};
-const userAccount = new UserAccount(0, "John");
-// #-E
-// #-S: Generics
-console.log("\n# Generics");
-function genericFunc(arg) {
-    return arg;
-}
-const compGenericFunc = genericFunc;
-console.log(compGenericFunc("hello"));
-// #-E
-// #-S: Structural Type System
-console.log("\n# Structural Type System");
-function logCoordinates(coordinates) {
-    console.log("x: ", coordinates.x, "y: ", coordinates.y);
-}
-let coordinates = {
-    x: 0,
-    y: 0,
-};
-let coordinates_1 = {
-    x: 0,
-    y: 0,
-    z: 0,
-};
-logCoordinates(coordinates);
-logCoordinates(coordinates_1);
-// #-E
-// #-S: Function Type
-let add = (num_1, num_2) => num_1 + num_2;
-let strConcat = (str_1, str_2) => str_1;
-// #-E
-// #-S: Union Types
-let weight;
-// #-E
-// #-S: Discriminated Union
-console.log("\n# Discriminated Union");
-function printAnimal(animal) {
-    if (animal.type === "lion") {
-        console.log(animal.sound);
+receiveValue(10);
+receiveValue("Hello World");
+// # Point-Free Programming
+console.log("\n# Point-Free Programming");
+// ## Non-Point-Free Approach
+console.log("## Non-Point-Free Approach");
+function double(x) { return x * 2; }
+function addOne(x) { return x + 1; }
+function transform(x) { return x.map(num => addOne(double(num))); }
+console.log(transform([1, 2, 3]));
+// ## Point-Free Approach
+// TODO: Make more examples on your own by using point-free programming.
+console.log("## Point-Free Approach");
+const compose = (f, g) => (x) => f(g(x));
+// `T` is the type of the input to the second function (g).
+// `U` is the type of the output from `g` and input to `f`.
+// `V` is the type of the output from `f`.
+// Simplifying the above function:
+// const compose = <T, U, V>(f: (arg: U) => V, g: (arg: T) => U) => (x: T) => f(g(x));
+// const compose = (f: (arg: number) => number, g: (arg: number) => number) => (x: number) => f(g(x));
+// Create a point-free transformation function.
+const transform1 = compose((arr) => arr.map(addOne), (arr) => arr.map(double));
+console.log(transform1([1, 2, 3]));
+// # Conditional Types Wİth Generics
+console.log("\n# Conditional Types Wİth Generics");
+function createLabel(input) {
+    if (typeof input === "number") {
+        return { id: input };
     }
-    else if (animal.type === "bird") {
-        console.log(animal.mouthType);
+    else {
+        return { name: input };
     }
 }
-printAnimal({ type: "lion", sound: "roar" });
-printAnimal({ type: "bird", mouthType: "beak" });
-;
-;
-// #-E
-// #-S: Unit Type
-console.log("\n# Unit Type");
-function employee(name, age, gender) {
-    console.log("Name: ", name, "Age: ", age, "Gender: ", gender);
-}
-// If you would use just `gender = "man"` it would throw error.
-let gender = "man";
-employee("Josh", 30, gender);
-// #-E
-// #-S: Passing Object As A Parameter
-console.log("\n# Passing Object as a Parameter");
-function printCoord(pt) {
-    console.log("X: ", pt.x, "Y:", pt.y);
-}
-printCoord({ x: 10, y: 15 });
-// #-E
-// #-S: Exhaustiveness Checking
-console.log("\n# Exhaustiveness Checking");
-function exhaustiveness(shape) {
-    switch (shape.kind) {
-        case "circle":
-            return shape.circleMethod;
-        case "square":
-            return shape.squareMethod;
-        default:
-            const _exhaustivenessCheck = shape;
-            return _exhaustivenessCheck;
-    }
-}
-const triangle = { kind: "triangle", triangleMethod: "Triangle method." };
-console.log(exhaustiveness(triangle));
-// #-E
-// #-S: Function Property
-console.log("\n# Function Property");
-const myFunction = function () {
-    console.log("Function called");
-};
-myFunction.description = "This is a function with a description property.";
-console.log(myFunction.description);
-myFunction();
-// #-E
-// #-S: Function With Constructor
-console.log("\n# Function With Constructor");
-const CarFactory = class {
-    constructor(brand) {
-        this.brand = brand;
-        this.doorNumber = 4;
-    }
-};
-function printCar(car) {
-    const newCar = new car("Audi");
-    return newCar;
-}
-const myCar = printCar(CarFactory);
-console.log(myCar);
-// #-E
-// #-S: Generic Functions
-console.log("\n# Generic Functions");
-function identity(arg) {
-    return arg;
-}
-console.log(identity(16));
-console.log(identity("hello"));
-// #-E
-// #-S: Function Constraints
-console.log("\n# Function Constraints");
-function getLength(arg) {
-    return arg.length;
-}
-console.log(getLength("hello"));
-// #-E
+console.log(createLabel(1));
+console.log(createLabel("test"));
+// ## Inferring Within Conditional Types
+console.log("## Inferring Within Conditional Types");
+const val = "hello";
+console.log(val);
+export {};

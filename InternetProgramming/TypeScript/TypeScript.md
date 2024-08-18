@@ -197,9 +197,7 @@
     handleRequest(req3.url, req3.method); // Works
     ```
 
-<!-- Bookmark -->
-+ **Enums**: Define a set of named constants.
-  - Use to describe values that can be one of a set of named constants, but consider carefully if they add value over other solutions.
++ **Enums (Enumeration)**: TS supports enums.
 
 ## Narrowing
 + **Narrowing**: Narrowing is the process of refining a variable's type to a more specific type based on the program's control flow. Methods to achieve narrowing include:
@@ -208,7 +206,12 @@
   - **`in` Operator Narrowing**
   - **`instanceof` Narrowing**
   - **Control Flow Analysis**
-  - **Assignments**:  TypeScript narrows the left side based on the right side of the assignment.
+  - **Assignments**: TypeScript narrows the left side based on the right side of the assignment.
+    + **Example**:
+      ```typescript
+      let value: string | number;
+      value = 42;
+      ```
   - **Assertion Functions**: Used to assert a variable's type at runtime.
    + **Example**: `function assertIsString(value: any): asserts value is string {}`
   - **Type Predicates**: Define user-defined type guards.
@@ -221,8 +224,7 @@
      ```
   - **Discriminated Unions**
   - **Exhaustiveness Checking**
-    + Ensures all cases of a union type are handled.
-    + Uses the `never` type for checking.
+    + Ensures all possible cases of a union type are handled. The `never` type is used to catch any unhandled cases, ensuring your code is complete and error-free.
     + **Example**:
       ```typescript
       type Shape = Circle | Square;
@@ -239,9 +241,10 @@
         }
       }
       ```
+      By assigning shape to `_exhaustiveCheck`, TS checks if shape can be assigned to `never`. If shape is of any type other than never, TS will throw a compile-time error.
 
 + In JavaScript, `typeof null` returns `"object"` (historical quirk).
-+ In JS, constructs like `if` first *coerce* their conditions to booleans to make sense of them. Truthy and falsy values:
++ In JS, constructs like `if` first *coerce* their conditions to booleans to make sense of them. Here is the truthy and falsy values:
   - **Falsy**: `0`, `NaN`, `""` (empty string), `0n` (bigint zero), `null`, `undefined`
   - **Truthy**: All other values.
 
@@ -264,27 +267,18 @@
   > ***NOTE**: When possible, use the *type parameter* itself rather than *constraining* it.*
 
 + In JS, if you call a function with more arguments than there are parameters, the extra arguments are simply ignored. TS behaves the same way.
-
 + **Function Overloads**: Allows you to define multiple versions of a function with the same name but different parameter types or numbers.
   - **Overload Signature**: You define multiple signatures for a function, each specifying a different set of parameters and return types.
-  - **Implementation Signature**: The actual implementation of the function (the function body) must match one of the overload signatures.
+  - **Implementation Signature**: The actual implementation of the function must match one of the overload signatures.
 
   > ***NOTE**: Prefer union types for parameters over overloads when possible.*
 
 + **Type Safety**: Ensures values are used consistently with their types.
 + In JS, a function’s return type is `undefined`. In TS, it’s `void`.
 + **Untyped Function Call**: Refers to function calls where TS lacks enough information to infer the types of the function’s parameters or return value.
-
 + **Parameter Destructuring**
   - Type annotation for destructured objects should be placed after the destructuring syntax.
-    + **Example**:
-      ```typescript
-      function sum({ a, b, c }: { a: number; b: number; c: number }) {}
-
-      // Same as prior example
-      type ABC = { a: number; b: number; c: number };
-      function sum({ a, b, c }: ABC) {}
-      ```
+    + **Example**: `function sum({ a, b, c }: { a: number; b: number; c: number }) {}`
 
 ## Object Types
 + **Index Signatures**: Allow specifying the types of values that can be accessed using dynamic keys. Useful when the keys are not known ahead of time but you want to enforce type constraints on values.
@@ -307,11 +301,11 @@
 
   > ***NOTE**: Excess property errors are usually bugs. Review your code before working around them.*
 
-+ **Option Bags (Options Objects)**: A pattern where a single object with optional properties is passed as a function argument. This approach is also known as.
++ **Option Bags (Options Objects)**: A pattern where a single object with optional properties is passed as a function argument.
   - **Example**: `function createUser({ name, age }: { name: string; age?: number; }) {}`
 
 + **Extending Types**: Create a superset of an interface by using the `extends` keyword.
-+ **Declaration Merging**: TS merges properties from multiple interfaces with the same name into a single interface. Only interfaces and namespaces (or modules) support merging in TypeScript.
++ **Declaration Merging**: TS merges properties from multiple interfaces with the same name into a single interface. Only interfaces and namespaces (or modules) support merging in TS.
   - **Example**:
     ```typescript
     interface Person { name: string; }
@@ -347,6 +341,7 @@
     + Use a placeholder (e.g., `T`, `Type`) that is replaced with an actual type during use.
 
 > ***NOTE**: You can create generic interface and class but it is not possible to create generic enums and namespaces.*
+
 + You can use constructors to create instances of generic types.
   - **Example**: `function create<Type>(c: { new (): Type }): Type { return new c(); }`
 
@@ -371,15 +366,15 @@
     ```
 
 ### The `typeof` Type Operator
-+ **`ReturnType<FunctionName>`**: Extracts the return type of a function type. It is used with types only.
 + **`typeof`**: is used to get the type of a variable or a property. It can be used with both types and values.
++ **`ReturnType<FunctionName>`**: Extracts the return type of a function type. It is used with types only.
 
 ### Indexed Access Types
-+ Indexed Access Types in TypeScript allow you to access the type of a property in an object type using an index. This feature is particularly useful for dynamically retrieving the type of a property from a given type.
++ Indexed Access Types in TS allow you to access the type of a property in an object type using an index. This feature is particularly useful for dynamically retrieving the type of a property from a given type.
   - **Example**:
     ```typescript
     interface Person { name: string; }
-    type NameType = Person['name']; // NameType is inferred as string
+    type NameType = Person['name'];
     ```
 
 + Indexed Access Types can also be used with *index signatures*.
@@ -404,24 +399,30 @@
   ```
   Thus, you can access property types:
   ```typescript
-  type Age = typeof MyArray[number]["age"]; // Age is inferred as number
+  type Age = typeof MyArray[number]["age"];
   ```
 
 > ***NOTE**: Indexed Access Types work with types, not values. You cannot use a constant value in place of a type when indexing.*
 
 ### Conditional Types
-+ *Conditional types* enable you to define types based on conditions, similar to how conditional statements work in programming.
++ Conditional types enable you to define types based on conditions, similar to how conditional statements work in programming.
   - **Syntax**: `SomeType extends OtherType ? TrueType : FalseType`
 
-+ **Using Conditional Types with Generics**
++ **Using Conditional Types With Generics**
   - **Example**:
     Instead of defining multiple overloads, use conditional types to simplify.
     ```typescript
     interface IdLabel { id: number; }
     interface NameLabel { name: string; }
-
     type Label<T> = T extends number ? IdLabel : NameLabel;
-    function createLabel<T extends number | string>(input: T): Label<T> {}
+
+    function createLabel<T extends number | string>(input: T): Label<T> {
+        if (typeof input === "number") {
+            return { id: input } as Label<T>;
+        } else {
+            return { name: input } as Label<T>;
+        }
+    }
     ```
 
 + **Inferring Within Conditional Types**
@@ -451,7 +452,7 @@
       type ArrOfStrOrNum = ToArrayNonDist<string | number>; // (string | number)[]
       ```
 
-<!-- TODO: Re-reaad mapped types section. -->
+<!-- TODO: Re-read mapped types section. -->
 ### Mapped Types
 + **Mapping Modifiers**
   - There are two additional modifiers which can be applied during mapping: `readonly` and `?`. You can remove or add these modifiers by prefixing with `-` or `+`. If you don’t add a prefix, then `+` is assumed.
