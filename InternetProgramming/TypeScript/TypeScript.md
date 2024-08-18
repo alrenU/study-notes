@@ -2,65 +2,83 @@
 + (Suggested Book In Official Docs) JavaScript: The Good Parts
 
 # Notes From Offical Documents
-<!-- TS For New Programmer -->
-<!-- TS For JS Programmer -->
-<!-- TS For Functional Programmers -->
-<!-- TS Tooling In 5 Minutes -->
-+ **TypeScript (TS)**: A statically-typed *superset* of JavaScript (JS) that adds type annotations to the language. Because of that any valid JS code is also a valid TS code.
-+ **Runtime Behavior**: TS preserves the runtime behavior of JS. For instance, dividing by zero in JS results in `Infinity` rather than throwing an exception. TS does not alter this behavior, so existing JS code will run the same way when converted to TS.
-+ The TS compiler converts TS code into JS code for execution.
-+ **Type Erasure**: Type annotations and other TS-specific types are removed during compilation. The resulting JS code does not include TS types.
-+ **Libraries and Frameworks**: TS uses the same standard library and external libraries as JS. There are no TS-specific frameworks to learn.
-+ **Tooling and Usage**
-  - **Installing TypeScript**: Via *npm* or *Visual Studio* plugins.
-  - **Class Constructors**: Using `public` in `constructor` parameters creates properties automatically.
-    + **Example**: `constructor(public firstName: string) {}`
-
-+ **Type Inference**: TS automatically determines the type of a variable based on the assigned value.
-+ *Visual Studio Code* uses TS under the hood to enhance JS development.
-<!-- TODO: Put "Well-Known Symbols" into JS notes. -->
-+ **Well-Known Symbols**: Special symbols built into the language for internal and meta-programming purposes.
-<!-- TODO: Put "Generator Functions" into JS notes. -->
-+ **Generator Functions (`*`)**: Special type of functions that allow you to iterate through a sequence of values lazily, meaning they produce values one at a time and only. They are particularly useful for handling sequences or streams of data that may be too large to fit into memory all at once.
-    + **Example**:
-      ```typescript
-      function* myGenerator() {
-        yield 1;
-        yield 2;
-      }
-      ```
-      Each `yield` statement produces a value and pauses the function until the next value is requested.
-
-+ **Composing Types**:
-  - **Unions (`|`)**: A value can be one of several types: `let value: number | string;`.
-  - **Generics**: Create functions and classes that work with any type while maintaining type information.
-    + **Example**: `function getItem<Type>(item: Type): Type {}`
-
 <!-- TODO: Put "Call By Value And Call By Reference" into JS notes. -->
-+ **Call By Value And Call By Reference**: Functions receive a copy of the value.
-  - **Primitives**: Acts as *call by value*.
-  - **References (Objects and Arrays)**: Acts as *call by reference*.
++ In JS primitives acts as *call by value* whereas objects and arrays acts as *call by reference*.
+<!-- TODO: Put "Well-Known Symbols" into JS notes. -->
++ **Well-Known Symbols**: Predefined symbols that allow you to customize and extend the behavior of built-in objects and methods, such as iterators, string operations, and instance checks.
+<!-- TODO: Put "Generator Functions" into JS notes. -->
++ **Generator Functions (`*`)**: Special type of functions that produce values one at a time. They are useful for handling sequences or streams of data that may be too large to fit into memory all at once.
+  - **Example**: `function* myGenerator() { yield 1; yield 2; }`
+    Each `yield` statement produces a value and pauses the function until the next value is requested.
 
-+ **Primitive Types**
-  - **JavaScript Types**: `boolean`, `bigint`, `number`, `string`, `symbol`, `undefined`, `null`
++ TS is a statically-typed *superset* of JS that adds type annotations to the language. Any valid JS code is also a valid TS code.
++ TS preserves the runtime behavior of JS. For instance, dividing by zero in JS results in `Infinity` rather than throwing an exception. TS does not alter this behavior, so existing JS code will run the same way when converted to TS.
++ **Type Erasure**: The TS compiler converts TS code into JS code for execution. Because of that type annotations and other TS-specific types are removed during compilation.
++ You can install TS via *npm* or *Visual Studio* plugins.
++ **Type Inference**: Determining the type of a variable based on the assigned value.
++ **Type Safety**: Ensures values are used consistently with their types.
++ In TS, a *type* refers to a way of describing the shape, structure, or nature of data. Types can be.
+<!-- TODO: In the "Types" section: update newly writed types, delete redundant types notes. -->
++ **Types**
+  - **Basic Types**: `boolean`, `bigint`, `number`, `string`, `symbol`, `undefined`, `null`
     + **`undefined` vs. `null`**:
-      - `undefined` is a type on its own.
-      - `null` is historically an object type but treated as its own type in TS.
+      - Both `undefined` and `null` are their own type in TS. In JS the `null` is considered as object because of historical reasons.
       - `null == undefined` is `true` in *loose equality*.
       - `null === undefined` is `false` in *strict equality*.
-  - **TypeScript Additions**:
-    + **`unknown`**: Represents any value but requires type checking before use.
-    + **`never`**: Represents values which are never observed. In a return type, this means that the function throws an exception or terminates execution of the program.
-    + **`void`**: Indicates functions that do not return a value.
+  - **Special Types**
+    + **`any`:** Represents any type, but lacks type safety.
+    + **`unknown`**: It is a safer alternative to `any`, representing a value that could be of any type, but requires type checking before being used.
+    + **`never`**: Represents values that never occur, typically used for functions that never return or throw an error.
+    + **`void`**: Represents the absence of any type, typically used for functions that do not return a value.
+  - **Object Types**
+    + **`object`**
+    + **`{}`**
+  - **Array Types**
+    + **`number[]`**
+    + **`Array<number>`**
+  - **Tupple Types**
+  - **Function Types**
+  - **Union Types**
+  - **Intersection Types**
+  - **Literal Types**
+  - **Type Aliases**
+  - **Interfaces**
+  - **Enums**
+  - **Generics**
+  - **Mapped Types**
+  - **Conditional Types**
+  - **Indexed Access Types**
+  - **Keyof Type Operator**
+  - **Readonly Types**
+  - **Partial Types**
+  - **Required Types**
+  - **Utility Types**
+
+  - **Composite Types**
     + **Object Literal**: `{ property: Type }`
     + **Arrays**: `T[]` or `Array<T>`
     + **Tuples**: `[T, T]` (fixed length but mutable)
     + **Functions**: `(t: T) => U`
-      - **Example**:
-        ```typescript
-        let fst: (a: any, b: any) => any = (a, b) => a;
-        let fst1: <T, U>(a: T, b: U) => T = (a, b) => a;
-        ```
+    + **`enum`**: A way to define a set of named constants.
+    + **Union Types**: A type that can be one of several types (e.g., `number | string`).
+    + **Intersection Types**: Combines multiple types into one (e.g., `TypeA & TypeB`).
+    + **Type Aliases**: Custom names for types, (e.g., `type ID = string | number`).
+    + **Interfaces**: Used to define the shape of an object.
+  - **Constructs As Types**
+    + **Literal Types**: Specific values (e.g., `let status: "success" | "failure" = "success";`).
+    + **Mapped Types**: Creates new types by transforming existing ones.
+    + **Template Literal Types**: `type Greeting = Hello, ${string}`
+    + **Utility Types**: Types provided by TS to help with common type manipulations (e.g., `Partial<T>`, `Required<T>`).
+    + **Conditional Types**: `T extends U ? X : Y`.
+    + **Type Assertions**: A way to tell the compiler to treat a value as a specific type.
+    + **Literal Inference**: Infers the most specific type possible.
+        
+<!-- TODO: Put the following section to its related section (probably classes). -->
++ Using `public` in `constructor` parameters creates properties automatically.
+  - **Example**: `constructor(public firstName: string) {}`
+
++ **Generics**: Enables the creation of reusable components that can work with any data type, ensuring type safety and flexibility.
+  - **Example**: `function getItem<Type>(item: Type): Type {}`
 
 <!-- TODO: Put "Boxed Types" into JS notes. -->
 + **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
@@ -273,7 +291,6 @@
 
   > ***NOTE**: Prefer union types for parameters over overloads when possible.*
 
-+ **Type Safety**: Ensures values are used consistently with their types.
 + In JS, a function’s return type is `undefined`. In TS, it’s `void`.
 + **Untyped Function Call**: Refers to function calls where TS lacks enough information to infer the types of the function’s parameters or return value.
 + **Parameter Destructuring**
@@ -451,77 +468,3 @@
       type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never;
       type ArrOfStrOrNum = ToArrayNonDist<string | number>; // (string | number)[]
       ```
-
-<!-- TODO: Re-read mapped types section. -->
-### Mapped Types
-+ **Mapping Modifiers**
-  - There are two additional modifiers which can be applied during mapping: `readonly` and `?`. You can remove or add these modifiers by prefixing with `-` or `+`. If you don’t add a prefix, then `+` is assumed.
-  - **Example**:
-    ```typescript
-    // Removes 'readonly' attributes from a type's properties
-    type CreateMutable<Type> = {
-      -readonly [Property in keyof Type]: Type[Property];
-    };
-
-    type LockedAccount = {
-      readonly id: string;
-      readonly name: string;
-    };
-
-    type UnlockedAccount = CreateMutable<LockedAccount>;
-    ```
-  - **Example**:
-    ```typescript
-    // Removes 'optional' attributes from a type's properties
-    type Concrete<Type> = {
-      [Property in keyof Type]-?: Type[Property];
-    };
-
-    type MaybeUser = {
-      id: string;
-      name?: string;
-      age?: number;
-    };
-
-    type User = Concrete<MaybeUser>;
-    ```
-
-+ **Key Remapping via `as`**: Use as to remap keys in mapped types.
-  - **Example**:
-    ```typescript
-    type MappedTypeWithNewProperties<Type> = {
-        [Properties in keyof Type as NewKeyType]: Type[Properties]
-    }
-    ```
-
-### Template Literal Types
-+ Template literal types extend string literal types.
-+ **Union Expansion**: If a union type is used in a template literal, it creates a union of all possible strings.
-  - **Example**:
-    ```typescript
-    type EmailLocaleIDs = "welcome_email" | "email_heading";
-    type FooterLocaleIDs = "footer_title" | "footer_sendoff";
-    type AllLocaleIDs = `${EmailLocaleIDs | FooterLocaleIDs}_id`;
-    // "welcome_email_id" | "email_heading_id" | "footer_title_id" | "footer_sendoff_id"
-    ```
-  - **Cross Product of Unions**: Combining multiple unions results in a Cartesian product of the possible values.
-    + **Example**:
-      ```typescript
-      type Lang = "en" | "ja" | "pt";
-      type LocaleMessageIDs = `${Lang}_${AllLocaleIDs}`;
-      // "en_welcome_email_id" | "en_email_heading_id" | ... | "pt_footer_title_id" | "pt_footer_sendoff_id"
-      ```
-  - **Application Example**:
-  Define a function that listens for changes on object properties, ensuring type safety with template literal types.
-  ```typescript
-  type PropEventSource<Type> = {
-    on<Key extends keyof Type>(eventName: `${Key}Changed`, callback: (newValue: Type[Key]) => void): void;
-  };
-  ```
-
-> ***NOTE**: We generally recommend that people use ahead-of-time generation for large string unions, but this is useful in smaller cases.*
-
-+ **Intrinsic String Manipulation Types**: TypeScript provides built-in types for manipulating strings at the type level. For example: `Uppercase<StringType>`, `Lowercase<StringType>` etc.
-
-<!-- TODO - Summary -->
-## Classes
