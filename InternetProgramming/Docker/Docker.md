@@ -2,7 +2,7 @@
 # Notes From Official Documents
 + Separates applications from infrastructure and allows infrastructure management.
 + **Docker Desktop**: GUI for managing containers, apps, and images.
-+ **Docker Hub**: Docker Hub is a cloud-based service for storing and sharing Docker container images. It supports public and private repositories, automated builds, and integrates with Docker CLI for managing images. It also offers image search, version control, security scanning, and team collaboration.
++ **Docker Hub**: It is a cloud-based service for storing and sharing Docker container images. It supports public and private repositories, automated builds, and integrates with Docker CLI for managing images.
 + **Container**: A running instance of a Docker image, providing a lightweight, isolated environment for applications. Key aspects:
   - **Isolation**: Containers separate applications and manage dependencies independently.
   - **Portability**: They run consistently across different environments, regardless of the underlying OS.
@@ -45,6 +45,17 @@
 
 + **Docker Scout**: It helps identify and manage security vulnerabilities in Docker images.
 + **Docker Build**: Command used to create Docker images from a Dockerfile. The command builds the image in a series of layers.
-+ **Docker Extensions**
-+ **Docker Compose**
-+ **Docker Content Trust**
++ **Docker Extensions**: Let you use third-party tools within Docker Desktop to extend its functionality.
++ **Docker Compose**: It is a tool for defining and running multi-container Docker applications using a simple YAML file.
++ **Docker Content Trust**: It is a security feature that ensures the integrity and authenticity of Docker images by enabling digital signing and verification of images before they are pulled or pushed to Docker registries.
++ **CVE (Common Vulnerabilities and Exposures)**: Refers to a publicly disclosed security vulnerability in software that could affect Docker images or containers.
++ **Docker Desktop Integrated Terminal**
+  - Using the integrated terminal in Docker Desktop containers (*Exec* tab) is same as running one of the following commands:
+    + `docker exec -it <container-id> /bin/sh`
+    + `docker exec -it <container-id> cmd.exe` (when accessing Windows containers)
+    + `docker debug <container-id>` (when using debug mode)
+  - When not in debug mode, Docker automatically uses the default user specified in the image's Dockerfile; if none is specified or in debug mode, it defaults to root.
+
++ To remove an image, you must first remove the associated container.
++ An image becomes dangling when a new version with the same tag is built, meaning it is no longer tagged or referenced by any containers.
++ **Tag**: A tag is a label used to identify and differentiate Docker images, often indicating version numbers or variants (e.g., myimage:latest).
