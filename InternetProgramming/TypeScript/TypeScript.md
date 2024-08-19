@@ -2,23 +2,34 @@
 + (Suggested Book In Official Docs) JavaScript: The Good Parts
 
 # Notes From Offical Documents
+<!-- TODO: The higher-kinded types and funktors are functional programming concept. Put them into their related section later. -->
++ **Higher-Kinded Types**: Abstract types that take other types as parameters, originating from functional programming. TS does not directly support HKTs.
+  - **Funktor**: A container type in functional programming that supports a map operation.
+  - Functors are a specific instance of HKTs, representing a particular pattern where a type constructor is used.
+
+<!-- TODO: The point-free programming is a functional programming concept. Put it into its related section later. -->
++ **Point-Free Programming (Tacit Programming)**: A style where functions are defined by composing other functions without explicitly mentioning their arguments.
+
 <!-- TODO: Put "Call By Value And Call By Reference" into JS notes. -->
 + In JS primitives acts as *call by value* whereas objects and arrays acts as *call by reference*.
+<!-- TODO: Put the following note to JS. -->
++ **`const`**: *Reference* is immutable but the *referent* is still mutable.
 <!-- TODO: Put "Well-Known Symbols" into JS notes. -->
-+ **Well-Known Symbols**: Predefined symbols that allow you to customize and extend the behavior of built-in objects and methods, such as iterators, string operations, and instance checks.
++ **Well-Known Symbols**: Predefined symbols that allow you to customize and extend the behavior of objects and methods.
 <!-- TODO: Put "Generator Functions" into JS notes. -->
 + **Generator Functions (`*`)**: Special type of functions that produce values one at a time. They are useful for handling sequences or streams of data that may be too large to fit into memory all at once.
   - **Example**: `function* myGenerator() { yield 1; yield 2; }`
-    Each `yield` statement produces a value and pauses the function until the next value is requested.
+
+<!-- TODO: Put "Boxed Types" into JS notes. -->
++ **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
 
 + TS is a statically-typed *superset* of JS that adds type annotations to the language. Any valid JS code is also a valid TS code.
-+ TS preserves the runtime behavior of JS. For instance, dividing by zero in JS results in `Infinity` rather than throwing an exception. TS does not alter this behavior, so existing JS code will run the same way when converted to TS.
-+ **Type Erasure**: The TS compiler converts TS code into JS code for execution. Because of that type annotations and other TS-specific types are removed during compilation.
-+ You can install TS via *npm* or *Visual Studio* plugins.
++ TS preserves JS's runtime behavior. For example, dividing by zero in JS yields `Infinity`, not an exception. TS maintains this behavior, so existing JS code runs unchanged when converted to TS.
++ The TS compiler converts TS code into JS code for execution.
++ **Type Erasure**: Type annotations and other TS-specific types are removed during compilation to JS.
 + **Type Inference**: Determining the type of a variable based on the assigned value.
 + **Type Safety**: Ensures values are used consistently with their types.
-+ In TS, a *type* refers to a way of describing the shape, structure, or nature of data. Types can be.
-<!-- TODO: In the "Types" section: update newly writed types, delete redundant types notes. -->
++ In TS, a *type* refers to a way of describing the shape, structure, or nature of data.
 + **Types**
   - **Basic Types**: `boolean`, `bigint`, `number`, `string`, `symbol`, `undefined`, `null`
     + **`undefined` vs. `null`**:
@@ -30,120 +41,67 @@
     + **`unknown`**: It is a safer alternative to `any`, representing a value that could be of any type, but requires type checking before being used.
     + **`never`**: Represents values that never occur, typically used for functions that never return or throw an error.
     + **`void`**: Represents the absence of any type, typically used for functions that do not return a value.
-  - **Object Types**
-    + **`object`**
-    + **`{}`**
-  - **Array Types**
-    + **`number[]`**
-    + **`Array<number>`**
-  - **Tupple Types**
-  - **Function Types**
-  - **Union Types**
-  - **Intersection Types**
-  - **Literal Types**
-  - **Type Aliases**
-  - **Interfaces**
-  - **Enums**
-  - **Generics**
-  - **Mapped Types**
-  - **Conditional Types**
-  - **Indexed Access Types**
-  - **Keyof Type Operator**
-  - **Readonly Types**
-  - **Partial Types**
-  - **Required Types**
-  - **Utility Types**
+  - **Object Types**: `object` or `{}`
+  - **Array Types**: `number[]` or `Array<number>`
+  - **Tupple Types**: Special kind of array that allows you to specify the types of its elements in a fixed-size array.
+    + **Example**: `let tuple: [string, number] = ['hello', 42];`
+  - **Function Types**: Defines the shape of functions, including their parameters and return type.
+    + **Example**: `let add: (a: number, b: number) => number = (x, y) => x + y;`
+  - **Union Types**: Allows you to specify multiple types for a value. A value can be of one type or another.
+    + **Example**: `let value: string | number = 'hello'; value = 42;`
+  - **Intersection Types**: Combines multiple types into one. A value of an intersection type will have all properties of the intersected types.
+    + **Example**: `type Employee = Person & Worker;`
+  - **Literal Types**: Specifies exact values a variable can hold, rather than a general type.
+    + **Example**: `let status: 'success' | 'error' = 'success';`
+  - **Type Aliases**: Creates a new name for a type.
+    + **Example**: `type ID = string | number;`
+  - **Interfaces**: Defines the shape of objects. They are similar to type aliases but are often used for defining object types and can be extended.
+    + **Example**: `interface Person { name: string; age: number; }`
+  - **Enums**: Defines a set of named constants.
+    + **Example**: `enum Direction { Up, Down, Left, Right }`
+  - **Generics**: Allows you to create reusable components that can work with any type. They provide a way to pass types as parameters.
+    + **Example**: `function identity<T>(arg: T): T { return arg; }`
+  - **Mapped Types**: Allows you to create new types by transforming properties of an existing type.
+    + **Example**: `Readonly<T>`, `Partial<T>`, `Required<T>`
+  - **Conditional Types**: Provides a way to create types based on conditions.
+    + **Example**: `type TrueOrFalse<T> = T extends true ? 'yes' : 'no';`
+  - **Indexed Access Types**: Allows you to get the type of a property of a type.
+    + **Example**: `type NameType = Person['name'];`
+  - **Keyof Type Operator**: Returns a union type of the property names of a type.
+    + **Example**: `type PersonKeys = keyof Person; // 'name' | 'age'`
+  - **Utility Types**: Built-in generic types that provide common type transformations.
+    + **Example**: `Pick`, `Omit`, `Record`, `Exclude`, `Extract`, `ReturnType`
+  - **Unit Types**: Represent exactly one value.
+    + **Example**:
+      ```typescript
+      declare function pad(s: string, n: number, direction: "left" | "right"): string;
+      pad("hi", 10, "left");
+      ```
+      Here, `direction` is a union type (`"left" | "right"`). Using a variable like this:
+      ```typescript
+      let s = "right";
+      pad("hi", 10, s); // error
+      ```
+      results in an error because `s` is a string, not the specific union type. To fix this:
+      ```typescript
+      let s: "left" | "right" = "right";
+      pad("hi", 10, s); // works
+      ```
 
-  - **Composite Types**
-    + **Object Literal**: `{ property: Type }`
-    + **Arrays**: `T[]` or `Array<T>`
-    + **Tuples**: `[T, T]` (fixed length but mutable)
-    + **Functions**: `(t: T) => U`
-    + **`enum`**: A way to define a set of named constants.
-    + **Union Types**: A type that can be one of several types (e.g., `number | string`).
-    + **Intersection Types**: Combines multiple types into one (e.g., `TypeA & TypeB`).
-    + **Type Aliases**: Custom names for types, (e.g., `type ID = string | number`).
-    + **Interfaces**: Used to define the shape of an object.
-  - **Constructs As Types**
-    + **Literal Types**: Specific values (e.g., `let status: "success" | "failure" = "success";`).
-    + **Mapped Types**: Creates new types by transforming existing ones.
-    + **Template Literal Types**: `type Greeting = Hello, ${string}`
-    + **Utility Types**: Types provided by TS to help with common type manipulations (e.g., `Partial<T>`, `Required<T>`).
-    + **Conditional Types**: `T extends U ? X : Y`.
-    + **Type Assertions**: A way to tell the compiler to treat a value as a specific type.
-    + **Literal Inference**: Infers the most specific type possible.
-        
++ **`declare` Keyword**: It informs TS of an entity's existence (such as a function, variable, class, or module) without providing an implementation.
 <!-- TODO: Put the following section to its related section (probably classes). -->
 + Using `public` in `constructor` parameters creates properties automatically.
   - **Example**: `constructor(public firstName: string) {}`
 
-+ **Generics**: Enables the creation of reusable components that can work with any data type, ensuring type safety and flexibility.
-  - **Example**: `function getItem<Type>(item: Type): Type {}`
-
-<!-- TODO: Put "Boxed Types" into JS notes. -->
-+ **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
-+ **Intersections**: Combine multiple types into one, including properties and methods from all types.
-  - **Example**:
-    ```typescript
-    interface InterfaceA { a: string; }
-    interface InterfaceB { b: number; }
-    type Combined = InterfaceA & InterfaceB;
-    ```
-
-+ **Unit Types**: Represent exactly one value. Useful for simulating enums.
-  - **Example**:
-    ```typescript
-    declare function pad(s: string, n: number, direction: "left" | "right"): string;
-    pad("hi", 10, "left");
-    ```
-    In this function, `direction` is a union type of `left` and `right`, meaning it can only be one of these two string literals. The issue arises when you try to use a variable instead of a literal:
-    ```typescript
-    let s = "right";
-    pad("hi", 10, s); // error
-    ```
-    Here, `s` is of type string (because `right` gets widened to string when assigned to `s`). Since string is not the same as the union type `"left" | "right"`, TS gives an error. To fix this, you can explicitly declare `s` with the union type:
-    ```typescript
-    let s: "left" | "right" = "right";
-    pad("hi", 10, s); // works
-    ```
-    + `declare` keyword is used to tell the TS compiler about the existence of an entity (such as a function, variable, class, or module) without providing an implementation.
-
 + **Type Parameters**: Placeholders for types in functions, classes, or interfaces.
-  - **Example**:
-    ```typescript
-    function identity<T>(value: T): T { return value; }
-    class Box<T>{}
-    new Box<number>();
-    ```
+  - **Example**: `T` is a type parameter: `class Box<T>{}`.
   - Type parameters are conventionally single uppercase letters.
-  - Type parameters should only be used to propagate type information, such as constraining parameters to be the same type.
 
-<!-- TODO: The higher-kinded types and funktors are functional programming concept. Put them into their related section later. -->
-+ **Higher-Kinded Types**: Abstract types that take other types as parameters. Functors are an example of higher-kinded types. Both HKT and funktors comes from functional programming and does not represented in TS.
-  - **Funktor**: In functional programming, a functor is a container type that supports a map operation.
-  - Functors are an example of higher-kinded types. They are a specific use case of HKTs where the type constructor. HKTs are a broader concept that encompasses various type patterns and abstractions, including functors.
++ **Readonly Modifiers**: Makes properties immutable. Includes `readonly` for individual properties, `Readonly<T>` for all properties, and `ReadonlyArray<T>` for immutable arrays.
++ **`const` Assertion**: `let a = [1, 2, 3] as const;`
++ **Type Guards**: Allows you to narrow down the type of a variable within a conditional block. Here’s a list of common type guards: `typeof`, `instanceof`, `in`, `Array.isArray()`, `null`, `undefined`.
 
-<!-- TODO: The point-free programming is a functional programming concept. Put it into its related section later. -->
-+ **Point-Free Programming (Tacit Programming)**: It is a style of programming where you write functions without explicitly mentioning the arguments they operate on. Instead, you define functions by composing other functions.
-+ **`readonly` Modifier**: Makes properties immutable.
-  - `readonly`, `Readonly<T>` (makes all properties readonly), `ReadonlyArray<T>`
-  - It does not mean its internal contents can’t be changed. It means the property itself can’t be re-written to.
-
-+ **`const`**
-  - In `const` variables *reference* is immutable but the *referent* is still mutable.
-  - You can also use a *const-assertion*, which operates on arrays and object literals: `let a = [1, 2, 3] as const;`.
-
-+ **Type Guards**: Ensure values conform to specific types at runtime.
-  - **Types of Type Guards**: `typeof`, `instanceof`, `in` operator, user-defined checks.
-
-> ***NOTE**: If possible, use *type guards* or conditional checks to narrow down types instead of using assertions, as they provide better type safety.*
-
-+ **Mapped Types**
-  - Built-in mapped types:
-    + **`Partial<T>`**: Makes all properties *optional*.
-    + **`Required<T>`**: Makes all properties *required*.
-    + **`Readonly<T>`**: Makes all properties *read-only*.
-
+<!-- Bookmark -->
 ## The Basics
 <!-- TODO: Put below matter to the JS section. -->
 + JS uses ***dynamic typing***, where types are determined at runtime.
