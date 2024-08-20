@@ -45,6 +45,7 @@
 
 + **Docker Scout**: It helps identify and manage security vulnerabilities in Docker images.
 + **Docker Build**: Command used to create Docker images from a Dockerfile. The command builds the image in a series of layers.
++ **Docker Builder**: Tools and technologies that enhance and extend the image building process. The term "builder" can specifically refer to: *BuildKit*, *Docker Buildx*.
 + **Docker Extensions**: Let you use third-party tools within Docker Desktop to extend its functionality.
 + **Docker Compose**: It is a tool for defining and running multi-container Docker applications using a simple YAML file.
 + **Docker Content Trust**: It is a security feature that ensures the integrity and authenticity of Docker images by enabling digital signing and verification of images before they are pulled or pushed to Docker registries.
@@ -56,6 +57,18 @@
     + `docker debug <container-id>` (when using debug mode)
   - When not in debug mode, Docker automatically uses the default user specified in the image's Dockerfile; if none is specified or in debug mode, it defaults to root.
 
-+ To remove an image, you must first remove the associated container.
++ To remove an image, you must first remove the associated container. The same goes for volumes.
 + An image becomes dangling when a new version with the same tag is built, meaning it is no longer tagged or referenced by any containers.
 + **Tag**: A tag is a label used to identify and differentiate Docker images, often indicating version numbers or variants (e.g., myimage:latest).
++ **Typical Workflow**
+  1. **Write Dockerfile**
+  2. **Build Image**: Create an image from the Dockerfile.
+  3. **Run Container**: Start a container from the image.
+  4. **Manage Volumes**
+
++ Docker uses WSL on windows as an underlying Linux.
++ **Docker Desktop Resource Saver Mode**: Reduces CPU and memory usage by automatically stopping the Docker Desktop Linux VM when no containers are running for a while. Commands that cause an exit from Resource Saver take a little longer to execute (about 3 to 10 seconds) as Docker Desktop restarts the Linux VM.
++ **Docker Desktop `settings.json`**: Configuration file that contains various settings and preferences for Docker Desktop.
+
+## Miscellaneous
++ **Jeager**: It is an open-source distributed tracing system that monitors and troubleshoots microservices by tracking and visualizing request flows, helping diagnose performance issues and system behavior.
