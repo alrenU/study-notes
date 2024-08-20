@@ -22,14 +22,18 @@
 
 <!-- TODO: Put "Boxed Types" into JS notes. -->
 + **Boxed Types**: JS has boxed versions of primitives with methods. For example, `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
+<!-- TODO: Put below matter to the JS section. -->
++ **Dynamic Typing** Variables can hold values of any type and their type can change at runtime.
 
 + TS is a statically-typed *superset* of JS that adds type annotations to the language. Any valid JS code is also a valid TS code.
 + TS preserves JS's runtime behavior. For example, dividing by zero in JS yields `Infinity`, not an exception. TS maintains this behavior, so existing JS code runs unchanged when converted to TS.
++ **`tsc`**: TS compiler.
 + The TS compiler converts TS code into JS code for execution.
 + **Type Erasure**: Type annotations and other TS-specific types are removed during compilation to JS.
 + **Type Inference**: Determining the type of a variable based on the assigned value.
 + **Type Safety**: Ensures values are used consistently with their types.
 + In TS, a *type* refers to a way of describing the shape, structure, or nature of data.
++ **Non-Exception Failures**: Refer to errors or issues in a program that do not trigger exceptions but still cause the program to behave incorrectly or unexpectedly.
 + **Types**
   - **Basic Types**: `boolean`, `bigint`, `number`, `string`, `symbol`, `undefined`, `null`
     + **`undefined` vs. `null`**:
@@ -100,19 +104,13 @@
 + **Readonly Modifiers**: Makes properties immutable. Includes `readonly` for individual properties, `Readonly<T>` for all properties, and `ReadonlyArray<T>` for immutable arrays.
 + **`const` Assertion**: `let a = [1, 2, 3] as const;`
 + **Type Guards**: Allows you to narrow down the type of a variable within a conditional block. Here’s a list of common type guards: `typeof`, `instanceof`, `in`, `Array.isArray()`, `null`, `undefined`.
++ **Downleveling**: Refers to the process of converting modern ECMAScript features into older versions for compatibility with older JS environments.
++ You can enhance TS's strictness with `tsconfig.json` configurations:
+  - **`noImplicitAny`**: Requires explicit types for all variables; otherwise, TS defaults to `any`.
+  - **`strictNullChecks`**: Mandates explicit handling of `null` and `undefined` values.
+  - **`noEmitOnError`**: Prevents JS file generation if there are compilation errors.
 
 <!-- Bookmark -->
-## The Basics
-<!-- TODO: Put below matter to the JS section. -->
-+ JS uses ***dynamic typing***, where types are determined at runtime.
-+ **Non-Exception Failures**: In TS, this refers to issues detected during type checking that don't cause the compiler to crash. Common types include: *type errors*, *syntax errors*, *semantic errors*.
-+ **`tsc`**: The TS compiler. It compiles TS code into JS.
-+ **`--noEmitOnError`**: By default, TS will emit (generate) JS code even if there are errors. Using this flag prevents the emission of JS files if there are any compilation errors.
-+ **Downleveling**: TS can convert code written in newer ECMAScript versions to older versions. This process is known as downleveling.
-+ You can add strictness level to your TS program by adding extra configurations in `tsconfig.json` file. The two most important ones are `noImplicitAny` and `strictNullChecks`.
-  - **`noImplicitAny`**: Ensures that all variables must have explicit types. Without this flag, TS will default to `any` type when it cannot infer the type. Enabling it helps catch unintentional uses of `any`.
-  - **`strictNullChecks`**: Enforces explicit handling of `null` and `undefined`. By default, these values can be assigned to any type. This flag makes it necessary to explicitly handle or check for `null` and `undefined` values, improving code safety.
-
 ## Everyday Types
 + **`any` Type**: Represents any value and bypasses TS’s type checking.
   - Use sparingly as it negates type safety.
