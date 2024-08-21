@@ -2,47 +2,8 @@
 # Notes From Official Documents
 + Separates applications from infrastructure and allows infrastructure management.
 + **Docker Desktop**: GUI for managing containers, apps, and images.
++ **Docker Credential Helper**: It is a tool designed to securely manage and store authentication credentials for Docker.
 + **Docker Hub**: It is a cloud-based service for storing and sharing Docker container images. It supports public and private repositories, automated builds, and integrates with Docker CLI for managing images.
-+ **Container**: A running instance of a Docker image, providing a lightweight, isolated environment for applications. Key aspects:
-  - **Isolation**: Containers separate applications and manage dependencies independently.
-  - **Portability**: They run consistently across different environments, regardless of the underlying OS.
-  - **Efficiency**: Share the host OS kernel but have their own filesystem, making them faster and more lightweight than VMs.
-  - **Scalability**: Easily scaled up or down to handle varying loads.
-
-+ **Image**: A static, read-only blueprint with everything needed to run an application, including code, runtime, libraries, and dependencies.
-  - Key points:
-    + **Read-Only**: Images are immutable; changes are made in separate layers.
-    + **Layers**: Docker images use stacked layers to represent changes or additions, enhancing efficiency through:
-      - **Layered Architecture**: Each layer adds specific components, such as libraries or application files, to build the final image.
-      - **Efficient Storage**: Common layers are reused across images, reducing redundancy and saving storage.
-      - **Layer Caching**: Docker caches unchanged layers to speed up builds.
-      - **Reuse and Consistency**: Common layers across different images (e.g., base operating systems) can be reused.
-    + **Versioning**: Tagged for version control, e.g., `myapp:latest`.
-    + **Portability**: Can be shared and run on any Docker-enabled system.
-    + **Creation**: Built using a `Dockerfile` that defines the image’s configuration and setup.
-  - A Docker image can include the followings:
-    + **Base Operating Systems**: Minimal operating system or runtime environment.
-    + **System Libraries and Dependencies**
-    + **Application Code**: The actual code or binaries of the application being packaged.
-    + **Configuration Files**
-    + **Runtime Environments**: Includes interpreters, compilers, or specific runtime environments.
-    + **Metadata**: Instructions for container execution, such as environment variables, default commands, and exposed ports.
-    + **Scripts**: Initialization scripts, startup scripts, or entrypoint scripts used to prepare the application environment or run the application.
-    + **Filesystem Layers**: Directories, files, and the overall filesystem layout.
-    + **Volumes**
-    + **Networking Configurations**
-
-+ **Port Mapping (Port Forwarding)**: Directs network traffic from one port to another to enable external access to private network resources. It works by:
-  - Using a private network with devices having private IP addresses.
-  - Configuring a router/firewall to connect the private network to the public internet.
-  - (Port Mapping) Setting up the router to forward requests from a public port to an internal port.
-  - Allowing external requests to reach the correct device through the mapped port.
-
-+ **Docker Engine**: It is the core component of Docker that enables containerization. It’s a client-server application with three main parts:
-  1. **Docker Daemon (`dockerd`)**: The background service responsible for managing Docker containers. It handles container creation, execution, and monitoring.
-  2. **Docker CLI**: The command-line tool (`docker`) used to interact with Docker Daemon. It allows users to run commands to build, run, and manage containers.
-  3. **Docker API**: The API that allows applications and services to interact with Docker Daemon programmatically.
-
 + **Docker Scout**: It helps identify and manage security vulnerabilities in Docker images.
 + **Docker Build**: Command used to create Docker images from a Dockerfile. The command builds the image in a series of layers.
 + **Docker Builder**: Tools and technologies that enhance and extend the image building process. The term "builder" can specifically refer to: *BuildKit*, *Docker Buildx*.
@@ -50,6 +11,38 @@
 + **Docker Compose**: It is a tool for defining and running multi-container Docker applications using a simple YAML file.
 + **Docker Content Trust**: It is a security feature that ensures the integrity and authenticity of Docker images by enabling digital signing and verification of images before they are pulled or pushed to Docker registries.
 + **CVE (Common Vulnerabilities and Exposures)**: Refers to a publicly disclosed security vulnerability in software that could affect Docker images or containers.
++ Docker uses WSL on windows as an underlying Linux.
++ **Docker Desktop `settings.json`**: Configuration file that contains various settings and preferences for Docker Desktop.
++ **Docker Desktop Resource Saver Mode**: Reduces CPU and memory usage by automatically stopping the Docker Desktop Linux VM when no containers are running for a while. Commands that cause an exit from Resource Saver take a little longer to execute (about 3 to 10 seconds) as Docker Desktop restarts the Linux VM.
++ **Docker Objects**: Images, containers, networks, volumes, plugins, etc.
++ Docker is written in *GoLang*.
++ **Namespaces**: Docker uses Linux namespaces to create isolated workspaces for containers. When a container runs, Docker sets up a set of namespaces that virtualize and isolate system resources, ensuring each container operates in its own separate environment.
++ **Docker Engine**: It is the core component of Docker that enables containerization. It’s a client-server application with three main parts:
+  1. **Docker Daemon (`dockerd`)**: The background service responsible for managing Docker containers by listening Docker API requests. It manages Docker objects.
+  2. **Docker CLI (Client)**: The command-line tool (`docker`) used to interact with Docker Daemon. It allows users to run commands to build, run, and manage containers. It communicates with deamon using a REST API, over UNIX sockets or a network interface. Another Docker client is *Docker Compose*.
+  3. **Docker API**: The API that allows applications and services to interact with Docker Daemon programmatically.
+
++ **Port Mapping (Port Forwarding)**: Directs network traffic from one port to another to enable external access to private network resources. It works by:
+  - Using a private network with devices having private IP addresses.
+  - Configuring a router/firewall to connect the private network to the public internet.
+  - (Port Mapping) Setting up the router to forward requests from a public port to an internal port.
+  - Allowing external requests to reach the correct device through the mapped port.
+
++ **Docker Image**: A static, read-only blueprint that includes code, runtime, libraries, and dependencies to run an application. Created using a `Dockerfile`. It consists of stacked layers representing changes or additions. Each instruction in a `Dockerfile` creates a layer in the image. Reuses common layers to reduce redundancy and save storage. Docker caches the layers to speed up builds. A Docker image can include the followings:
+  - **Base Operating Systems**
+  - **System Libraries and Dependencies**
+  - **Application Code**: The actual code or binaries.
+  - **Configuration Files**
+  - **Runtime Environments**: Interpreters, compilers, or specific runtime environments.
+  - **Metadata**: Environment variables, default commands, and exposed ports.
+  - **Scripts**
+  - **Filesystem Layers**: Directories, files, and the overall filesystem layout.
+  - **Volumes**
+  - **Networking Configurations**
+
++ **Tag**: A label for identifying and differentiating Docker images, often indicating versions or variants (e.g., `myimage:latest`).
++ **Container**: A runnable instance of an image, isolated from other containers and the host machine. It can connect to networks, attach storage, and create new images based on its state, using the host machine’s network connection for external access.
+
 + **Docker Desktop Integrated Terminal**
   - Using the integrated terminal in Docker Desktop containers (*Exec* tab) is same as running one of the following commands:
     + `docker exec -it <container-id> /bin/sh`
@@ -59,16 +52,79 @@
 
 + To remove an image, you must first remove the associated container. The same goes for volumes.
 + An image becomes dangling when a new version with the same tag is built, meaning it is no longer tagged or referenced by any containers.
-+ **Tag**: A tag is a label used to identify and differentiate Docker images, often indicating version numbers or variants (e.g., myimage:latest).
 + **Typical Workflow**
   1. **Write Dockerfile**
   2. **Build Image**: Create an image from the Dockerfile.
   3. **Run Container**: Start a container from the image.
   4. **Manage Volumes**
 
-+ Docker uses WSL on windows as an underlying Linux.
-+ **Docker Desktop Resource Saver Mode**: Reduces CPU and memory usage by automatically stopping the Docker Desktop Linux VM when no containers are running for a while. Commands that cause an exit from Resource Saver take a little longer to execute (about 3 to 10 seconds) as Docker Desktop restarts the Linux VM.
-+ **Docker Desktop `settings.json`**: Configuration file that contains various settings and preferences for Docker Desktop.
+## CLI Codes
++ **`docker run -d -p 8080:80 docker/welcome-to-docker`**
+  - **`docker run`**: Create and start a new Docker container.
+  - **`-d` (Detached Mode)**: The container will run in the background and you won't see its logs in your terminal.
+  - **`-p 8080:80`**: Maps port 80 inside the container to port 8080 on the host machine. 
+  - **`docker/welcome-to-docker`**: Name of the Docker image.
+
++ **`docker compose watch`**: It monitors changes in your Docker Compose project and automatically rebuilds and restarts services when changes are detected.
+
++ **General Commands**
+  - **`docker --version`**
+  - **`docker info`**: Provides system-wide information about Docker.
+  - **`docker help`**
+
++ **Image Commands**
+  - **`docker build -t <image_name> .`**: Builds an image from a Dockerfile in the current directory.
+  - **`docker images`**: Lists all images on your local system.
+  - **`docker rmi <image_name>`**: Removes an image from your local system.
+  - **`docker pull <image_name>`**
+  - **`docker push <image_name>`**
+
++ **Container Commands**
+  - **`docker run -d --name <container_name> <image_name>`**: Runs a container in detached mode.
+  - **`docker ps`**: Lists all running containers.
+    + **`docker ps -a`**: Lists all containers.
+  - **`docker stop <container_name>`**: Stops a running container.
+  - **`docker rm <container_name>`**: Removes a stopped container.
+  - **`docker exec -it <container_name> sh`**: Opens a shell inside a running container.
+
++ **Volume Commands**
+  - **`docker volume create <volume_name>`**
+  - **`docker volume ls`**
+  - **`docker volume rm <volume_name>`**: Removes a volume.
+
++ **Networked Commands**
+  - **`docker network create <network_name>`**
+  - **`docker network ls`**
+  - **`docker network rm <network_name>`**
+
+## Flags
++ **`docker run` Flags**
+  - **`-d`**: Runs the container in detached mode (in the background).
+  - **`-p`**: Publishes a container’s port(s) to the host.
+  - **`--name`**: Assigns a name to the container.
+  - **`-e`**: Sets environment variables.
+  - **`-v`**: Binds mount a volume.
+  - **`--rm`**: Automatically removes the container when it exits.
+  - **`-i`**t: Allocates a pseudo-TTY and keeps STDIN open (interactive mode).
+
++ **`docker build` Flags**
+  - **`-t`**: Tags the image with a name.
+  - **`--no-cache`**: Builds the image without using the cache.
+  - **`-f`**: Specifies the Dockerfile to use.
+
++ **`docker ps` Flags**
+  - **`-a`**: Shows all containers (default shows just running).
+  - **`-q`**: Only displays container IDs.
+  - **`--filter`**: Filters output based on conditions provided.
+
++ **`docker logs` Flags**
+  - **`-f`**: Follows log output.
+  - **`--tail`**: Shows the last N lines of logs.
+
++ **`docker-compose` Flags**
+  - **`-f`**: Specifies an alternate compose file.
+  - **`-p`**: Sets the project name.
+  - **`--build`**: Forces rebuild of images.
 
 ## Miscellaneous
 + **Jeager**: It is an open-source distributed tracing system that monitors and troubleshoots microservices by tracking and visualizing request flows, helping diagnose performance issues and system behavior.
