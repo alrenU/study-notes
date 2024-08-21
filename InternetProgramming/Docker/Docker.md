@@ -76,7 +76,7 @@
 
 + **Image Commands**
   - **`docker build -t <image_name> .`**: Builds an image from a Dockerfile in the current directory.
-  - **`docker images`**: Lists all images on your local system.
+  - **`docker image ls`or`docker images`**: Lists all images on your local system.
   - **`docker rmi <image_name>`**: Removes an image from your local system.
   - **`docker pull <image_name>`**
   - **`docker push <image_name>`**
