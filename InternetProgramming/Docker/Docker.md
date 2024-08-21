@@ -58,6 +58,8 @@
   3. **Run Container**: Start a container from the image.
   4. **Manage Volumes**
 
++ **Multi-Stage Builds**
+
 ## CLI Codes
 + **`docker run -d -p 8080:80 docker/welcome-to-docker`**
   - **`docker run`**: Create and start a new Docker container.
