@@ -6,9 +6,15 @@
 + Personal insights.
 
 # AI Question Templates
-> ***NOTE**: I am taking notes about the TypeScript while studying and I need you to make these notes organized, concise, easy to read and understand. Can you also fix if there are any wrong information?*
+> **Partial Documens Messy Notes Organization**: I am taking notes about the [NAME] while studying and I need you to make these notes organized, concise, easy to read and understand. Can you also fix if there are any wrong information?
 
-> ***NOTE**: Can you summarize this TypeScript document? I need you to make these notes organized, concise, easy to read and understand.*
+> **Full Document Messy Notes Organization**: I take notes about TypeScript. These notes are unordered. I ask you to make them ordered in MardDown file format. Can you organize the related notes together and remove the redundant ones? The file format should be like this:
+  - From top to the bottom, notes should be more complex that is start from simple notes to comples notes.
+  - Notes should bu concice enough to take up little space in file but easy and simple to understand.
+  - The wrong information should be fixed with the correct one.
+  - The notes that has no explanation should be explained.
+
+> **Summarizing The Passage**: Can you summarize this TypeScript document? I need you to make these notes organized, concise, easy to read and understand.
 
 # Table of Contents
 + internet-programming

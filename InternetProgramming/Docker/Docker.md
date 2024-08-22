@@ -7,6 +7,9 @@
 + **Docker Scout**: It helps identify and manage security vulnerabilities in Docker images.
 + **Docker Build**: Command used to create Docker images from a Dockerfile. The command builds the image in a series of layers.
 + **Docker Builder**: Tools and technologies that enhance and extend the image building process. The term "builder" can specifically refer to: *BuildKit*, *Docker Buildx*.
+  - **BuildKit**: A Docker tool that speeds up and enhances Docker image builds with features like parallel builds and advanced caching.
+  - **Docker Buildx**: A Docker CLI plugin that uses BuildKit to build images for multiple platforms and adds extra build capabilities.
+
 + **Docker Extensions**: Let you use third-party tools within Docker Desktop to extend its functionality.
 + **Docker Compose**: It is a tool for defining and running multi-container Docker applications using a simple YAML file.
 + **Docker Content Trust**: It is a security feature that ensures the integrity and authenticity of Docker images by enabling digital signing and verification of images before they are pulled or pushed to Docker registries.
