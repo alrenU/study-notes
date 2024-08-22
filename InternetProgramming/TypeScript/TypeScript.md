@@ -424,3 +424,5 @@
       type ToArrayNonDist<Type> = [Type] extends [any] ? Type[] : never;
       type ArrOfStrOrNum = ToArrayNonDist<string | number>; // (string | number)[]
       ```
+
+# Unordered Notes

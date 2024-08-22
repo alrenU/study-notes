@@ -133,3 +133,5 @@
 
 ## Miscellaneous
 + **Jeager**: It is an open-source distributed tracing system that monitors and troubleshoots microservices by tracking and visualizing request flows, helping diagnose performance issues and system behavior.
+
+# Unordered Notes
