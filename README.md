@@ -13,6 +13,7 @@
   - Notes should bu concice enough to take up little space in file but easy and simple to understand.
   - The wrong information should be fixed with the correct one.
   - The notes that has no explanation should be explained.
+  - Unnecessay notes should be removed.
 
 > **Summarizing The Passage**: Can you summarize this TypeScript document? I need you to make these notes organized, concise, easy to read and understand.
 

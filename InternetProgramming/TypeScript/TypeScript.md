@@ -41,7 +41,7 @@
       - `null == undefined` is `true` in *loose equality*.
       - `null === undefined` is `false` in *strict equality*.
   - **Special Types**
-    + **`any`:** Represents any type, but lacks type safety.
+    + **`any`:** Represents any type without type safety. If TypeScript can’t infer a type or if a parameter type isn’t specified, it defaults to `any`.
     + **`unknown`**: It is a safer alternative to `any`, representing a value that could be of any type, but requires type checking before being used.
     + **`never`**: Represents values that never occur, typically used for functions that never return or throw an error.
     + **`void`**: Represents the absence of any type, typically used for functions that do not return a value.
@@ -106,16 +106,12 @@
 + **Type Guards**: Allows you to narrow down the type of a variable within a conditional block. Here’s a list of common type guards: `typeof`, `instanceof`, `in`, `Array.isArray()`, `null`, `undefined`.
 + **Downleveling**: Refers to the process of converting modern ECMAScript features into older versions for compatibility with older JS environments.
 + You can enhance TS's strictness with `tsconfig.json` configurations:
-  - **`noImplicitAny`**: Requires explicit types for all variables; otherwise, TS defaults to `any`.
+  - **`noImplicitAny`**: Requires explicit types for all variables.
   - **`strictNullChecks`**: Mandates explicit handling of `null` and `undefined` values.
   - **`noEmitOnError`**: Prevents JS file generation if there are compilation errors.
 
 <!-- Bookmark -->
 ## Everyday Types
-+ **`any` Type**: Represents any value and bypasses TS’s type checking.
-  - Use sparingly as it negates type safety.
-  - When TS cannot infer a type, it defaults to `any`.
-
 + **Type Annotations**: Explicitly specify types for variables, function parameters, and return values.
   - **Example**: `let num: number = 42;`
 
@@ -226,7 +222,6 @@
 + **Function Type Expressions**: Specifies the types of a function’s parameters and return value without implementing the function.
   - **Example**: `type GreetFunction = (name: string) => string;`
 
-+ If a parameter type isn’t specified, it defaults to `any`.
 + **Call Signature**: Defines the type of a function within an object type or interface.
   - **Example**: `interface MathOperation { (a: number, b: number): number; }`
 
