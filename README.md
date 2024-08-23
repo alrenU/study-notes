@@ -1,7 +1,6 @@
 # What Should Be Taken As A Note
 - Core concepts and terminology.
-- Common pitfalls and debugging tips.
-- Best practices.
+- Common pitfalls.
 - Useful libraries and tools.
 - Personal insights.
 
@@ -18,10 +17,14 @@
 - **Summarizing The Passage**: Can you summarize this [NAME] document? I need you to make these notes organized, concise, easy to read and understand.
 
 # Table of Contents
-- internet-programming
-  - [HTML.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/HTML.md)
-  - [VueJS.md](https://github.com/alrenU/study-notes/blob/main/internet-programming/VueJS.md)
-  - [TypeScript.md](https://github.com/alrenU/study-notes/blob/main/InternetProgramming/TypeScript/TypeScript.md)
+- **Internet Programming**
+  - [Docker](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Docker/Docker.md)
+  - [GitLab](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/GitLab/GitLab.md)
+  - [HTML](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/HTML/HTML.md)
+  - [Kubernetes](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Kubernetes/Kubernetes.md)
+  - [RedPanda](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/RedPanda/RedPanda.md)
+  - [TypeScript](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/TypeScript/TypeScript.md)
+  - [VueJS](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Vue/Vue.md)
 
 # Books to Read
 - Crafting Interpreters | Robert Nystrom
@@ -34,7 +37,7 @@
 - Readings in Database Systems | Peter Bailis, Joseph M. Hellerstein
 - Designing Data-Intensive Applications: The Big Ideas Behind Reliable, Scalable, and Maintainable Systems | Martin Kleppmann
 
-- [teachyourselfcs](https://teachyourselfcs.com/)
+- [Teach Yourself Computer Science](https://teachyourselfcs.com/)
 
 - The Goal: A Process Of Ongoing Improvement | Eliyahu M. Goldratt, Jeff Cox
 - The Phoenix Project: A Novel about IT, DevOps, and Helping Your Business Win | Kim, Gene, Behr, Kevin, Spafford, George

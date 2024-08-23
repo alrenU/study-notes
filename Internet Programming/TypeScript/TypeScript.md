@@ -1,7 +1,7 @@
 # TypeScript
 - (Suggested Book In Official Docs) JavaScript: The Good Parts
 
-# Notes From Offical Documents
+# Out Of Scope Notes To Be Moved
 <!-- TODO-START: Put below notes to their related functional programming sections. -->
 - **Higher-Kinded Types (HKTs)**
   - Abstract types that take other types as parameters, originating from functional programming.
@@ -37,7 +37,7 @@
   - **Example**: `function* myGenerator() { yield 1; yield 2; }`
 <!-- TODO-END -->
 
-
+# Notes From Offical Documents
 - **TypeScript (TS)**: A statically-typed *superset* of JavaScript (JS) that adds type annotations. Valid JS code is also valid TS code.
 - **Runtime Behavior**: TS preserves JS's runtime behavior.
 - **`tsc`**: TS compiler that converts TS code to JS code.
@@ -65,11 +65,8 @@
     - **`never`**: Represents values that never occur, used for functions that never return or throw errors.
     - **`void`**: Represents the absence of any type, used for functions that do not return a value.
     
-  - **Object Types**
-    - `object` or `{}`
-
-  - **Array Types**
-    - `number[]` or `Array<number>`
+  - **Object Types**: `object` or `{}`
+  - **Array Types**: `number[]` or `Array<number>`
 
   - **Tuple Types**
     - Fixed-size arrays with specified element types.
