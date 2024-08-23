@@ -23,6 +23,7 @@
   - [HTML](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/HTML/HTML.md)
   - [Kubernetes](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Kubernetes/Kubernetes.md)
   - [RedPanda](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/RedPanda/RedPanda.md)
+  - [Terraform](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Terraform/Terraform.md)
   - [TypeScript](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/TypeScript/TypeScript.md)
   - [Vue](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Vue/Vue.md)
 
