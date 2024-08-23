@@ -24,7 +24,7 @@
   - [Kubernetes](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Kubernetes/Kubernetes.md)
   - [RedPanda](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/RedPanda/RedPanda.md)
   - [TypeScript](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/TypeScript/TypeScript.md)
-  - [VueJS](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Vue/Vue.md)
+  - [Vue](https://github.com/alrenU/study-notes/blob/main/Internet%20Programming/Vue/Vue.md)
 
 # Books to Read
 - Crafting Interpreters | Robert Nystrom

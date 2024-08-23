@@ -1,7 +1,7 @@
 # TypeScript
 - (Suggested Book In Official Docs) JavaScript: The Good Parts
 
-# Out Of Scope Notes To Be Moved
+# Out Of Scope Notes
 <!-- TODO-START: Put below notes to their related functional programming sections. -->
 - **Higher-Kinded Types (HKTs)**
   - Abstract types that take other types as parameters, originating from functional programming.

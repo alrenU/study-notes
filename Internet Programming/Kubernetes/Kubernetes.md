@@ -97,3 +97,24 @@
     - **`--validate=false`** is equivalent to ignore.
 
   - If `kubectl` cannot connect to an API server with field validation, it uses client-side validation.
+
+#### Kubernetes Object Management
+> ***NOTE**: A Kubernetes object should be managed using only one technique. Mixing and matching techniques for the same object results in undefined behavior.*
+
+- **Management Techniques**
+  - In Kubernetes, `kubectl` commands can be categorized into three types based on how they manage resources and configurations.
+
+  - **Imperative Commands**
+    - **What It Does**: Directly manages live Kubernetes objects.
+    - **How It Works**: Commands are executed immediately on the live state of the cluster.
+    - **Usage Context**: Best suited for quick tasks or development environments where you need to rapidly create or modify resources without a lot of planning or record-keeping.
+
+  - **Imperative Object Configuration**
+    - **What It Does**: Manages Kubernetes objects using configuration files that define the desired state of the objects.
+    - **How It Works**: You provide a file (or multiple files) to kubectl which describes the object configuration. The kubectl command then applies these configurations directly to the cluster.
+    - **Usage Context**: Suitable for both development and production environments where you want to work with configuration files but still manually specify the operations.
+
+  - **Declarative Object Configuration**
+    - What It Does: Manages Kubernetes objects by maintaining configuration files and letting kubectl handle the creation, updating, and deletion of resources based on these files.
+    - How It Works: You define the desired state in files stored locally. The kubectl commands detect differences between the desired state and the live state, and apply necessary changes.
+    - Usage Context: Ideal for production environments or larger projects where you want to ensure that the cluster state is always in sync with your configuration files.
