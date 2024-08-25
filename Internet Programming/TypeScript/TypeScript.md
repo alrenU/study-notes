@@ -3,8 +3,7 @@
 
 # Out Of Scope Notes
 <!-- TODO-START: Put below notes to their related functional programming sections. -->
-- **Higher-Kinded Types (HKTs)**
-  - Abstract types that take other types as parameters, originating from functional programming.
+- **Higher-Kinded Types (HKTs)**: Abstract types that take other types as parameters, originating from functional programming.
   - **Funktor**: A container type in functional programming that supports a map operation. Functors are a specific instance of HKTs, representing a particular pattern where a type constructor is used.
 
 - **Point-Free Programming (Tacit Programming)**: A style where functions are defined by composing other functions without explicitly mentioning their arguments.
@@ -19,8 +18,7 @@
   - *Reference* is immutable
   - *Referent* is mutable.
 
-- **Boxed Types**
-  - JS primitives have boxed versions with methods.
+- **Boxed Types**: JS primitives have boxed versions with methods.
   - **Example**: `(1).toExponential()` is equivalent to `Number.prototype.toExponential.call(1)`.
 
 - **Well-Known Symbols**: Predefined symbols for customizing and extending object behavior
@@ -31,9 +29,7 @@
   - **Falsy**: `0`, `NaN`, `""` (empty string), `0n` (bigint zero), `null`, `undefined`
   - **Truthy**: All other values.
 
-- Generator Functions (`*`)
-  - Produce values one at a time.
-  - Useful for handling sequences or large data streams.
+- **Generator Functions (`*`)**: Produce values one at a time. Useful for handling sequences or large data streams.
   - **Example**: `function* myGenerator() { yield 1; yield 2; }`
 <!-- TODO-END -->
 
@@ -73,37 +69,30 @@
     - Optional elements can only be at the end and affect the tuple's length type.
     - **Example**: `let tuple: [string, number] = ['hello', 42];`
 
-  - **Function Types**
-    - Defines function shapes, including parameters and return types.
-      - **Example**: `let add: (a: number, b: number) => number = (x, y) => x - y;`
+  - **Function Types**: Defines function shapes, including parameters and return types.
+    - **Example**: `let add: (a: number, b: number) => number = (x, y) => x - y;`
 
-  - **Union Types (`|`)**
-    - Allows a value to be one of several types.
+  - **Union Types (`|`)**: Allows a value to be one of several types.
     - **Example**: `let value: string | number = 'hello'; value = 42;`
     - **Untagged Unions**: No runtime information for distinguishing types.
     - **Discriminated Unions (Tagged Unions)**: Each type in the union has a common property.
 
-  - **Intersection Types**
-    - Combines multiple types into one, including all properties of intersected types.
+  - **Intersection Types**: Combines multiple types into one, including all properties of intersected types.
     - **Example**: `type Employee = Person & Worker;`
 
-  - **Literal Types**
-    - Specifies exact values a variable can hold.
+  - **Literal Types**: Specifies exact values a variable can hold.
     - **Example**: `let status: 'success' | 'error' = 'success';`
 
-  - **Enums**
-    - Defines a set of named constants.
+  - **Enums**: Defines a set of named constants.
     - **Example**: `enum Direction { Up, Down, Left, Right }`
 
-  - **Generics**
-    - Allows creation of reusable components that work with any type.
+  - **Generics**: Allows creation of reusable components that work with any type.
     - **Example**: `function identity<T>(arg: T): T { return arg; }`
     - You can create generic interface and class but it is not possible to create generic enums and namespaces.
     - You can provide default values for generic types.
     - You can use constructors to create instances of generic types.
       - **Example**: `function create<Type>(c: { new (): Type }): Type { return new c(); }`
-    - **Generic Functions**
-      - A generic function is a function that can operate on different types without being explicitly tied to one.
+    - **Generic Functions**: A generic function is a function that can operate on different types without being explicitly tied to one.
       - **Example**: `function identity<Type>(arg: Type): Type {}`
       - **Type Parameter**: It is a placeholder for a type specified when defining a generic type or function (e.g., `Type` in `identity<Type>`).
       - **Constraints**
@@ -111,37 +100,29 @@
         - **Example**: `function logLength<T extends { length: number }>(arg: T): T {}`
 
 - **TypeScript Type Constructs or Features**
-  - **Type Aliases**
-    - Creates a new name for a type.
+  - **Type Aliases**: Creates a new name for a type.
     - **Example**: `type ID = string | number;`
 
-  - **Interfaces**
-    - Defines the shape of objects, similar to type aliases but often used for object types and can be extended.
+  - **Interfaces**: Defines the shape of objects, similar to type aliases but often used for object types and can be extended.
     - **Example**: `interface Person { name: string; age: number; }`
     - **`extends` Keyword**: Creates a superset of an interface.
 
-  - **Mapped Types**
-    - Creates new types by transforming properties of an existing type.
+  - **Mapped Types**: Creates new types by transforming properties of an existing type.
     - **Examples**: `Readonly<T>`, `Partial<T>`, `Required<T>`
 
-  - **Conditional Types**
-    - Creates types based on conditions.
+  - **Conditional Types**: Creates types based on conditions.
     - **Example**: `type TrueOrFalse<T> = T extends true ? 'yes' : 'no';`
 
-  - **Indexed Access Types**
-    - Gets the type of a property of a type.
+  - **Indexed Access Types**: Gets the type of a property of a type.
     - **Example**: `type NameType = Person['name'];`
 
-  - **Keyof Type Operator**
-    - Returns a union type of the property names of a type.
+  - **Keyof Type Operator**: Returns a union type of the property names of a type.
     - **Example**: `type PersonKeys = keyof Person; // 'name' | 'age'`
 
-  - **Utility Types**
-    - Built-in generic types for common type transformations.
+  - **Utility Types**: Built-in generic types for common type transformations.
     - **Examples**: `Pick`, `Omit`, `Record`, `Exclude`, `Extract`, `ReturnType`
 
-  - **Unit Types**
-    - Represent exactly one value.
+  - **Unit Types**: Represent exactly one value.
     - **Example**:
       ```typescript
       declare function pad(s: string, n: number, direction: "left" | "right"): string;
@@ -167,9 +148,7 @@
 - **`strictNullChecks`**: Mandates explicit handling of `null` and `undefined` values.
 - **`noEmitOnError`**: Prevents JS file generation if there are compilation errors.
 
-- **Type Parameters**:
-  - Placeholders for types in functions, classes, or interfaces.
-  - Conventionally single uppercase letters.
+- **Type Parameters**: Placeholders for types in functions, classes, or interfaces. Conventionally single uppercase letters.
   - **Example**: `class Box<T> {}` where `T` is a type parameter.
 
 - **Readonly Modifiers**
@@ -177,8 +156,7 @@
   - **`Readonly<T>`**: Makes all properties of type `T` immutable.
   - **`ReadonlyArray<T>`**: Makes arrays immutable.
 
-- **`declare` Keyword**
-  - Informs TS of an entity's existence (function, variable, class, or module) without implementation.
+- **`declare` Keyword**: Informs TS of an entity's existence (function, variable, class, or module) without implementation.
   - **Example**: `declare function globalFunction(message: string): void;`
 
 - **Contextual Typing**: Infers the type of a value based on how and where it’s used.
@@ -189,32 +167,26 @@
   - Interfaces can be extended with new properties; type aliases cannot.
   - Interfaces may be more performant for the compiler when extending types.
 
-- **Type Annotations**
-  - Explicitly specify types for variables, function parameters, and return values.
+- **Type Annotations**: Explicitly specify types for variables, function parameters, and return values.
   - **Example**: `let num: number = 42;`
   - **Return Type Annotation**: Specifies the return type of a function.
 
-- **Optional Properties (`?`)**
-  - Checks for `undefined` of an object's property.
+- **Optional Properties (`?`)**: Checks for `undefined` of an object's property.
   - **Example**: `interface User { email?: string; }`
 
-- **Non-null Assertion Operator (`!`)**
-  - Asserts that a value is not `null` or `undefined`.
+- **Non-null Assertion Operator (`!`)**: Asserts that a value is not `null` or `undefined`.
   - **Example**: `value!.length`
 
-- **Double-Boolean Negation (`!!`)**
-  - Converts a value to a boolean.
+- **Double-Boolean Negation (`!!`)**: Converts a value to a boolean.
   - **Example**: `const isTruthy = !!value;`
 
-- **Type Assertions**
-  - Explicitly specify a value’s type when TypeScript cannot infer it.
+- **Type Assertions**: Explicitly specify a value’s type when TypeScript cannot infer it.
   - **Syntax**:
     - **Angle-Bracket Syntax**: `<string>someValue`
     - **`as` Syntax**: `document.querySelector('input') as HTMLInputElement;`
   - **Complex Coercion**: Use two assertions if needed: first to `any` or `unknown`, then to the desired type. This allows bypassing TS's strict type checking temporarily.
 
-- **Type Predicates**
-  - User-defined type guards.
+- **Type Predicates**: User-defined type guards.
   - **Syntax**: `parameterName is Type`
   - **Example**:
     ```typescript
@@ -223,8 +195,7 @@
     }
     ```
 
-- **Exhaustiveness Checking**
-  - Ensures all possible cases of a union type are handled. The `never` type is used to catch any unhandled cases, ensuring your code is complete and error-free.
+- **Exhaustiveness Checking**: Ensures all possible cases of a union type are handled. The `never` type is used to catch any unhandled cases, ensuring your code is complete and error-free.
   - **Example**:
     ```typescript
     type Shape = Circle | Square;
@@ -245,19 +216,16 @@
 
 - **Narrowing**: Narrowing is the process of refining a variable's type to a more specific type based on the program's control flow.
 
-- **Function Type Expressions**
-  - Specifies the types of a function’s parameters and return value without implementing the function.
+- **Function Type Expressions**: Specifies the types of a function’s parameters and return value without implementing the function.
   - **Example**: `type GreetFunction = (name: string) => string;`
 
-- **Call Signature**
-  - Defines the type of a function within an object type or interface.
+- **Call Signature**: Defines the type of a function within an object type or interface.
   - **Example**: `interface MathOperation { (a: number, b: number): number; }`
 
 - Functions can have properties since they are considered *objects*.
 - You can use constructors and call functions with the `new` operator.
 
-- **Function Overloads**
-  - Allows defining multiple versions of a function with the same name but different parameter types or numbers.
+- **Function Overloads**: Allows defining multiple versions of a function with the same name but different parameter types or numbers.
   - **Overload Signature**: Multiple signatures for a function, each with a different set of parameters and return types.
   - **Implementation Signature**: The function's implementation must match one of the overload signatures.
 
@@ -266,20 +234,17 @@
 - In TS, a function’s return type is `void`.
 - **Untyped Function Call**: Occurs when TS can't infer the types of a function’s parameters or return value.
 
-- **Parameter Destructuring**
-  - Type annotations for destructured objects should be placed after the destructuring syntax.
+- **Parameter Destructuring**: Type annotations for destructured objects should be placed after the destructuring syntax.
   - **Example**: `function sum({ a, b, c }: { a: number; b: number; c: number }) {}`
 
-- **Index Signatures**
-  - Define types for values accessed with dynamic keys. Useful for enforcing type constraints on values with unknown keys.
+- **Index Signatures**: Define types for values accessed with dynamic keys. Useful for enforcing type constraints on values with unknown keys.
   - **Example**:
     ```typescript
     interface StringNumberMap { [key: string]: number; }
     const example: StringNumberMap = { age: 25, year: 2024 };
     ```
 
-- **Excess Property Checking**
-  - TS ensures object literals only have properties defined in their type. Extra properties produce an error.
+- **Excess Property Checking**: TS ensures object literals only have properties defined in their type. Extra properties produce an error.
   - **Example**:
     ```typescript
     interface Person { name: string; age: number; }
@@ -290,12 +255,10 @@
     };
     ```
 
-- **Option Bags (Options Objects)**
-  - Pass a single object with optional properties as a function argument.
+- **Option Bags (Options Objects)**: Pass a single object with optional properties as a function argument.
   - **Example**: `function createUser({ name, age }: { name: string; age?: number; }) {}`
 
-- **Declaration Merging**
-  - TS merges properties from multiple interfaces with the same name into one. Applicable only for interfaces and namespaces.
+- **Declaration Merging**: TS merges properties from multiple interfaces with the same name into one. Applicable only for interfaces and namespaces.
   - **Example**:
     ```typescript
     interface Person { name: string; }

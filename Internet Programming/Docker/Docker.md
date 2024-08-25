@@ -7,8 +7,7 @@
 - **Docker Scout**: It helps identify and manage security vulnerabilities in Docker images.
 - **Docker Build**: Command used to create Docker images from a Dockerfile. The command builds the image in a series of layers.
 
-- **Docker Builder**
-  - Tools and technologies that enhance and extend the image building process. The term "builder" can specifically refer to: *BuildKit*, *Docker Buildx*.
+- **Docker Builder**: Tools and technologies that enhance and extend the image building process. The term "builder" can specifically refer to: *BuildKit*, *Docker Buildx*.
   - **BuildKit**: A Docker tool that speeds up and enhances Docker image builds with features like parallel builds and advanced caching.
   - **Docker Buildx**: A Docker CLI plugin that uses BuildKit to build images for multiple platforms and adds extra build capabilities.
 
@@ -23,18 +22,16 @@
 - Docker is written in *GoLang*.
 - **Namespaces**: Docker uses Linux namespaces to create isolated workspaces for containers. When a container runs, Docker sets up a set of namespaces that virtualize and isolate system resources, ensuring each container operates in its own separate environment.
 
-- **Docker Engine**
-  - It is the core component of Docker that enables containerization. It’s a client-server application with three main parts:
-    1. **Docker Daemon (`dockerd`)**: The background service responsible for managing Docker containers by listening Docker API requests. It manages Docker objects.
-    2. **Docker CLI (Client)**: The command-line tool (`docker`) used to interact with Docker Daemon. It allows users to run commands to build, run, and manage containers. It communicates with deamon using a REST API, over UNIX sockets or a network interface. Another Docker client is *Docker Compose*.
-    3. **Docker API**: The API that allows applications and services to interact with Docker Daemon programmatically.
+- **Docker Engine**: It is the core component of Docker that enables containerization. It’s a client-server application with three main parts:
+  1. **Docker Daemon (`dockerd`)**: The background service responsible for managing Docker containers by listening Docker API requests. It manages Docker objects.
+  2. **Docker CLI (Client)**: The command-line tool (`docker`) used to interact with Docker Daemon. It allows users to run commands to build, run, and manage containers. It communicates with deamon using a REST API, over UNIX sockets or a network interface. Another Docker client is *Docker Compose*.
+  3. **Docker API**: The API that allows applications and services to interact with Docker Daemon programmatically.
 
-- **Port Mapping (Port Forwarding)**
-  - Directs network traffic from one port to another to enable external access to private network resources. It works by:
-    - Using a private network with devices having private IP addresses.
-    - Configuring a router/firewall to connect the private network to the public internet.
-    - (Port Mapping) Setting up the router to forward requests from a public port to an internal port.
-    - Allowing external requests to reach the correct device through the mapped port.
+- **Port Mapping (Port Forwarding)**: Directs network traffic from one port to another to enable external access to private network resources. It works by:
+  - Using a private network with devices having private IP addresses.
+  - Configuring a router/firewall to connect the private network to the public internet.
+  - (Port Mapping) Setting up the router to forward requests from a public port to an internal port.
+  - Allowing external requests to reach the correct device through the mapped port.
 
 - **Docker Image**
   - A static, read-only blueprint that includes code, runtime, libraries, and dependencies to run an application. Created using a `Dockerfile`. It consists of stacked layers representing changes or additions. Each instruction in a `Dockerfile` creates a layer in the image. Reuses common layers to reduce redundancy and save storage. Docker caches the layers to speed up builds. A Docker image can include the followings:

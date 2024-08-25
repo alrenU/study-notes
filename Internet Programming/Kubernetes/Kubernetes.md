@@ -8,30 +8,40 @@
 - **`minikube`**: Tool to run a single-node or multi-node Kubernetes cluster locally on your computer. Provides a complete, single-node Kubernetes cluster in a VM or container on your local machine. Best for development and testing; provides a more "full-featured" local Kubernetes environment compared to kind.
 - **`kubeadm`**: Tool to initialize and manage Kubernetes clusters. Helps set up Kubernetes clusters, from creating the *control plane* and *worker nodes* to joining them into a cluster. Suitable for both local and production environments.
 
-- **Cluster**
-  - A set of nodes that work together to run containerized applications.
+- **Cluster**: A set of nodes that work together to run containerized applications. It's components:
+  - **Nodes**: A node is a physical or virtual machine within a Kubernetes cluster. Nodes are of two main types:
+    1. **Master Node (Control Plane Node)**: Manages the cluster’s overall health and operation, ensuring configurations are met. It's components:
+      - **API Server**: Handles API requests and communication between components and users.
+      - **Controller Manager**: Monitors cluster state and makes adjustments to maintain the desired state.
+      - **Scheduler**: Assigns pods to nodes based on resource availability and requirements.
+      - **etcd**: A distributed key-value store for cluster data and state information.
 
-  - **Main Components**
-    - **Nodes**
-      - A node is a physical or virtual machine within a Kubernetes cluster. It's types:
-        - **Master Node (Control Plane Node)**
-          - Manages the cluster’s overall health and operation, ensuring configurations are met.
-          - **Components**:
-            - **API Server**: Handles API requests and communication between components and users.
-            - **Controller Manager**: Monitors cluster state and makes adjustments to maintain the desired state.
-            - **Scheduler**: Assigns pods to nodes based on resource availability and requirements.
-            - **etcd**: A distributed key-value store for cluster data and state information.
+    2. **Worker Node (Compute Node)**: Runs applications and workloads (pods). It's components:
+      - **Kubelet**: Ensures containers are running in pods as specified by the control plane.
+      - **Kube Proxy**: Manages network routing and load balancing within the cluster.
+      - **Container Runtime**: Software that executes and manages containerized applications (e.g., Docker, containerd, CRI-O).
 
-        - **Worker Node (Compute Node)**
-          - Runs applications and workloads.
-          - **Components**:
-            - **Kubelet**: Ensures containers are running in pods as specified by the control plane.
-            - **Kube Proxy**: Manages network routing and load balancing within the cluster.
-            - **Container Runtime**: Software that executes and manages containerized applications (e.g., Docker, containerd).
-    
+  - **Kubernetes Objects**: These components are deployed on worker nodes. Master nodes do not run application workloads directly but manage the scheduling and orchestration of these components across the worker nodes.
     - **Pods**: The smallest deployable units in Kubernetes, containing one or more containers.
     - **Services**: Facilitate communication between pods and with the external world, providing load balancing and stable endpoints.
-    - **Deployments, ReplicaSets, and Other Controllers**: Oversee application deployment and scaling.
+    - **Deployments**: Manage the deployment and scaling of a set of pods. They ensure that a specified number of pod replicas are running and handle rolling updates.
+    - **ReplicaSets**: Ensure that a specified number of pod replicas are running at any given time. Deployments typically manage ReplicaSets.
+    - **Other Controllers**: Oversees application deployment and scaling, including StatefulSets, DaemonSets, and Jobs.
+
+- **Load Balancing**: Refers to distributing network or application traffic across multiple instances of a service to ensure that no single instance becomes a bottleneck.Main aspects of load balancing in Kubernetes:
+  - **Algorithms**: Kubernetes typically uses round-robin by default, but can be configured for other methods.
+  - **Scaling**: Works in conjunction with *Horizontal Pod Autoscaler (HPA)* to adjust the number of pods based on load.
+
+  - **Types**
+    - **Cluster IP**: Provide internal load balancing within the Kubernetes cluster by distributing traffic among pods that match the service's selector.
+    - **NodePort**: Services expose a service on a static port on each node's IP address, allowing external traffic to be routed to the service while still balancing the load across pods.
+    - **LoadBalancer**: Available in cloud environments, provision an external load balancer managed by the cloud provider to distribute incoming traffic to the service. (like AWS ELB or Google Cloud Load Balancer).
+
+- **Container Runtime Interface (CRI)**: A standard interface for Kubernetes to manage containers through various runtimes (e.g., Docker, containerd, CRI-O) without being tied to any specific one.
+  - **Abstraction Layer**: CRI abstracts Kubernetes from the specifics of different container runtimes, allowing it to use multiple runtimes via a unified interface.
+  - **CRI Components**
+    - **RuntimeService**: Handles container lifecycle operations like creating, starting, stopping, and deleting containers.
+    - **ImageService**: Manages container images, including pulling images from a registry, listing images, and removing images.
 
 ## Concepts
 ### Overview
@@ -58,7 +68,7 @@
     - Policies for application behavior, including restart, upgrades, and fault tolerance.
 
   - Creating an object sets the desired state for your cluster, and Kubernetes works to maintain that state.
-  - Use the Kubernetes API to create, modify, or delete objects. Tools like kubectl make API calls for you, but you can also use Client Libraries to interact with the API directly in your own programs.
+  - Use the Kubernetes API to create, modify, or delete objects. Tools like `kubectl` make API calls for you, but you can also use Client Libraries to interact with the API directly in your own programs.
 
 - **Object Spec and Status**
   - **Object Spec**
@@ -87,34 +97,31 @@
 - **Server-Side Field Validation**
   - Detects unrecognized or duplicate fields in an object, similar to `kubectl --validate` but on the server side.
 
-  - Validation Levels:
-    - **Strict**: Errors if validation fails.
-    - **Warn**: Validation errors show as warnings, not failures.
-    - **Ignore**: No field validation is performed.
+  - **Validation Levels**
+    1. **Strict**: Errors if validation fails.
+    2. **Warn**: Validation errors show as warnings, not failures.
+    3. **Ignore**: No field validation is performed.
 
-  - **`kubectl` Validation Flag**:
+  - **`kubectl` Validation Flag**
     - **`--validate=true`** (default) is equivalent to strict.
     - **`--validate=false`** is equivalent to ignore.
 
   - If `kubectl` cannot connect to an API server with field validation, it uses client-side validation.
 
 #### Kubernetes Object Management
-> ***NOTE**: A Kubernetes object should be managed using only one technique. Mixing and matching techniques for the same object results in undefined behavior.*
-
 - **Management Techniques**
   - In Kubernetes, `kubectl` commands can be categorized into three types based on how they manage resources and configurations.
 
-  - **Imperative Commands**
-    - **What It Does**: Directly manages live Kubernetes objects.
-    - **How It Works**: Commands are executed immediately on the live state of the cluster.
-    - **Usage Context**: Best suited for quick tasks or development environments where you need to rapidly create or modify resources without a lot of planning or record-keeping.
+  1. **Imperative Commands**: Executed directly on the live state of the Kubernetes cluster for immediate changes (e.g., creating, updating, or deleting resources).
+    - **Management Technique**: Operates on live objects.
+    - **Recommended Environment**: Development projects.
 
-  - **Imperative Object Configuration**
-    - **What It Does**: Manages Kubernetes objects using configuration files that define the desired state of the objects.
-    - **How It Works**: You provide a file (or multiple files) to kubectl which describes the object configuration. The kubectl command then applies these configurations directly to the cluster.
-    - **Usage Context**: Suitable for both development and production environments where you want to work with configuration files but still manually specify the operations.
+  2. **Imperative Object Configuration**: Manages resources using individual configuration files with imperative commands to apply changes.
+    - **Management Technique**: Operates on individual files.
+    - **Recommended Environment**: Production projects.
 
-  - **Declarative Object Configuration**
-    - What It Does: Manages Kubernetes objects by maintaining configuration files and letting kubectl handle the creation, updating, and deletion of resources based on these files.
-    - How It Works: You define the desired state in files stored locally. The kubectl commands detect differences between the desired state and the live state, and apply necessary changes.
-    - Usage Context: Ideal for production environments or larger projects where you want to ensure that the cluster state is always in sync with your configuration files.
+  3. **Declarative Object Configuration**: Manages resources through directories of configuration files, where Kubernetes maintains the desired state.
+    - **Management Technique**: Operates on directories of files.
+    - **Recommended Environment**: Production projects.
+
+> ***NOTE**: A Kubernetes object should be managed using only one technique. Mixing and matching techniques for the same object results in undefined behavior.*
