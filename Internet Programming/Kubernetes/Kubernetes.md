@@ -250,9 +250,9 @@
 - Dependent objects have a `metadata.ownerReferences` field, which includes the object name and UID within the same namespace. Kubernetes sets this field automatically, but you can also configure it manually.
 - The `ownerReferences.blockOwnerDeletion` field, set to true or false, controls whether dependents can block their owner from being deleted. Kubernetes sets this field to true automatically when a controller sets `metadata.ownerReferences`, but you can also configure it manually.
 - The Kubernetes admission controller manages access to the `ownerReferences` field based on the owner's delete permissions, preventing unauthorized users from delaying the deletion of the owner object.
-- **Foreground Finalizer**: It is a mechanism used during the foreground cascading deletion process.
-- **Foreground Cascading Deletion**: When an object is deleted, Kubernetes will first delete all its dependent resources before removing the object itself.
-- **Orphan Deletion Policy**: The orphan deletion policy determines how dependents are handled when their owner is deleted.
-- **Orphan Cascading Deletion**: When an object is deleted, Kubernetes removes the owner object but does not delete its dependents.
+- **Foreground Finalizer**: Ensures that the owner isn’t deleted until dependents are removed.
+- **Foreground Cascading Deletion**: Waits for dependents to be deleted before removing the owner.
+- **Orphan Deletion Policy**: Dictates whether dependents are kept or deleted when their owner is removed.
+- **Orphan Cascading Deletion**: Leaves dependents in the cluster when the owner is deleted.
 
 #### Recommended Labels
