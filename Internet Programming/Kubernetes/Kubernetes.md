@@ -190,3 +190,69 @@
     - **`grep namespace:`**: Searches the output for the line containing the namespace: key, which shows the default namespace for the current context.
 
 - **Namespaces and DNS**: When you create a *Service*, it creates a corresponding *DNS entry*. This entry is of the form `<service-name>.<namespace-name>.svc.cluster.local` (FQDN), which means that if a container only uses `<service-name>`, it will resolve to the service which is local to a namespace (means that the service is only accessible within that specific namespace).
+
+- **Automatic Labeling**: The Kubernetes control plane sets an immutable label kubernetes.`io/metadata.name` on all namespaces. The value of the label is the namespace name.
+
+#### Annotations
+- You can use Kubernetes annotations to attach arbitrary non-identifying metadata to objects.
+- Labels can be used to select objects and to find collections of objects that satisfy certain conditions. In contrast, annotations are not used to identify and select objects.
+- **Example**:
+  ```yaml
+  "metadata": {
+    "annotations": {
+      "key1" : "value1",
+      "key2" : "value2"
+    }
+  }
+  ```
+
+- Valid annotation keys have two segments: an optional prefix and name, separated by a slash (`/`). If specified, the prefix must be a DNS subdomain.
+- If the prefix is omitted, the annotation Key is presumed to be private to the user.
+- Automated system components (e.g. `kube-scheduler`, `kube-controller-manager`, `kube-apiserver`, `kubectl`, or other third-party automation) which add annotations to end-user objects must specify a prefix.
+- The `kubernetes.io/` and `k8s.io/` prefixes are reserved for Kubernetes core components.
+
+#### Field Selectors
+- Let you select Kubernetes objects based on the value of one or more resource fields.
+- **Example**: `metadata.name=my-service`
+
+> ***NOTE**: Field selectors are essentially resource filters.*
+
+- **Supported Fields**
+  - Supported field selectors vary by Kubernetes resource type. All resource types support the `metadata.name` and `metadata.namespace` fields.
+  - There are extensive list of supported fields list in offical documentations. Check it for more information.
+
+- **Supported Operators**
+  - You can use the `=`, `==`, and `!=` operators with field selectors (`=` and `==` mean the same thing).
+  - *Set-based operators* are not supported for field selectors.
+  - You can use comma to chaining the selectors like labels.
+
+- **Multiple Resource Types**: You can use field selectors across multiple resource types.
+  - **Example**: `kubectl get statefulsets,services --all-namespaces --field-selector metadata.namespace!=default`
+
+#### Finalizers
+- Finalizers are namespaced keys that instruct Kubernetes to delay resource deletion until certain conditions are met. They notify *controllers* to clean up resources owned by the object marked for deletion.
+- When you request the deletion of an object with finalizers, Kubernetes sets the `.metadata.deletionTimestamp` and returns a 202 status code. The object remains in a terminating state while finalizers perform their actions. Once the finalizers are removed and the `metadata.finalizers` field is empty, Kubernetes completes the deletion.
+- You can use finalizers to control garbage collection of resources.
+- Finalizers are usually lists of keys, similar to annotations, and do not contain executable code. Kubernetes automatically includes some finalizers, but you can also define custom ones.
+- When you create a resource using a manifest file, you can specify finalizers in the `metadata.finalizers` field.
+- **Example**: The `kubernetes.io/pv-protection` finalizer prevents accidental deletion of `PersistentVolumes`. While a Pod uses the volume, the finalizer keeps it from being deleted. Once the Pod stops using the volume, Kubernetes removes the finalizer, allowing the PersistentVolume to be deleted.
+- Once you request the deletion of an object, the object remains in a "Terminating" state until certain conditions are met or finalizers are processed. During this time, you cannot restore or recover the object. If you need a similar object after the deletion request, you'll need to create a new one.
+
+- **Owner References, Labels, and Finalizers**
+  - In Kubernetes, labels and owner references both describe relationships between objects but serve different roles.
+  - **Labels** are used by controllers to track and manage groups of related objects, like Pods created by a Job. The Job controller adds labels to Pods and monitors changes to them based on these labels.
+  - **Owner references** link these Pods back to the Job that created them. If you delete the Job, Kubernetes uses owner references to decide which Pods to clean up.
+  - **Finalizers** are used to perform cleanup tasks before deleting an object. They can sometimes prevent objects from being deleted immediately. If an object isn’t deleted as expected, check both finalizers and owner references to troubleshoot the issue.
+
+#### Owners and Dependents
+- In Kubernetes, some objects own other objects. For example, a ReplicaSet owns a group of Pods, making those Pods its *dependents*.
+- A Service uses labels to determine which EndpointSlices it should work with. Each EndpointSlice includes an owner reference that links it back to the Service, making it a dependent object. This ensures proper management and prevents interference from other parts of the system.
+- Dependent objects have a `metadata.ownerReferences` field, which includes the object name and UID within the same namespace. Kubernetes sets this field automatically, but you can also configure it manually.
+- The `ownerReferences.blockOwnerDeletion` field, set to true or false, controls whether dependents can block their owner from being deleted. Kubernetes sets this field to true automatically when a controller sets `metadata.ownerReferences`, but you can also configure it manually.
+- The Kubernetes admission controller manages access to the `ownerReferences` field based on the owner's delete permissions, preventing unauthorized users from delaying the deletion of the owner object.
+- **Foreground Finalizer**: It is a mechanism used during the foreground cascading deletion process.
+- **Foreground Cascading Deletion**: When an object is deleted, Kubernetes will first delete all its dependent resources before removing the object itself.
+- **Orphan Deletion Policy**: The orphan deletion policy determines how dependents are handled when their owner is deleted.
+- **Orphan Cascading Deletion**: When an object is deleted, Kubernetes removes the owner object but does not delete its dependents.
+
+#### Recommended Labels
