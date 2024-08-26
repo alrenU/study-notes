@@ -1,11 +1,11 @@
 # Docker
 # Notes From Official Documents
-- Separates applications from infrastructure and allows infrastructure management.
+- **Docker**: Separates applications from infrastructure and allows infrastructure management.
 - **Docker Desktop**: GUI for managing containers, apps, and images.
 - **Docker Credential Helper**: It is a tool designed to securely manage and store authentication credentials for Docker.
 - **Docker Hub**: It is a cloud-based service for storing and sharing Docker container images. It supports public and private repositories, automated builds, and integrates with Docker CLI for managing images.
 - **Docker Scout**: It helps identify and manage security vulnerabilities in Docker images.
-- **Docker Build**: Command used to create Docker images from a Dockerfile. The command builds the image in a series of layers.
+- **`docker build`**: Command used to create Docker images from a `Dockerfile`. The command builds the image in a series of layers.
 
 - **Docker Builder**: Tools and technologies that enhance and extend the image building process. The term "builder" can specifically refer to: *BuildKit*, *Docker Buildx*.
   - **BuildKit**: A Docker tool that speeds up and enhances Docker image builds with features like parallel builds and advanced caching.
