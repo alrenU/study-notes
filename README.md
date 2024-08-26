@@ -50,7 +50,7 @@
 - The Wisdom of Crowds | James Surowiecki
 - User stories applied for agile software development | Cohn, Mike;Beck, Kent
 
-- Test-Driven Development By Example | Kent Beck
+- (*) Test-Driven Development By Example | Kent Beck
 - Extreme Programming Explained: Embrace Change (2nd Edition) | Kent Beck & Cynthia Andres
 - Growing Object-Oriented Software, Guided by Tests | Steve Freeman; Nat Pryce
 - Building Microservices, 2nd Edition (Early Release, Raw and Unedited) | Sam Newman
