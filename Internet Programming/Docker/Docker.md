@@ -1,31 +1,31 @@
 # Docker
 # Notes From Official Documents
 - **Docker**: Separates applications from infrastructure and allows infrastructure management.
+- Docker is written in *GoLang*.
 - **Docker Desktop**: GUI for managing containers, apps, and images.
-- **Docker Credential Helper**: It is a tool designed to securely manage and store authentication credentials for Docker.
-- **Docker Hub**: It is a cloud-based service for storing and sharing Docker container images. It supports public and private repositories, automated builds, and integrates with Docker CLI for managing images.
-- **Docker Scout**: It helps identify and manage security vulnerabilities in Docker images.
+- **Docker Extensions**: Third-party tools within Docker Desktop.
+- **Docker Desktop `settings.json`**: Configuration file that contains various settings and preferences for Docker Desktop.
+- **Docker Desktop Resource Saver Mode**: Reduces CPU and memory usage by automatically stopping the Docker Desktop Linux VM when no containers are running for a while.
+- **Docker Hub**: Cloud-based service for storing and sharing Docker container images. Supports public and private repositories, automated builds, and integrates with Docker CLI for managing images.
+- **Docker Credential Helper**: Helps to securely manage and store authentication credentials for Docker.
+- **Docker Scout**: Helps identify and manage security vulnerabilities in Docker images.
 - **`docker build`**: Command used to create Docker images from a `Dockerfile`. The command builds the image in a series of layers.
 
-- **Docker Builder**: Tools and technologies that enhance and extend the image building process. The term "builder" can specifically refer to: *BuildKit*, *Docker Buildx*.
-  - **BuildKit**: A Docker tool that speeds up and enhances Docker image builds with features like parallel builds and advanced caching.
-  - **Docker Buildx**: A Docker CLI plugin that uses BuildKit to build images for multiple platforms and adds extra build capabilities.
+- **Docker Builder**: Enhances the image building process. The term "builder" can specifically refer to: *BuildKit*, *Docker Buildx*.
+  - **BuildKit**: Speeds up and enhances Docker image builds with features like parallel builds and advanced caching.
+  - **Docker Buildx**: A Docker CLI plugin that uses *BuildKit* to build images for multiple platforms and adds extra build capabilities.
 
-- **Docker Extensions**: Let you use third-party tools within Docker Desktop to extend its functionality.
-- **Docker Compose**: It is a tool for defining and running multi-container Docker applications using a simple YAML file.
-- **Docker Content Trust**: It is a security feature that ensures the integrity and authenticity of Docker images by enabling digital signing and verification of images before they are pulled or pushed to Docker registries.
-- **CVE (Common Vulnerabilities and Exposures)**: Refers to a publicly disclosed security vulnerability in software that could affect Docker images or containers.
-- Docker uses WSL on windows as an underlying Linux.
-- **Docker Desktop `settings.json`**: Configuration file that contains various settings and preferences for Docker Desktop.
-- **Docker Desktop Resource Saver Mode**: Reduces CPU and memory usage by automatically stopping the Docker Desktop Linux VM when no containers are running for a while. Commands that cause an exit from Resource Saver take a little longer to execute (about 3 to 10 seconds) as Docker Desktop restarts the Linux VM.
+- **Docker Compose**: Tool for defining and running multi-container Docker applications using a simple YAML file.
+- **Docker Content Trust**: Ensures the integrity and authenticity of Docker images by enabling digital signing and verification of images before they are pulled or pushed to Docker registries.
+- **CVE (Common Vulnerabilities and Exposures)**: Refers to disclosed security vulnerabilities in software that could affect Docker images or containers.
+- Docker uses WSL on Windows as an underlying Linux.
 - **Docker Objects**: Images, containers, networks, volumes, plugins, etc.
-- Docker is written in *GoLang*.
 - **Namespaces**: Docker uses Linux namespaces to create isolated workspaces for containers. When a container runs, Docker sets up a set of namespaces that virtualize and isolate system resources, ensuring each container operates in its own separate environment.
 
-- **Docker Engine**: It is the core component of Docker that enables containerization. It’s a client-server application with three main parts:
-  1. **Docker Daemon (`dockerd`)**: The background service responsible for managing Docker containers by listening Docker API requests. It manages Docker objects.
-  2. **Docker CLI (Client)**: The command-line tool (`docker`) used to interact with Docker Daemon. It allows users to run commands to build, run, and manage containers. It communicates with deamon using a REST API, over UNIX sockets or a network interface. Another Docker client is *Docker Compose*.
-  3. **Docker API**: The API that allows applications and services to interact with Docker Daemon programmatically.
+- **Docker Engine**: Core component of Docker that enables containerization. It’s a client-server application with three main parts:
+  1. **Docker Daemon (`dockerd`)**: Background service responsible for managing Docker containers by listening Docker API requests. It manages Docker objects.
+  2. **Docker CLI (Client)**: Command-line tool (`docker`) used to interact with Docker Daemon. It allows users to run commands to build, run, and manage containers. It communicates with deamon using a REST API, over UNIX sockets or a network interface. Another Docker client is *Docker Compose*.
+  3. **Docker API**: Allows applications and services to interact with Docker Daemon programmatically.
 
 - **Port Mapping (Port Forwarding)**: Directs network traffic from one port to another to enable external access to private network resources. It works by:
   - Using a private network with devices having private IP addresses.
