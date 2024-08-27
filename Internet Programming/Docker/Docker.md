@@ -3,6 +3,7 @@
 # Bookmark
 - Official Documentation: [https://docs.docker.com/get-started/docker-concepts/building-images/]
 - Official Documentation: [https://docs.docker.com/desktop/dev-environments/]
+  - Accidentally started to read the docs from this section. After I done with the previous documantation, I should continue from here.
 
 # Notes From Official Documention
 - **Docker**: Separates applications from infrastructure and allows infrastructure management.

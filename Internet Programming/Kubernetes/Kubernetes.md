@@ -2,6 +2,7 @@
 
 # Bookmark
 - Official Documentation: [https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/]
+  - I have started from the "Concepts" section. "Getting Started" section is unread.
 
 # Notes From Official Documentation
 
