@@ -1,3 +1,7 @@
 # GitLab
-# Notes From Official Notes
-# Unordered Notes
+
+# Bookmark
+- Official Documentation: []
+
+# Notes From Official Documentation
+# Unordered Notes From Official Documentation

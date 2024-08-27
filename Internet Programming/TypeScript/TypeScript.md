@@ -1,6 +1,9 @@
 # TypeScript
 - (Suggested Book In Official Docs) JavaScript: The Good Parts
 
+# Bookmark
+- Official Documentation: [https://www.typescriptlang.org/docs/handbook/2/mapped-types.html]
+
 # Out Of Scope Notes
 <!-- TODO-START: Put below notes to their related functional programming sections. -->
 - **Higher-Kinded Types (HKTs)**: Abstract types that take other types as parameters, originating from functional programming.
@@ -33,7 +36,7 @@
   - **Example**: `function* myGenerator() { yield 1; yield 2; }`
 <!-- TODO-END -->
 
-# Notes From Offical Documents
+# Notes From Offical Documentation
 - **TypeScript (TS)**: A statically-typed *superset* of JavaScript (JS) that adds type annotations. Valid JS code is also valid TS code.
 - **Runtime Behavior**: TS preserves JS's runtime behavior.
 - **`tsc`**: TS compiler that converts TS code to JS code.
@@ -364,4 +367,4 @@
       type ArrOfStrOrNum = ToArrayNonDist<string | number>; // (string | number)[]
       ```
 
-# Unordered Notes
+# Unordered Notes From Official Documentation
