@@ -4,14 +4,15 @@
 - Official Documentation: [https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/]
 
 # Notes From Official Documentation
+
 # Unordered Notes From Official Documentation
-- **Kubernetes (K8s)**: It is an open source container orchestration engine for automating deployment, scaling, and management of containerized applications.
+- **Kubernetes (K8s)**: Container orchestration engine for automating deployment, scaling, and management of containerized applications.
 
 ## Install Tools
-- **`kubectl`**: The Kubernetes command-line tool, `kubectl`, allows you to run commands against Kubernetes clusters. You can use `kubectl` to deploy applications, inspect and manage cluster resources, and view logs. Can be used with any Kubernetes cluster, whether local or remote.
-- **`kind`**: Tool to run Kubernetes clusters locally using Docker or Podman containers. Creates lightweight Kubernetes clusters in Docker containers for testing and development. Ideal for CI/CD pipelines or local development with multiple clusters or isolated environments.
-- **`minikube`**: Tool to run a single-node or multi-node Kubernetes cluster locally on your computer. Provides a complete, single-node Kubernetes cluster in a VM or container on your local machine. Best for development and testing; provides a more "full-featured" local Kubernetes environment compared to kind.
-- **`kubeadm`**: Tool to initialize and manage Kubernetes clusters. Helps set up Kubernetes clusters, from creating the *control plane* and *worker nodes* to joining them into a cluster. Suitable for both local and production environments.
+- **`kubectl`**: Kubernetes command-line tool for deploying applications, managing resources, and viewing logs in clusters.
+- **`kind`**: Tool for running lightweight Kubernetes clusters locally using Docker or Podman containers. Ideal for testing, development, and CI/CD pipelines with multiple or isolated environments.
+- **`minikube`**: Tool for running a single-node or multi-node Kubernetes cluster locally in a VM or container. Offers a complete local Kubernetes environment, ideal for development and testing, and more feature-rich than `kind`.
+- **`kubeadm`**: Tool for initializing and managing Kubernetes clusters, including setting up *control planes* and *worker nodes*. Suitable for both local and production environments.
 
 - **Cluster**: A set of nodes that work together to run containerized applications. It's components:
   - **Nodes**: A node is a physical or virtual machine within a Kubernetes cluster. Nodes are of two main types:
